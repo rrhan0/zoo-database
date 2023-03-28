@@ -4,21 +4,21 @@ CREATE TABLE Computers2(
     type VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE Computers1(
-    c_id VARCHAR(20) PRIMARY KEY,
-    model VARCHAR(20) NOT NULL,
-    FOREIGN KEY (model) REFERENCES Computers2(model)
-);
-
 CREATE TABLE Workers(
     w_id VARCHAR(20) PRIMARY KEY,
-    c_id VARCHAR(20),
     name VARCHAR(20) NOT NULL,
     pay_rate FLOAT NOT NULL,
     address VARCHAR(30) NOT NULL,
     email VARCHAR(30) UNIQUE,
-    phone VARCHAR(13) UNIQUE,
-    FOREIGN KEY (c_id) REFERENCES Computers1
+    phone VARCHAR(13) UNIQUE
+);
+
+CREATE TABLE Computers1(
+   c_id VARCHAR(20) PRIMARY KEY,
+   w_id VARCHAR(20) UNIQUE,
+   model VARCHAR(20) NOT NULL,
+   FOREIGN KEY (model) REFERENCES Computers2(model),
+   FOREIGN KEY (w_id) REFERENCES Workers(w_id)
 );
 
 CREATE TABLE Zookeepers(
