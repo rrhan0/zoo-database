@@ -8,6 +8,8 @@ public class ZooController {
         //Run this program on the Event Dispatch Thread (EDT)
         SwingUtilities.invokeLater(() -> {
             JWindow frame1 = new JWindow();
+
         });
+
     }
 }
