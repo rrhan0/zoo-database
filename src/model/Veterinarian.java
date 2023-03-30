@@ -8,7 +8,6 @@ public class Veterinarian extends Worker {
         this.specialization = specialization;
     }
 
-
     public String getSpecialization() {
         return specialization;
     }
