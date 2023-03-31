@@ -1,6 +1,9 @@
 package database;
 
 
+import model.Animal;
+import model.Computer;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -79,41 +82,116 @@ public class DatabaseConnectionHandler {
 //		}
 //	}
 //
-//	public BranchModel[] getBranchInfo() {
-//		ArrayList<BranchModel> result = new ArrayList<BranchModel>();
-//
-//		try {
-//			Statement stmt = connection.createStatement();
-//			ResultSet rs = stmt.executeQuery("SELECT * FROM branch");
-//
-////    		// get info on ResultSet
-////    		ResultSetMetaData rsmd = rs.getMetaData();
-////
-////    		System.out.println(" ");
-////
-////    		// display column names;
-////    		for (int i = 0; i < rsmd.getColumnCount(); i++) {
-////    			// get column name and print it
-////    			System.out.printf("%-15s", rsmd.getColumnName(i + 1));
-////    		}
-//
-//			while(rs.next()) {
-//				BranchModel model = new BranchModel(rs.getString("branch_addr"),
-//													rs.getString("branch_city"),
-//													rs.getInt("branch_id"),
-//													rs.getString("branch_name"),
-//													rs.getInt("branch_phone"));
-//				result.add(model);
-//			}
-//
-//			rs.close();
-//			stmt.close();
-//		} catch (SQLException e) {
-//			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-//		}
-//
-//		return result.toArray(new BranchModel[result.size()]);
-//	}
+	public Animal[] getAnimalInfo(ArrayList<String> columns) {
+		ArrayList<Animal> result = new ArrayList<Animal>();
+
+		StringBuilder builder = new StringBuilder();
+		for (String value : columns) {
+			builder.append(value);
+		}
+		String projection = builder.toString();
+
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT ? FROM COMPUTERS1 c1, COMPUTERS2 c2 WHERE c1.MODEL = c2.MODEL");
+//			ps.setString(1, projection);
+			ps.setString(1, "SELECT * FROM ANIMALS1 a1, ANIMALS2 a2 WHERE a1.SPECIES = a2.SPECIES");
+			ResultSet rs = ps.executeQuery();
+
+    		ResultSetMetaData rsmd = rs.getMetaData();
+
+			while(rs.next()) {
+				String a_id = null;
+				String p_id = null;
+				String name = null;
+				String species = null;
+				String genus = null;
+
+				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+					String columnName = rsmd.getColumnName(i);
+					String columnValue = rs.getString(columnName);
+
+					if ("a_id".equalsIgnoreCase(columnName)) {
+						a_id = columnValue;
+					} else if ("p_id".equalsIgnoreCase(columnName)) {
+						p_id = columnValue;
+					} else if ("name".equalsIgnoreCase(columnName)) {
+						name = columnValue;
+					} else if ("species".equalsIgnoreCase(columnName)) {
+						species = columnValue;
+					} else if ("genus".equalsIgnoreCase(columnName)) {
+						genus = columnValue;
+					}
+				}
+
+
+				Animal animal = new Animal(a_id, p_id, name, species, genus);
+				result.add(animal);
+			}
+
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new Animal[0]);
+	}
+
+	public Computer[] getComputerInfo(ArrayList<String> columns) {
+		ArrayList<Computer> result = new ArrayList<Computer>();
+
+		StringBuilder builder = new StringBuilder();
+		for (String value : columns) {
+			builder.append(value);
+		}
+		String projection = builder.toString();
+
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT ? FROM COMPUTERS1 c1, COMPUTERS2 c2 WHERE c1.MODEL = c2.MODEL");
+//			ps.setString(1, projection);
+			ps.setString(1, "C_ID, W_ID, c1.MODEL AS MODEL, MANUFACTURER, TYPE");
+			ResultSet rs = ps.executeQuery();
+
+    		// get info on ResultSet
+    		ResultSetMetaData rsmd = rs.getMetaData();
+
+			while(rs.next()) {
+				String c_id = null;
+				String w_id = null;
+				String model = null;
+				String manufacturer = null;
+				String type = null;
+
+				// check if each column exists in the ResultSet
+				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+					String columnName = rsmd.getColumnName(i);
+					String columnValue = rs.getString(columnName);
+
+					if ("c_id".equalsIgnoreCase(columnName)) {
+						c_id = columnValue;
+					} else if ("w_id".equalsIgnoreCase(columnName)) {
+						w_id = columnValue;
+					} else if ("model".equalsIgnoreCase(columnName)) {
+						model = columnValue;
+					} else if ("manufacturer".equalsIgnoreCase(columnName)) {
+						manufacturer = columnValue;
+					} else if ("type".equalsIgnoreCase(columnName)) {
+						type = columnValue;
+					}
+				}
+
+				Computer computer = new Computer(c_id, w_id, model, manufacturer, type);
+				result.add(computer);
+			}
+
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new Computer[0]);
+	}
 //
 //	public void updateBranch(int id, String name) {
 //		try {
