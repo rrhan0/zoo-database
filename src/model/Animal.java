@@ -6,13 +6,17 @@ public class Animal {
     private final String name;
     private final String species;
     private final String genus;
+    private final String PRIMARYKEY;
+    private final int attributes;
 
     public Animal(String a_id, String p_id, String name, String species, String genus) {
         this.a_id = a_id;
+        this.PRIMARYKEY = a_id;
         this.p_id = p_id;
         this.name = name;
         this.species = species;
         this.genus = genus;
+        this.attributes = 5;
     }
 
     public String getA_id() {
