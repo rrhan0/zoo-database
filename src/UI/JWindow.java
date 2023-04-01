@@ -153,11 +153,12 @@ public class JWindow {
             insertFrame = new JFrame();
             insertFrame.setTitle("Insert New Animal");
             insertFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            insertFrame.setSize(800, 500);
+            insertFrame.setSize(200, 500);
+
             insertFrame.setLocationRelativeTo(null);
 
             //Create all the text fields required for animals
-            JPanel forInsert = new JPanel();
+            JPanel forInsert = new JPanel(new FlowLayout(FlowLayout.CENTER));
             JTextField a_id = new JTextField("Animal's ID (REQUIRED)"); //MUST BE ERROR CHECKED
             JTextField p_id = new JTextField("Place ID (REQUIRED)");
             JTextField name = new JTextField("Animal's name");
