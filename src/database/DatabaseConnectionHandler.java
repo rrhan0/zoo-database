@@ -4,6 +4,8 @@ package database;
 import model.Animal;
 import model.Computer;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -82,14 +84,54 @@ public class DatabaseConnectionHandler {
 //		}
 //	}
 //
+	public Object[] getObjectInfo(String projection, String tables, String cond, Class<?> entityClass) {
+		ArrayList<Object> result = new ArrayList<Object>();
+
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT ? FROM ? WHERE ?");
+			ResultSet rs = ps.executeQuery();
+
+			// get info on ResultSet
+			ResultSetMetaData rsmd = rs.getMetaData();
+
+			while(rs.next()) {
+				Object obj = entityClass.getDeclaredConstructor().newInstance();
+
+				// check if each column exists in the ResultSet
+				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+					String columnName = rsmd.getColumnName(i);
+					String columnValue = rs.getString(columnName);
+
+					try {
+						Field field = entityClass.getDeclaredField(columnName);
+						field.setAccessible(true);
+
+						if (field.getType() == int.class) {
+							field.setInt(obj, Integer.parseInt(columnValue));
+						} else if (field.getType() == String.class) {
+							field.set(obj, columnValue);
+						}
+					} catch (NoSuchFieldException e) {
+						// ignore columns that don't exist in the object
+					}
+				}
+
+				result.add(obj);
+			}
+
+			rs.close();
+			ps.close();
+		} catch (SQLException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new Object[0]);
+	}
+
 	public Animal[] getAnimalInfo(ArrayList<String> columns) {
 		ArrayList<Animal> result = new ArrayList<Animal>();
 
-		StringBuilder builder = new StringBuilder();
-		for (String value : columns) {
-			builder.append(value);
-		}
-		String projection = builder.toString();
+		String projection = String.join(", ", columns);
 
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT ? FROM COMPUTERS1 c1, COMPUTERS2 c2 WHERE c1.MODEL = c2.MODEL");
