@@ -28,6 +28,7 @@ public final class Constants {
     public static final String O_ID = "O_ID";
     public static final String CONTENTS = "CONTENTS";
     public static final String DATE_RECEIVED = "DATE_RECEIVED";
+    public static final String EXPIRY_DATE = "EXPIRY_DATE";
 
     public static final String VENDOR_W_ID = "v.W_ID AS W_ID";
     public static final String VET_W_ID = "v.W_ID AS W_ID";

@@ -15,7 +15,7 @@ public class ZooController {
     public static void main(String[] args) {
         //Run this program on the Event Dispatch Thread (EDT)
         DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
-        dbHandler.login(, );
+        dbHandler.login("", "");
         ArrayList<String> col = new ArrayList<String>();
         col.add(Constants.C_ID);
         col.add(Constants.W_ID);
@@ -64,6 +64,7 @@ public class ZooController {
         col.add(Constants.CONTENTS);
         col.add(Constants.WEIGHT);
         col.add(Constants.DATE_RECEIVED);
+        col.add(Constants.EXPIRY_DATE);
 
         RawFoodOrder[] resulto = dbHandler.getRawFoodOrderInfo(col);
 

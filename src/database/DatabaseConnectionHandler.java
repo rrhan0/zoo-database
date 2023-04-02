@@ -4,6 +4,7 @@ package database;
 import model.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * This class handles all database related transactions
@@ -37,6 +38,8 @@ public class DatabaseConnectionHandler {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
 	}
+
+
 
 //	public void deleteBranch(int branchId) {
 //		try {
@@ -137,7 +140,8 @@ public class DatabaseConnectionHandler {
 				String o_id = null;
 				String contents = null;
 				Integer weight = 0;
-				String date_received = null;
+				Date date_received = null;
+				Date expiry_date = null;
 
 				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 					String columnName = rsmd.getColumnName(i);
@@ -149,11 +153,13 @@ public class DatabaseConnectionHandler {
 					} else if ("weight".equalsIgnoreCase(columnName)) {
 						weight = rs.getInt(columnName);
 					} else if ("date_received".equalsIgnoreCase(columnName)) {
-						date_received = rs.getString(columnName);
+						date_received = new Date(rs.getDate(columnName).getTime());
+					} else if ("expiry_date".equalsIgnoreCase(columnName)) {
+						expiry_date = new Date(rs.getDate(columnName).getTime());
 					}
 				}
 
-				RawFoodOrder raw_food_order = new RawFoodOrder(o_id, contents, weight, date_received);
+				RawFoodOrder raw_food_order = new RawFoodOrder(o_id, contents, weight, date_received, expiry_date);
 				result.add(raw_food_order);
 			}
 
