@@ -42,4 +42,14 @@ public final class Constants {
     public static final String PHONE = "PHONE";
 
 
+    public static final String WORKS_AT = "WORKS_AT";
+    public static final String ASSIGNED_TO = "ASSIGNED_TO";
+    public static final String FEEDS = "FEEDS";
+    public static final String MAINTAINS_HEALTH_OF = "MAINTAINS_HEALTH_OF";
+    public static final String COHABITATES_WITH = "COHABITATES_WITH";
+    public static final String MADE_FROM = "MADE_FROM";
+    public static final String STORED_AT = "STORED_AT";
+    public static final String LOCATED_AT = "LOCATED_AT";
+
+
 }

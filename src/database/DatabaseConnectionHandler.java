@@ -1,7 +1,10 @@
 package database;
 
 
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import model.*;
+import util.Constants;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,6 +94,233 @@ public class DatabaseConnectionHandler {
 	}
 
 
+	public Object[][] getTableInfo(String projection, String tableName) {
+		ArrayList<Object[]> result = new ArrayList<>();
+
+
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT " + projection + " FROM " + tableName);
+			ResultSet rs = ps.executeQuery();
+
+			ResultSetMetaData rsmd = rs.getMetaData();
+
+			while (rs.next()) {
+				Object[] values = new Object[rsmd.getColumnCount()];
+
+				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+					String columnName = rsmd.getColumnName(i);
+
+					if (rsmd.getColumnType(i) == java.sql.Types.VARCHAR) {
+						values[i - 1] = rs.getString(columnName);
+					} else if (rsmd.getColumnType(i) == java.sql.Types.FLOAT) {
+						values[i - 1] = rs.getFloat(columnName);
+					}
+				}
+
+				result.add(values);
+			}
+
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new Object[0][0]);
+	}
+
+	public StoredAt[] getStoredAtInfo(ArrayList<String> columns) {
+		String projection = String.join(", ", columns);
+
+		Object[][] queryResults = this.getTableInfo(projection, Constants.STORED_AT);
+		StoredAt[] result = new StoredAt[queryResults.length];
+
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
+
+			String a_id = null;
+			String name = null;
+			String p_id = null;
+			for (int j = 0; j < row.length; j++) {
+				if ("a_id".equalsIgnoreCase(columns.get(j))) {
+					a_id = (String) row[j];
+				} else if ("name".equalsIgnoreCase(columns.get(j))) {
+					name = (String) row[j];
+				} else if ("p_id".equalsIgnoreCase(columns.get(j))) {
+					p_id = (String) row[j];
+				}
+			}
+			result[i] = new StoredAt(a_id, name, p_id);
+		}
+		return result;
+	}
+
+	public MaintainsHealthOf[] getMaintainsHealthOfInfo(ArrayList<String> columns) {
+		String projection = String.join(", ", columns);
+
+		Object[][] queryResults = this.getTableInfo(projection, Constants.MAINTAINS_HEALTH_OF);
+		MaintainsHealthOf[] result = new MaintainsHealthOf[queryResults.length];
+
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
+
+			String w_id = null;
+			String a_id = null;
+			for (int j = 0; j < row.length; j++) {
+				if ("w_id".equalsIgnoreCase(columns.get(j))) {
+					w_id = (String) row[j];
+				} else if ("a_id".equalsIgnoreCase(columns.get(j))) {
+					a_id = (String) row[j];
+				}
+			}
+			result[i] = new MaintainsHealthOf(w_id, a_id);
+		}
+		return result;
+	}
+
+
+	public MadeFrom[] getMadeFromInfo(ArrayList<String> columns) {
+		String projection = String.join(", ", columns);
+
+		Object[][] queryResults = this.getTableInfo(projection, Constants.MADE_FROM);
+		MadeFrom[] result = new MadeFrom[queryResults.length];
+
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
+
+			String a_id = null;
+			String name = null;
+			String o_id = null;
+			for (int j = 0; j < row.length; j++) {
+				if ("a_id".equalsIgnoreCase(columns.get(j))) {
+					a_id = (String) row[j];
+				} else if ("name".equalsIgnoreCase(columns.get(j))) {
+					name = (String) row[j];
+				} else if ("o_id".equalsIgnoreCase(columns.get(j))) {
+					o_id = (String) row[j];
+				}
+			}
+			result[i] = new MadeFrom(a_id, name, o_id);
+		}
+		return result;
+	}
+
+	public LocatedAt[] getLocatedAtInfo(ArrayList<String> columns) {
+		String projection = String.join(", ", columns);
+
+		Object[][] queryResults = this.getTableInfo(projection, Constants.LOCATED_AT);
+		LocatedAt[] result = new LocatedAt[queryResults.length];
+
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
+
+			String o_id = null;
+			String p_id = null;
+			for (int j = 0; j < row.length; j++) {
+				if ("o_id".equalsIgnoreCase(columns.get(j))) {
+					o_id = (String) row[j];
+				} else if ("p_id".equalsIgnoreCase(columns.get(j))) {
+					p_id = (String) row[j];
+				}
+			}
+			result[i] = new LocatedAt(o_id, p_id);
+		}
+		return result;
+	}
+
+	public Feeds[] getFeedsInfo(ArrayList<String> columns) {
+		String projection = String.join(", ", columns);
+
+		Object[][] queryResults = this.getTableInfo(projection, "FEEDS");
+		Feeds[] result = new Feeds[queryResults.length];
+
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
+
+			String w_id = null;
+			String a_id = null;
+			for (int j = 0; j < row.length; j++) {
+				if ("w_id".equalsIgnoreCase(columns.get(j))) {
+					w_id = (String) row[j];
+				} else if ("a_id".equalsIgnoreCase(columns.get(j))) {
+					a_id = (String) row[j];
+				}
+			}
+			result[i] = new Feeds(w_id, a_id);
+		}
+		return result;
+	}
+
+	public CohabitatesWith[] getCohabitatesWithInfo(ArrayList<String> columns) {
+		String projection = String.join(", ", columns);
+
+		Object[][] queryResults = this.getTableInfo(projection, "COHABITATES_WITH");
+		CohabitatesWith[] result = new CohabitatesWith[queryResults.length];
+
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
+
+			String a_id1 = null;
+			String a_id2 = null;
+			for (int j = 0; j < row.length; j++) {
+				if ("a_id1".equalsIgnoreCase(columns.get(j))) {
+					a_id1 = (String) row[j];
+				} else if ("a_id2".equalsIgnoreCase(columns.get(j))) {
+					a_id2 = (String) row[j];
+				}
+			}
+			result[i] = new CohabitatesWith(a_id1, a_id2);
+		}
+		return result;
+	}
+
+	public AssignedTo[] getAssignedToInfo(ArrayList<String> columns) {
+		String projection = String.join(", ", columns);
+
+		Object[][] queryResults = this.getTableInfo(projection, "ASSIGNED_TO");
+		AssignedTo[] result = new AssignedTo[queryResults.length];
+
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
+
+			String w_id = null;
+			String p_id = null;
+			for (int j = 0; j < row.length; j++) {
+				if ("w_id".equalsIgnoreCase(columns.get(j))) {
+					w_id = (String) row[j];
+				} else if ("p_id".equalsIgnoreCase(columns.get(j))) {
+					p_id = (String) row[j];
+				}
+			}
+			result[i] = new AssignedTo(w_id, p_id);
+		}
+		return result;
+	}
+
+
+
+	public WorksAt[] getWorksAtInfo(ArrayList<String> columns) {
+		String projection = String.join(", ", columns);
+
+		Object[][] queryResults = this.getTableInfo(projection, "WORKS_AT");
+		WorksAt[] result = new WorksAt[queryResults.length];
+
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
+
+			String w_id = null;
+			String p_id = null;
+			for (int j = 0; j < row.length; j++) {
+				if ("w_id".equalsIgnoreCase(columns.get(j))) {
+					w_id = (String) row[j];
+				} else if ("p_id".equalsIgnoreCase(columns.get(j))) {
+					p_id = (String) row[j];
+				}
+			}
+			result[i] = new WorksAt(w_id, p_id);
+		}
+		return result;
+	}
 
 	public PreppedFood[] getPreppedFoodInfo(ArrayList<String> columns) {
 		ArrayList<PreppedFood> result = new ArrayList<>();

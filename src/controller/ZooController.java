@@ -123,6 +123,12 @@ public class ZooController {
         col.add(Constants.SPECIALIZATION);
 
         Worker[] resultvet = dbHandler.getVeterinarianInfo(col);
+
+        col.clear();
+        col.add(Constants.P_ID);
+//        col.add(Constants.W_ID);
+
+        WorksAt[] resultwork = dbHandler.getWorksAtInfo(col);
         // be careful of duplicates
 //        Veterinarian vet = new Veterinarian("asdf", "Richardo", 11f, "11 nowhere street", "asdf@gmail.com", "1234", "Trolling");
 //        dbHandler.insertVeterinarian(vet);
@@ -130,7 +136,6 @@ public class ZooController {
 
         SwingUtilities.invokeLater(() -> {
             JWindow frame1 = new JWindow();
-
         });
 
     }
