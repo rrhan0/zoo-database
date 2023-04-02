@@ -1,7 +1,5 @@
 package UI;
 
-import model.Veterinarian;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -187,8 +185,8 @@ public class JWindow {
                             throw new Exception();
                         }
 
-                        //THEN CREATE ACTUAL VET OBJECT
-                        createVet(w_idUserInput, nameInput, payRate_UserInput, addressInput, emailInput, phoneInput, specializationInput);
+                        //THEN CREATE ACTUAL VET OBJECT - call insertVet from DBCH
+                        //Veterinarian newVet = new Veterinarian(w_idUserInput, nameInput, payRate_UserInput, addressInput, emailInput, phoneInput, specializationInput);
                         insertFrame.dispose();
 
                         //SHOW SUCCESS
@@ -220,11 +218,6 @@ public class JWindow {
 
             this.insertFrame.setVisible(true);
 
-        }
-
-        //Creates a new vet given insert
-        public void createVet(String wid, String name, float pay, String addr, String email, String phone, String spec){
-            Veterinarian newVet = new Veterinarian(wid, name, pay, addr, email, phone, spec);
         }
 
         public void showSuccessFrame(){
