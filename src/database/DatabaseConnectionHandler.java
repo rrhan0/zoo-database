@@ -41,25 +41,25 @@ public class DatabaseConnectionHandler {
 
 
 
-//	public void deleteBranch(int branchId) {
-//		try {
-//			PreparedStatement ps = connection.prepareStatement("DELETE FROM branch WHERE branch_id = ?");
-//			ps.setInt(1, branchId);
-//
-//			int rowCount = ps.executeUpdate();
-//			if (rowCount == 0) {
-//				System.out.println(WARNING_TAG + " Branch " + branchId + " does not exist!");
-//			}
-//
-//			connection.commit();
-//
-//			ps.close();
-//		} catch (SQLException e) {
-//			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-//			rollbackConnection();
-//		}
-//	}
-//
+	public void deleteAnimal(String a_id) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM ANIMALS1 WHERE A_ID = ?");
+			ps.setString(1, a_id);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Animal " + a_id + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
 
 
 	public void insertVeterinarian(Veterinarian model) {

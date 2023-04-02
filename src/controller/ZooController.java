@@ -15,7 +15,7 @@ public class ZooController {
     public static void main(String[] args) {
         //Run this program on the Event Dispatch Thread (EDT)
         DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
-        dbHandler.login();
+        dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
         ArrayList<String> col = new ArrayList<String>();
         col.add(Constants.C_ID);
         col.add(Constants.W_ID);
@@ -126,7 +126,7 @@ public class ZooController {
         // be careful of duplicates
 //        Veterinarian vet = new Veterinarian("asdf", "Richardo", 11f, "11 nowhere street", "asdf@gmail.com", "1234", "Trolling");
 //        dbHandler.insertVeterinarian(vet);
-
+//        dbHandler.deleteAnimal("1002");
 
         SwingUtilities.invokeLater(() -> {
             JWindow frame1 = new JWindow();
