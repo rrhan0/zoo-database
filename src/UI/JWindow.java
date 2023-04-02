@@ -1,5 +1,7 @@
 package UI;
 
+import model.Veterinarian;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,7 +10,7 @@ import java.awt.event.ActionListener;
 public class JWindow {
         private JFrame defaultFrame;
         private JFrame insertFrame;
-        private JFrame errorFrame;
+        private JFrame successFrame;
         public JWindow() {
                 initialize();
                 show();
@@ -35,19 +37,18 @@ public class JWindow {
 
                 //Animal's insert button will actually do something :D
                 JButton animalsInsert = new JButton("INSERT");
-                animalsInsert.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        boolean success;
-                        success = insertNewAnimal();
-                    }
-                });
-
                 JButton habitatsInsert = new JButton("INSERT");
                 JButton workerInsert = new JButton("INSERT");
                 JButton vendorsInsert = new JButton("INSERT");
                 JButton zookeepersInsert = new JButton("INSERT");
                 JButton vetsInsert = new JButton("INSERT");
+                vetsInsert.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        insertNewVet();
+                    }
+                });
+
                 JButton shopsInsert = new JButton("INSERT");
                 JButton itemsInsert = new JButton("INSERT");
 
@@ -148,22 +149,24 @@ public class JWindow {
         }
 
 
-        public boolean insertNewAnimal(){
+        public void insertNewVet(){
             //Create a new pop-up window
             insertFrame = new JFrame();
-            insertFrame.setTitle("Insert New Animal");
+            insertFrame.setTitle("Insert New Veterinarian - Insert New Worker");
             insertFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            insertFrame.setSize(200, 500);
-
+            insertFrame.setSize(400, 500);
+            
             insertFrame.setLocationRelativeTo(null);
 
             //Create all the text fields required for animals
             JPanel forInsert = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            JTextField a_id = new JTextField("Animal's ID (REQUIRED)"); //MUST BE ERROR CHECKED
-            JTextField p_id = new JTextField("Place ID (REQUIRED)");
-            JTextField name = new JTextField("Animal's name");
-            JTextField species = new JTextField("Animal's species");
-            JTextField genus = new JTextField("Animal's genus");
+            JTextField w_id = new JTextField("Worker's ID (REQUIRED)", 20); //REQUIRED
+            JTextField pay_rate = new JTextField("Pay Rate (REQUIRED)"); //NOT NULL
+            JTextField name = new JTextField("Worker's Name (REQUIRED)", 20); //NOT NULL
+            JTextField email = new JTextField("Worker's email"); //UNIQUE
+            JTextField phone = new JTextField("Worker's phone"); //UNIQUE
+            JTextField address = new JTextField("Worker's Address (REQUIRED)"); //NOT NULL
+            JTextField specialization = new JTextField("Veterinarian's Specialization");
 
             //Create Apply button and create action listener
             JButton apply = new JButton("Apply Insert");
@@ -171,29 +174,45 @@ public class JWindow {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try{
-                        int a_idUserInput = Integer.parseInt(a_id.getText());
-                        int p_idUserInput = Integer.parseInt(p_id.getText());
-                        String nameInput = name.getText();
-                        String speciesInput = species.getText();
-                        String genusInput = genus.getText();
+                        String w_idUserInput = w_id.getText(); //REQUIRED
+                        float payRate_UserInput = Float.parseFloat(pay_rate.getText()); //NOT NULL
+                        String nameInput = name.getText(); //NOT NULL
+                        String emailInput = email.getText(); //UNIQUE
+                        String phoneInput = phone.getText(); //UNIQUE
+                        String addressInput = address.getText(); //NOT NULL
+                        String specializationInput = specialization.getText();
 
-                        //THEN ACTUALLY INSERTS
+
+                        if(w_idUserInput.equals("") || nameInput.equals("") || addressInput.equals("")){
+                            throw new Exception();
+                        }
+
+                        //THEN CREATE ACTUAL VET OBJECT
+                        createVet(w_idUserInput, nameInput, payRate_UserInput, addressInput, emailInput, phoneInput, specializationInput);
+                        insertFrame.dispose();
+
+                        //SHOW SUCCESS
+                        showSuccessFrame();
+
+
                     }catch(Exception uhoh){
                         insertFrame.dispose();
-                        errorFrame = new JFrame("Error");
-                        JOptionPane.showMessageDialog(null, "You have entered the wrong kind of data or did not fill in a required field" +
+                        JOptionPane.showMessageDialog(null, "You have entered a field incorrectly or did not fill in a required field" +
                                 "", "Error", JOptionPane.ERROR_MESSAGE);
 
                     }
+
                 }
             });
 
             //Add all textfield and apply button to panel
-            forInsert.add(a_id);
-            forInsert.add(p_id);
+            forInsert.add(w_id);
+            forInsert.add(pay_rate);
             forInsert.add(name);
-            forInsert.add(species);
-            forInsert.add(genus);
+            forInsert.add(email);
+            forInsert.add(phone);
+            forInsert.add(address);
+            forInsert.add(specialization);
             forInsert.add(apply);
 
             //Add panel to frame
@@ -201,9 +220,21 @@ public class JWindow {
 
             this.insertFrame.setVisible(true);
 
-            return false;
         }
 
+        //Creates a new vet given insert
+        public void createVet(String wid, String name, float pay, String addr, String email, String phone, String spec){
+            Veterinarian newVet = new Veterinarian(wid, name, pay, addr, email, phone, spec);
+        }
+
+        public void showSuccessFrame(){
+            successFrame = new JFrame();
+            successFrame.setTitle("Success!");
+            successFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            successFrame.setSize(300, 300);
+            successFrame.setLocationRelativeTo(null);
+            this.successFrame.setVisible(true);
+        }
 
         public void show() {
                 this.defaultFrame.setVisible(true);
