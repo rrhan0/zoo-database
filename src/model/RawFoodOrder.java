@@ -1,12 +1,12 @@
 package model;
 
-public class Raw_Food_Order {
+public class RawFoodOrder {
     private final String o_id;
     private final String contents;
     private final Integer weight;
     private final String date_received;
 
-    public Raw_Food_Order(String o_id, String contents, Integer weight, String date_recieved) {
+    public RawFoodOrder(String o_id, String contents, Integer weight, String date_recieved) {
         this.o_id = o_id;
         this.contents = contents;
         this.weight = weight;

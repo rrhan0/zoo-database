@@ -6,7 +6,7 @@ public class Habitat extends Place {
     private final int temperature;
     private final int humidity;
 
-    protected Habitat(String p_id, String name, String biome, int area, int temperature, int humidity) {
+    public Habitat(String p_id, String name, String biome, int area, int temperature, int humidity) {
         super(p_id, name);
         this.biome = biome;
         this.area = area;

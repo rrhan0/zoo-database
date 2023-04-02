@@ -3,7 +3,7 @@ package model;
 public class Shop extends Place {
     private final String type;
 
-    protected Shop(String p_id, String name, String type) {
+    public Shop(String p_id, String name, String type) {
         super(p_id, name);
         this.type = type;
     }
