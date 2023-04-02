@@ -60,29 +60,37 @@ public class DatabaseConnectionHandler {
 //		}
 //	}
 //
-//	public void insertBranch(BranchModel model) {
-//		try {
-//			PreparedStatement ps = connection.prepareStatement("INSERT INTO branch VALUES (?,?,?,?,?)");
-//			ps.setInt(1, model.getId());
-//			ps.setString(2, model.getName());
-//			ps.setString(3, model.getAddress());
-//			ps.setString(4, model.getCity());
-//			if (model.getPhoneNumber() == 0) {
-//				ps.setNull(5, java.sql.Types.INTEGER);
-//			} else {
-//				ps.setInt(5, model.getPhoneNumber());
-//			}
-//
-//			ps.executeUpdate();
-//			connection.commit();
-//
-//			ps.close();
-//		} catch (SQLException e) {
-//			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-//			rollbackConnection();
-//		}
-//	}
-//
+
+
+	public void insertVeterinarian(Veterinarian model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO WORKERS VALUES (?,?,?,?,?,?)");
+			ps.setString(1, model.getW_id());
+			ps.setString(2, model.getName());
+			ps.setFloat(3, model.getPay_rate());
+			ps.setString(4, model.getAddress());
+			ps.setString(5, model.getEmail());
+			ps.setString(6, model.getPhone());
+
+
+
+			ps.executeUpdate();
+
+			ps = connection.prepareStatement("INSERT INTO VETERINARIANS VALUES (?,?)");
+			ps.setString(1, model.getW_id());
+			ps.setString(2, model.getSpecialization());
+
+			ps.executeUpdate();
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+
 
 	public PreppedFood[] getPreppedFoodInfo(ArrayList<String> columns) {
 		ArrayList<PreppedFood> result = new ArrayList<>();
