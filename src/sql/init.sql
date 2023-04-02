@@ -69,6 +69,7 @@ CREATE TABLE Items(
     name VARCHAR(30) NOT NULL,
     stock INTEGER NOT NULL,
     price FLOAT NOT NULL,
+    type VARCHAR(20),
     FOREIGN KEY (p_id) REFERENCES Shops(p_id)
 );
 
@@ -369,25 +370,25 @@ INTO Storage_Units(p_id, name, temperature)
 VALUES ('205', 'Unit 5', 5);
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price)
-VALUES ('0001', '101', 'T-Shirt', 50, 24.99);
+INTO Items(i_id, p_id, name, stock, price, type)
+VALUES ('0001', '101', 'T-Shirt', 50, 24.99, 'clothing');
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price)
-VALUES ('0002', '102', 'Soda Bottle', 20, 3.50);
+INTO Items(i_id, p_id, name, stock, price, type)
+VALUES ('0002', '102', 'Soda Bottle', 20, 3.50, 'food');
 
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price)
-VALUES ('0003', '103', 'Penguin Stuffie', 10, 14.99);
+INTO Items(i_id, p_id, name, stock, price, type)
+VALUES ('0003', '103', 'Penguin Stuffie', 10, 14.99, 'toy');
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price)
-VALUES ('0004', '104', 'Bear Balloon', 30, 4.99);
+INTO Items(i_id, p_id, name, stock, price, type)
+VALUES ('0004', '104', 'Bear Balloon', 30, 4.99, 'toy');
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price)
-VALUES ('0005', '105', 'Hamburger', 40, 6.99);
+INTO Items(i_id, p_id, name, stock, price, type)
+VALUES ('0005', '105', 'Hamburger', 40, 6.99, 'food');
 
 INSERT
 INTO Animals2(species, genus)
