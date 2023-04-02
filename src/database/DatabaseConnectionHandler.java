@@ -231,7 +231,7 @@ public class DatabaseConnectionHandler {
 	public Feeds[] getFeedsInfo(ArrayList<String> columns) {
 		String projection = String.join(", ", columns);
 
-		Object[][] queryResults = this.getTableInfo(projection, "FEEDS");
+		Object[][] queryResults = this.getTableInfo(projection, Constants.FEEDS);
 		Feeds[] result = new Feeds[queryResults.length];
 
 		for (int i = 0; i < queryResults.length; i++) {
@@ -254,7 +254,7 @@ public class DatabaseConnectionHandler {
 	public CohabitatesWith[] getCohabitatesWithInfo(ArrayList<String> columns) {
 		String projection = String.join(", ", columns);
 
-		Object[][] queryResults = this.getTableInfo(projection, "COHABITATES_WITH");
+		Object[][] queryResults = this.getTableInfo(projection, Constants.COHABITATES_WITH);
 		CohabitatesWith[] result = new CohabitatesWith[queryResults.length];
 
 		for (int i = 0; i < queryResults.length; i++) {
@@ -302,7 +302,7 @@ public class DatabaseConnectionHandler {
 	public WorksAt[] getWorksAtInfo(ArrayList<String> columns) {
 		String projection = String.join(", ", columns);
 
-		Object[][] queryResults = this.getTableInfo(projection, "WORKS_AT");
+		Object[][] queryResults = this.getTableInfo(projection, Constants.WORKS_AT);
 		WorksAt[] result = new WorksAt[queryResults.length];
 
 		for (int i = 0; i < queryResults.length; i++) {
