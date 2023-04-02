@@ -1,3 +1,74 @@
+drop table COMPUTERS1 cascade constraints
+/
+
+drop table COMPUTERS2 cascade constraints
+/
+
+drop table VENDORS cascade constraints
+/
+
+drop table ITEMS cascade constraints
+/
+
+drop table WORKS_AT cascade constraints
+/
+
+drop table SHOPS cascade constraints
+/
+
+drop table ASSIGNED_TO cascade constraints
+/
+
+drop table FEEDS cascade constraints
+/
+
+drop table ZOOKEEPERS cascade constraints
+/
+
+drop table MAINTAINS_HEALTH_OF cascade constraints
+/
+
+drop table VETERINARIANS cascade constraints
+/
+
+drop table WORKERS cascade constraints
+/
+
+drop table COHABITATES_WITH cascade constraints
+/
+
+drop table MADE_FROM cascade constraints
+/
+
+drop table STORED_AT cascade constraints
+/
+
+drop table PREPPED_FOOD cascade constraints
+/
+
+drop table ANIMALS1 cascade constraints
+/
+
+drop table HABITATS1 cascade constraints
+/
+
+drop table HABITATS2 cascade constraints
+/
+
+drop table ANIMALS2 cascade constraints
+/
+
+drop table LOCATED_AT cascade constraints
+/
+
+drop table STORAGE_UNITS cascade constraints
+/
+
+drop table RAW_FOOD_ORDERS cascade constraints
+/
+
+
+
 CREATE TABLE Computers2(
     model VARCHAR(20) PRIMARY KEY,
     manufacturer VARCHAR(20) NOT NULL,
@@ -9,8 +80,8 @@ CREATE TABLE Workers(
     name VARCHAR(20) NOT NULL,
     pay_rate FLOAT NOT NULL,
     address VARCHAR(30) NOT NULL,
-    email VARCHAR(30) UNIQUE,
-    phone VARCHAR(13) UNIQUE
+    email VARCHAR(30) UNIQUE NOT NULL,
+    phone VARCHAR(13) UNIQUE NOT NULL
 );
 
 CREATE TABLE Computers1(
@@ -54,6 +125,7 @@ CREATE TABLE Habitats1(
 
 CREATE TABLE Shops(
     p_id VARCHAR(20) PRIMARY KEY,
+    name VARCHAR(20),
     type VARCHAR(20) NOT NULL
 );
 
@@ -169,6 +241,26 @@ CREATE TABLE Located_at(
 );
 
 INSERT
+INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('1', 'Clive Yong', 15.40, '1234 noname street', 'cliveyong@domain.com', '6041231234');
+
+INSERT
+INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('2', 'Mana Longhenry', 16.00, '4321 thisthing street', 'manalong@domain.com', '6042468100');
+
+INSERT
+INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('3', 'Skye Joe', 12.34, '2468 somewhere way', 'SkyeJoe@domain.com','5852111212');
+
+INSERT
+INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('4', 'Bob Way', 15.40, '1234 noname street','bobway@domain.com', '6041231233');
+
+INSERT
+INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('5', 'Richard Han', 15.40, '3579 somewhere place', 'richardh@domain.com','6043215678');
+
+INSERT
 INTO Computers2(model, manufacturer, type)
 VALUES ('Macbook Air 2020', 'Apple', 'Laptop');
 
@@ -189,44 +281,24 @@ INTO Computers2(model, manufacturer, type)
 VALUES ('Macbook Air 2016', 'Apple', 'Laptop');
 
 INSERT
-INTO Computers1(c_id, model)
-VALUES ('1', 'Macbook Air 2020');
+INTO Computers1(c_id, w_id, model)
+VALUES ('1', '1', 'Macbook Air 2020');
 
 INSERT
-INTO Computers1(c_id, model)
-VALUES ('2', 'Macbook Air 2019');
+INTO Computers1(c_id, w_id, model)
+VALUES ('2', '2', 'Macbook Air 2019');
 
 INSERT
-INTO Computers1(c_id, model)
-VALUES ('3', 'Macbook Air 2018');
+INTO Computers1(c_id, w_id, model)
+VALUES ('3', '3', 'Macbook Air 2018');
 
 INSERT
-INTO Computers1(c_id, model)
-VALUES ('4', 'Macbook Air 2017');
+INTO Computers1(c_id, w_id, model)
+VALUES ('4', '4', 'Macbook Air 2017');
 
 INSERT
-INTO Computers1(c_id, model)
-VALUES ('5', 'Macbook Air 2016');
-
-INSERT
-INTO Workers(w_id, name, pay_rate, address, email, phone)
-VALUES ('1', 'Clive Yong', 15.40, '1234 noname street', 'cliveyong@domain.com', '6041231234');
-
-INSERT
-INTO Workers(w_id, name, pay_rate, address, email, phone)
-VALUES ('2', 'Mana Longhenry', 16.00, '4321 thisthing street', 'manalong@domain.com', '6042468100');
-
-INSERT
-INTO Workers(w_id, name, pay_rate, address, email, phone)
-VALUES ('3', 'Skye Joe', 12.34, '2468 somewhere way', 'SkyeJoe@domain.com','5852111212');
-
-INSERT
-INTO Workers(w_id, name, pay_rate, address, email, phone)
-VALUES ('4', 'Bob Way', 15.40, '1234 noname street','bobway@domain.com', '6041231233');
-
-INSERT
-INTO Workers(w_id, name, pay_rate, address, email, phone)
-VALUES ('5', 'Richard Han', 15.40, '3579 somewhere place', 'richardh@domain.com','6043215678');
+INTO Computers1(c_id, w_id, model)
+VALUES ('5', '5', 'Macbook Air 2016');
 
 INSERT
 INTO Zookeepers(w_id)
