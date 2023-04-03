@@ -1,15 +1,12 @@
 package controller;
 
 import UI.JWindow;
-import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import database.DatabaseConnectionHandler;
 import model.*;
-
-import javax.swing.SwingUtilities;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import util.Constants;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 public class ZooController {
     public static void main(String[] args) {
@@ -133,6 +130,7 @@ public class ZooController {
 //        Veterinarian vet = new Veterinarian("asdf", "Richardo", 11f, "11 nowhere street", "asdf@gmail.com", "1234", "Trolling");
 //        dbHandler.insertVeterinarian(vet);
 //        dbHandler.deleteAnimal("1002");
+
 
         SwingUtilities.invokeLater(() -> {
             JWindow frame1 = new JWindow();
