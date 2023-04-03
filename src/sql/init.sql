@@ -196,7 +196,7 @@ CREATE TABLE Feeds(
     a_id VARCHAR(20),
     PRIMARY KEY (w_id, a_id),
     FOREIGN KEY (w_id) REFERENCES  Zookeepers(w_id),
-    FOREIGN KEY (a_id) REFERENCES Animals1(a_id)
+    FOREIGN KEY (a_id) REFERENCES Animals1(a_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Maintains_Health_of(
@@ -204,15 +204,15 @@ CREATE TABLE Maintains_Health_of(
     a_id VARCHAR(20),
     PRIMARY KEY (w_id, a_id),
     FOREIGN KEY (w_id) REFERENCES Veterinarians(w_id),
-    FOREIGN KEY (a_id) REFERENCES Animals1(a_id)
+    FOREIGN KEY (a_id) REFERENCES Animals1(a_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Cohabitates_with(
     a_id1 VARCHAR(20),
     a_id2 VARCHAR(20),
     PRIMARY KEY(a_id1, a_id2),
-    FOREIGN KEY (a_id1) REFERENCES Animals1(a_id),
-    FOREIGN KEY (a_id2) REFERENCES Animals1(a_id)
+    FOREIGN KEY (a_id1) REFERENCES Animals1(a_id) ON DELETE CASCADE,
+    FOREIGN KEY (a_id2) REFERENCES Animals1(a_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Made_from(
@@ -220,7 +220,7 @@ CREATE TABLE Made_from(
 	name VARCHAR(30),
 	o_id VARCHAR(20),
 	PRIMARY KEY(a_id, name, o_id),
-	FOREIGN KEY (a_id, name) REFERENCES Prepped_Food(a_id, name),
+	FOREIGN KEY (a_id, name) REFERENCES Prepped_Food(a_id, name) ON DELETE CASCADE,
 	FOREIGN KEY (o_id) REFERENCES Raw_Food_Orders(o_id)
 );
 
@@ -229,7 +229,7 @@ CREATE TABLE Stored_at(
     name VARCHAR(30),
     p_id VARCHAR(20),
     PRIMARY KEY(a_id, name, p_id),
-    FOREIGN KEY (a_id, name) REFERENCES Prepped_Food(a_id, name),
+    FOREIGN KEY (a_id, name) REFERENCES Prepped_Food(a_id, name) ON DELETE CASCADE,
     FOREIGN KEY (p_id) REFERENCES Storage_Units(p_id)
 );
 

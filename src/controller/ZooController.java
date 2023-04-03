@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class ZooController {
     public static void main(String[] args) {
+
 //        //Run this program on the Event Dispatch Thread (EDT)
 //        DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
 //        dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
@@ -121,14 +122,22 @@ public class ZooController {
 //        col.add(Constants.SPECIALIZATION);
 //
 //        Worker[] resultvet = dbHandler.getVeterinarianInfo(col);
-//        // be careful of duplicates
-//        //Veterinarian vet = new Veterinarian("asdf", "Richardo", 11f, "11 nowhere street", "asdf@gmail.com", "1234", "Trolling");
-//        //dbHandler.insertVeterinarian(vet);
+
+//
+//        col.clear();
+//        col.add(Constants.P_ID);
+//        col.add(Constants.W_ID);
+//
+//        WorksAt[] resultwork = dbHandler.getWorksAtInfo(col);
+        // be careful of duplicates
+//        Veterinarian vet = new Veterinarian("asdf", "Richardo", 11f, "11 nowhere street", "asdf@gmail.com", "1234", "Trolling");
+//        dbHandler.insertVeterinarian(vet);
+//        dbHandler.deleteAnimal("1002");
+
 
 
         SwingUtilities.invokeLater(() -> {
             JWindow frame1 = new JWindow();
-
         });
 
     }
