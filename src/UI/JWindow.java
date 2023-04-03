@@ -12,6 +12,7 @@ public class JWindow {
         private JFrame defaultFrame;
         private JFrame insertFrame;
         private JFrame deleteFrame;
+        private JFrame updateFrame;
         private JFrame successFrame;
         //Create new DBHandler object for modification of Database
         private DatabaseConnectionHandler dbHandler;
@@ -45,6 +46,8 @@ public class JWindow {
                 JButton workerInsert = new JButton("INSERT");
                 JButton vendorsInsert = new JButton("INSERT");
                 JButton zookeepersInsert = new JButton("INSERT");
+                JButton shopsInsert = new JButton("INSERT");
+                JButton itemsInsert = new JButton("INSERT");
 
                 //vet's insert button will actually do something :D
                 JButton vetsInsert = new JButton("INSERT");
@@ -55,24 +58,11 @@ public class JWindow {
                     }
                 });
 
-                JButton shopsInsert = new JButton("INSERT");
-                JButton itemsInsert = new JButton("INSERT");
-
                 //Initialize DELETE buttons and action listeners
                 JButton storageDelete = new JButton("DELETE");
                 JButton preppedFoodDelete = new JButton("DELETE");
                 JButton rawFoodOrdersDelete = new JButton("DELETE");
                 JButton computersDelete = new JButton("DELETE");
-
-                // animal's delete button will actually do something :D
-                JButton animalsDelete = new JButton("DELETE");
-                animalsDelete.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    deleteAnimal();
-                }
-                });
-
                 JButton habitatsDelete = new JButton("DELETE");
                 JButton workerDelete = new JButton("DELETE");
                 JButton vendorsDelete = new JButton("DELETE");
@@ -80,6 +70,35 @@ public class JWindow {
                 JButton vetsDelete = new JButton("DELETE");
                 JButton shopsDelete = new JButton("DELETE");
                 JButton itemsDelete = new JButton("DELETE");
+
+                // animal's delete button will actually do something :D
+                JButton animalsDelete = new JButton("DELETE");
+                animalsDelete.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        deleteAnimal();
+                    }
+                });
+
+                //Initialize UPDATE buttons and action listeners
+                JButton storageUpdate = new JButton("Update");
+                JButton PreppedFoodUpdate = new JButton("Update");
+                JButton rawFoodOrdersUpdate = new JButton("Update");
+                JButton computersUpdate = new JButton("Update");
+                JButton animalsUpdate = new JButton("Update");
+                JButton habitatsUpdate = new JButton("Update");
+                JButton workersUpdate = new JButton("Update");
+                JButton vendorsUpdate = new JButton("Update");
+                JButton shopsUpdate = new JButton("Update");
+                JButton itemsUpdate = new JButton("Update");
+
+                //Workers update button will actually do something :D
+                workersUpdate.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        updateWorkers();
+                    }
+                });
 
                 //Places Tab creation
                 JPanel places = new JPanel();
@@ -287,14 +306,15 @@ public class JWindow {
                         }
 
                         //delete tuple from database
+                        dbHandler.deleteAnimal(a_idInput);
 
                         //show success
                         deleteFrame.dispose();
                         showSuccessFrame();
                     }catch (Exception nono) {
                         deleteFrame.dispose();
-                        JOptionPane.showMessageDialog(null, "You did not fill in a required field" +
-                                "", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "You did not fill in a required field or entered a non-existing" +
+                                " animal ID", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             });
@@ -309,6 +329,17 @@ public class JWindow {
             //set frame as visible
             this.deleteFrame.setVisible(true);
     }
+
+        public void updateWorkers(){
+            //create new frame
+            updateFrame = new JFrame();
+            updateFrame.setTitle("Update Existing Worker");
+            updateFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            updateFrame.setSize(400, 500);
+            updateFrame.setLocationRelativeTo(null);
+
+            //TODO create all text fields required for workers
+        }
 
         public void showSuccessFrame(){
             successFrame = new JFrame();
