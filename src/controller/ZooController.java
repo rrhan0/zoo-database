@@ -10,10 +10,12 @@ import java.util.ArrayList;
 
 public class ZooController {
     public static void main(String[] args) {
-        //Run this program on the Event Dispatch Thread (EDT)
-        DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
-        dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
-        ArrayList<String> col = new ArrayList<String>();
+
+//        //Run this program on the Event Dispatch Thread (EDT)
+//        DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
+//        dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
+//        //dbHandler.login("ora_arl20","a43629526");
+//        ArrayList<String> col = new ArrayList<String>();
 //        col.add(Constants.C_ID);
 //        col.add(Constants.W_ID);
 //        col.add(Constants.MODEL);
@@ -120,6 +122,7 @@ public class ZooController {
 //        col.add(Constants.SPECIALIZATION);
 //
 //        Worker[] resultvet = dbHandler.getVeterinarianInfo(col);
+
 //
 //        col.clear();
 //        col.add(Constants.P_ID);
@@ -130,6 +133,7 @@ public class ZooController {
 //        Veterinarian vet = new Veterinarian("asdf", "Richardo", 11f, "11 nowhere street", "asdf@gmail.com", "1234", "Trolling");
 //        dbHandler.insertVeterinarian(vet);
 //        dbHandler.deleteAnimal("1002");
+
 
 
         SwingUtilities.invokeLater(() -> {
