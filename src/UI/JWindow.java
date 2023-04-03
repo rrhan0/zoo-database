@@ -339,6 +339,7 @@ public class JWindow {
             updateFrame.setLocationRelativeTo(null);
 
             //TODO create all text fields required for workers
+            //yes
         }
 
         public void showSuccessFrame(){
