@@ -12,7 +12,8 @@ public class ZooController {
     public static void main(String[] args) {
         //Run this program on the Event Dispatch Thread (EDT)
         DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
-        dbHandler.login("ora_arl20","a43629526");
+        dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
+        //dbHandler.login("ora_arl20","a43629526");
         ArrayList<String> col = new ArrayList<String>();
         col.add(Constants.C_ID);
         col.add(Constants.W_ID);
