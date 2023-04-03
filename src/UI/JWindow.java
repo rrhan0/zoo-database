@@ -1,5 +1,8 @@
 package UI;
 
+import database.DatabaseConnectionHandler;
+import model.Veterinarian;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,6 +13,8 @@ public class JWindow {
         private JFrame insertFrame;
         private JFrame deleteFrame;
         private JFrame successFrame;
+        //Create new DBHandler object for modification of Database
+        DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
         public JWindow() {
                 initialize();
                 show();
@@ -207,11 +212,11 @@ public class JWindow {
                 public void actionPerformed(ActionEvent e) {
                     try{
                         String w_idUserInput = w_id.getText(); //REQUIRED
-                        float payRate_UserInput = Float.parseFloat(pay_rate.getText()); //NOT NULL
                         String nameInput = name.getText(); //NOT NULL
+                        float payRate_UserInput = Float.parseFloat(pay_rate.getText()); //NOT NULL
+                        String addressInput = address.getText(); //NOT NULL
                         String emailInput = email.getText(); //UNIQUE
                         String phoneInput = phone.getText(); //UNIQUE
-                        String addressInput = address.getText(); //NOT NULL
                         String specializationInput = specialization.getText();
 
 
@@ -219,8 +224,8 @@ public class JWindow {
                             throw new Exception();
                         }
 
-                        //THEN CREATE ACTUAL VET OBJECT - call insertVet from DBCH
-                        //Veterinarian newVet = new Veterinarian(w_idUserInput, nameInput, payRate_UserInput, addressInput, emailInput, phoneInput, specializationInput);
+                        //THEN CREATE ACTUAL VET OBJECT AND INSERT IT
+                        dbHandler.insertVeterinarian(new Veterinarian(w_idUserInput, nameInput, payRate_UserInput, addressInput, emailInput, phoneInput, specializationInput));
                         insertFrame.dispose();
 
                         //SHOW SUCCESS
@@ -229,8 +234,8 @@ public class JWindow {
 
                     }catch(Exception uhoh){
                         insertFrame.dispose();
-                        JOptionPane.showMessageDialog(null, "You have entered a field incorrectly or did not fill in a required field" +
-                                "", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "You have entered a field incorrectly, did not fill in a required field," +
+                                "or attempted to insert a duplicate", "Error", JOptionPane.ERROR_MESSAGE);
 
                     }
 
@@ -277,6 +282,7 @@ public class JWindow {
                         if(a_idInput.equals("")) {
                             throw new Exception();
                         }
+                        showSuccessFrame();
                     }catch (Exception nono) {
                         deleteFrame.dispose();
                         JOptionPane.showMessageDialog(null, "You did not fill in a required field" +
