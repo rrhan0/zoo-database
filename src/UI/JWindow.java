@@ -23,7 +23,8 @@ public class JWindow {
 
         public void initialize() {
                 this.dbHandler = new DatabaseConnectionHandler();
-                dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
+               //dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
+                dbHandler.login(System.getenv("ora_arl20"), System.getenv("a43629526"));
                 //frame creation
                 defaultFrame = new JFrame();
 
@@ -82,12 +83,14 @@ public class JWindow {
 
                 //Initialize UPDATE buttons and action listeners
                 JButton storageUpdate = new JButton("Update");
-                JButton PreppedFoodUpdate = new JButton("Update");
+                JButton preppedFoodUpdate = new JButton("Update");
                 JButton rawFoodOrdersUpdate = new JButton("Update");
                 JButton computersUpdate = new JButton("Update");
                 JButton animalsUpdate = new JButton("Update");
                 JButton habitatsUpdate = new JButton("Update");
                 JButton workersUpdate = new JButton("Update");
+                JButton zookeepersUpdate = new JButton("Update");
+                JButton vetsUpdate = new JButton("Update");
                 JButton vendorsUpdate = new JButton("Update");
                 JButton shopsUpdate = new JButton("Update");
                 JButton itemsUpdate = new JButton("Update");
@@ -109,6 +112,7 @@ public class JWindow {
                 JPanel storageUnits = new JPanel();
                 storageUnits.add(storageInsert);
                 storageUnits.add(storageDelete);
+                storageUnits.add(storageUpdate);
                 storageUnits.setLayout((new FlowLayout()));
                 storageUnits.setBackground(Color.DARK_GRAY);
 
@@ -116,6 +120,7 @@ public class JWindow {
                 JPanel preppedFood = new JPanel();
                 preppedFood.add(preppedFoodInsert);
                 preppedFood.add(preppedFoodDelete);
+                preppedFood.add(preppedFoodUpdate);
                 preppedFood.setLayout(new FlowLayout());
                 preppedFood.setBackground(Color.DARK_GRAY);
 
@@ -123,6 +128,7 @@ public class JWindow {
                 JPanel rawFoodOrders = new JPanel();
                 rawFoodOrders.add(rawFoodOrdersInsert);
                 rawFoodOrders.add(rawFoodOrdersDelete);
+                rawFoodOrders.add(rawFoodOrdersUpdate);
                 rawFoodOrders.setLayout(new FlowLayout());
                 rawFoodOrders.setBackground(Color.DARK_GRAY);
 
@@ -130,6 +136,7 @@ public class JWindow {
                 JPanel computers = new JPanel();
                 computers.add(computersInsert);
                 computers.add(computersDelete);
+                computers.add(computersUpdate);
                 computers.setLayout(new FlowLayout());
                 computers.setBackground(Color.DARK_GRAY);
 
@@ -137,6 +144,7 @@ public class JWindow {
                 JPanel animals = new JPanel();
                 animals.add(animalsInsert);
                 animals.add(animalsDelete);
+                animals.add(animalsUpdate);
                 animals.setLayout(new FlowLayout());
                 animals.setBackground(Color.DARK_GRAY);
 
@@ -144,6 +152,7 @@ public class JWindow {
                 JPanel habitats = new JPanel();
                 habitats.add(habitatsInsert);
                 habitats.add(habitatsDelete);
+                habitats.add(habitatsUpdate);
                 habitats.setLayout(new FlowLayout());
                 habitats.setBackground(Color.DARK_GRAY);
 
@@ -151,6 +160,7 @@ public class JWindow {
                 JPanel workers = new JPanel();
                 workers.add(workerInsert);
                 workers.add(workerDelete);
+                workers.add(workersUpdate);
                 workers.setLayout(new FlowLayout());
                 workers.setBackground(Color.DARK_GRAY);
 
@@ -158,6 +168,7 @@ public class JWindow {
                 JPanel vendors = new JPanel();
                 vendors.add(vendorsInsert);
                 vendors.add(vendorsDelete);
+                vendors.add(workersUpdate);
                 vendors.setLayout(new FlowLayout());
                 vendors.setBackground(Color.DARK_GRAY);
 
@@ -165,6 +176,7 @@ public class JWindow {
                 JPanel zookeepers = new JPanel();
                 zookeepers.add(zookeepersInsert);
                 zookeepers.add(zookeepersDelete);
+                zookeepers.add(zookeepersUpdate);
                 zookeepers.setLayout(new FlowLayout());
                 zookeepers.setBackground(Color.DARK_GRAY);
 
@@ -172,6 +184,7 @@ public class JWindow {
                 JPanel vets = new JPanel();
                 vets.add(vetsInsert);
                 vets.add(vetsDelete);
+                vets.add(vetsUpdate);
                 vets.setLayout(new FlowLayout());
                 vets.setBackground(Color.DARK_GRAY);
 
@@ -179,6 +192,7 @@ public class JWindow {
                 JPanel shops = new JPanel();
                 shops.add(shopsInsert);
                 shops.add(shopsDelete);
+                shops.add(shopsUpdate);
                 shops.setLayout(new FlowLayout());
                 shops.setBackground(Color.DARK_GRAY);
 
@@ -186,6 +200,7 @@ public class JWindow {
                 JPanel items = new JPanel();
                 items.add(itemsInsert);
                 items.add(itemsDelete);
+                items.add(itemsUpdate);
                 items.setLayout(new FlowLayout());
                 items.setBackground(Color.DARK_GRAY);
 
@@ -222,9 +237,9 @@ public class JWindow {
             JTextField pay_rate = new JTextField("Pay Rate (REQUIRED)"); //NOT NULL
             JTextField name = new JTextField("Worker's Name (REQUIRED)", 20); //NOT NULL
             JTextField email = new JTextField("Worker's email"); //UNIQUE
-            JTextField phone = new JTextField("Worker's phone"); //UNIQUE
-            JTextField address = new JTextField("Worker's Address (REQUIRED)"); //NOT NULL
-            JTextField specialization = new JTextField("Veterinarian's Specialization");
+            JTextField phone = new JTextField("Worker's phone", 13); //UNIQUE
+            JTextField address = new JTextField("Worker's Address (REQUIRED)", 30); //NOT NULL
+            JTextField specialization = new JTextField("Veterinarian's Specialization", 20);
 
             //Create Apply button and create action listener
             JButton applyInsert = new JButton("Apply Insert");
@@ -241,7 +256,7 @@ public class JWindow {
                         String specializationInput = specialization.getText();
 
 
-                        if(w_idUserInput.equals("") || nameInput.equals("") || addressInput.equals("")){
+                        if(w_idUserInput.equals("") || nameInput.equals("") || addressInput.equals("") || emailInput.equals("") || phoneInput.equals("")){
                             throw new Exception();
                         }
 
@@ -339,7 +354,38 @@ public class JWindow {
             updateFrame.setLocationRelativeTo(null);
 
             //TODO create all text fields required for workers
-            //yes
+            JPanel forUpdate = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            JTextField w_id = new JTextField("Worker's ID (REQUIRED)", 20); //REQUIRED
+            JTextField name = new JTextField("Worker's Name", 20); //NOT NULL
+            JTextField payrate = new JTextField("Worker's Pay rate"); //NOT NULL
+            JTextField email = new JTextField("Worker's Email", 30); //NOT NULL
+            JTextField phone = new JTextField("Worker's Phone Number", 13); //NOT NULL
+            JTextField address = new JTextField("Worker's Address", 30); //NOT NULL
+
+            //Button to apply the update
+            JButton applyUpdate = new JButton("Apply Update");
+
+            try{
+                String widInput = w_id.getText();
+                String nameInput = name.getText();
+                float payrateInput = Float.parseFloat(payrate.getText());
+                String emailInput = email.getText();
+                String phoneInput = phone.getText();
+                String addressInput = address.getText();
+
+                if(widInput.equals("") || nameInput.equals("") || emailInput.equals("") || phoneInput.equals("") || addressInput.equals("")){
+                    throw new Error();
+                }
+
+                //actually updates here
+
+                showSuccessFrame();
+
+            }catch(Error e){
+                deleteFrame.dispose();
+                JOptionPane.showMessageDialog(null, "You entered the wrong type of input, did not fill in a required field, entered a duplicate, or" +
+                        " entered a WorkerID that does not exist", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
         public void showSuccessFrame(){
