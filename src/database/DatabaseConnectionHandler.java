@@ -2,6 +2,7 @@ package database;
 
 
 import com.sun.corba.se.spi.orbutil.threadpool.Work;
+import exceptions.NotExists;
 import model.*;
 import util.Constants;
 
@@ -44,20 +45,23 @@ public class DatabaseConnectionHandler {
 
 
 
-	public void deleteAnimal(String a_id) throws SQLException {
+	public void deleteAnimal(String a_id) throws SQLException, NotExists {
 		try {
 			PreparedStatement ps = connection.prepareStatement("DELETE FROM ANIMALS1 WHERE A_ID = ?");
 			ps.setString(1, a_id);
 
 			int rowCount = ps.executeUpdate();
-			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Animal " + a_id + " does not exist!");
-			}
+
 
 			connection.commit();
 
 			ps.close();
-		} catch (SQLException e) {
+
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Animal " + a_id + " does not exist!");
+				throw new NotExists(WARNING_TAG + " Animal " + a_id + " does not exist!");
+			}
+		} catch (SQLException | NotExists e) {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 			rollbackConnection();
 			throw e;
