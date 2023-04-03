@@ -285,6 +285,11 @@ public class JWindow {
                         if(a_idInput.equals("")) {
                             throw new Exception();
                         }
+
+                        //delete tuple from database
+
+                        //show success
+                        deleteFrame.dispose();
                         showSuccessFrame();
                     }catch (Exception nono) {
                         deleteFrame.dispose();
