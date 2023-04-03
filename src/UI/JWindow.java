@@ -14,13 +14,15 @@ public class JWindow {
         private JFrame deleteFrame;
         private JFrame successFrame;
         //Create new DBHandler object for modification of Database
-        DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
+        private DatabaseConnectionHandler dbHandler;
         public JWindow() {
                 initialize();
                 show();
         }
 
         public void initialize() {
+                this.dbHandler = new DatabaseConnectionHandler();
+                dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
                 //frame creation
                 defaultFrame = new JFrame();
 
@@ -225,6 +227,7 @@ public class JWindow {
                         }
 
                         //THEN CREATE ACTUAL VET OBJECT AND INSERT IT
+
                         dbHandler.insertVeterinarian(new Veterinarian(w_idUserInput, nameInput, payRate_UserInput, addressInput, emailInput, phoneInput, specializationInput));
                         insertFrame.dispose();
 
