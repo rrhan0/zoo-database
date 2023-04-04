@@ -13,7 +13,9 @@ public class JWindow {
         private JFrame insertFrame;
         private JFrame deleteFrame;
         private JFrame updateFrame;
+        private JFrame joinFrame;
         private JFrame successFrame;
+
         //Create new DBHandler object for modification of Database
         private DatabaseConnectionHandler dbHandler;
         public JWindow() {
@@ -49,6 +51,14 @@ public class JWindow {
                 JButton zookeepersInsert = new JButton("INSERT");
                 JButton shopsInsert = new JButton("INSERT");
                 JButton itemsInsert = new JButton("INSERT");
+                JButton assigned_toInsert = new JButton("INSERT");
+                JButton cohabitates_withInsert = new JButton("INSERT");
+                JButton feedsInsert = new JButton("INSERT");
+                JButton located_atInsert = new JButton("INSERT");
+                JButton made_fromInsert = new JButton("INSERT");
+                JButton maintains_healthInsert = new JButton("INSERT");
+                JButton stored_atInsert = new JButton("INSERT");
+                JButton works_atInsert = new JButton("INSERT");
 
                 //vet's insert button will actually do something :D
                 JButton vetsInsert = new JButton("INSERT");
@@ -71,6 +81,14 @@ public class JWindow {
                 JButton vetsDelete = new JButton("DELETE");
                 JButton shopsDelete = new JButton("DELETE");
                 JButton itemsDelete = new JButton("DELETE");
+                JButton assigned_toDelete = new JButton("DELETE");
+                JButton cohabitates_withDelete = new JButton("DELETE");
+                JButton feedsDelete = new JButton("DELETE");
+                JButton located_atDelete = new JButton("DELETE");
+                JButton made_fromDelete = new JButton("DELETE");
+                JButton maintains_healthDelete = new JButton("DELETE");
+                JButton stored_atDelete = new JButton("DELETE");
+                JButton works_atDelete = new JButton("DELETE");
 
                 // animal's delete button will actually do something :D
                 JButton animalsDelete = new JButton("DELETE");
@@ -82,24 +100,42 @@ public class JWindow {
                 });
 
                 //Initialize UPDATE buttons and action listeners
-                JButton storageUpdate = new JButton("Update");
-                JButton preppedFoodUpdate = new JButton("Update");
-                JButton rawFoodOrdersUpdate = new JButton("Update");
-                JButton computersUpdate = new JButton("Update");
-                JButton animalsUpdate = new JButton("Update");
-                JButton habitatsUpdate = new JButton("Update");
-                JButton workersUpdate = new JButton("Update");
-                JButton zookeepersUpdate = new JButton("Update");
-                JButton vetsUpdate = new JButton("Update");
-                JButton vendorsUpdate = new JButton("Update");
-                JButton shopsUpdate = new JButton("Update");
-                JButton itemsUpdate = new JButton("Update");
+                JButton storageUpdate = new JButton("UPDATE");
+                JButton preppedFoodUpdate = new JButton("UPDATE");
+                JButton rawFoodOrdersUpdate = new JButton("UPDATE");
+                JButton computersUpdate = new JButton("UPDATE");
+                JButton animalsUpdate = new JButton("UPDATE");
+                JButton habitatsUpdate = new JButton("UPDATE");
+                JButton workersUpdate = new JButton("UPDATE");
+                JButton zookeepersUpdate = new JButton("UPDATE");
+                JButton vetsUpdate = new JButton("UPDATE");
+                JButton vendorsUpdate = new JButton("UPDATE");
+                JButton shopsUpdate = new JButton("UPDATE");
+                JButton itemsUpdate = new JButton("UPDATE");
+                JButton assigned_toUpdate = new JButton("UPDATE");
+                JButton cohabitates_withUpdate = new JButton("UPDATE");
+                JButton feedsUpdate = new JButton("UPDATE");
+                JButton located_atUpdate = new JButton("UPDATE");
+                JButton made_fromUpdate = new JButton("UPDATE");
+                JButton maintains_healthUpdate = new JButton("UPDATE");
+                JButton stored_atUpdate = new JButton("UPDATE");
+                JButton works_atUpdate = new JButton("UPDATE");
 
                 //Workers update button will actually do something :D
                 workersUpdate.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         updateWorkers();
+                    }
+                });
+
+                // initialize join button between Animals and Prepped_Food
+                JButton animalsPreppedFoodJoin = new JButton("Animals joined w/ Prepped_Food");
+
+                animalsPreppedFoodJoin.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        joinAnimals();
                     }
                 });
 
@@ -145,6 +181,7 @@ public class JWindow {
                 animals.add(animalsInsert);
                 animals.add(animalsDelete);
                 animals.add(animalsUpdate);
+                animals.add(animalsPreppedFoodJoin);
                 animals.setLayout(new FlowLayout());
                 animals.setBackground(Color.DARK_GRAY);
 
@@ -168,7 +205,7 @@ public class JWindow {
                 JPanel vendors = new JPanel();
                 vendors.add(vendorsInsert);
                 vendors.add(vendorsDelete);
-                vendors.add(workersUpdate);
+                vendors.add(vendorsUpdate);
                 vendors.setLayout(new FlowLayout());
                 vendors.setBackground(Color.DARK_GRAY);
 
@@ -204,6 +241,69 @@ public class JWindow {
                 items.setLayout(new FlowLayout());
                 items.setBackground(Color.DARK_GRAY);
 
+                //Assigned_to Tab
+                JPanel assigned_to = new JPanel();
+                assigned_to.add(assigned_toInsert);
+                assigned_to.add(assigned_toDelete);
+                assigned_to.add(assigned_toUpdate);
+                items.setLayout(new FlowLayout());
+                items.setBackground(Color.DARK_GRAY);
+
+                //cohabitates_with tab
+                JPanel cohabitates_with = new JPanel();
+                cohabitates_with.add(cohabitates_withInsert);
+                cohabitates_with.add(cohabitates_withDelete);
+                cohabitates_with.add(cohabitates_withUpdate);
+                cohabitates_with.setLayout(new FlowLayout());
+                cohabitates_with.setBackground(Color.DARK_GRAY);
+
+                //feeds Tab
+                JPanel feeds = new JPanel();
+                feeds.add(feedsInsert);
+                feeds.add(feedsDelete);
+                feeds.add(feedsUpdate);
+                feeds.setLayout(new FlowLayout());
+                feeds.setBackground(Color.DARK_GRAY);
+
+                //located_at tab
+                JPanel located_at = new JPanel();
+                located_at.add(located_atInsert);
+                located_at.add(located_atDelete);
+                located_at.add(located_atUpdate);
+                located_at.setLayout(new FlowLayout());
+                located_at.setBackground(Color.DARK_GRAY);
+
+                //Made_from tab
+                JPanel made_from = new JPanel();
+                made_from.add(made_fromInsert);
+                made_from.add(made_fromDelete);
+                made_from.add(made_fromUpdate);
+                made_from.setLayout(new FlowLayout());
+                made_from.setBackground(Color.DARK_GRAY);
+
+                //maintains_health tab
+                JPanel maintains_health = new JPanel();
+                maintains_health.add(maintains_healthInsert);
+                maintains_health.add(maintains_healthDelete);
+                maintains_health.add(maintains_healthUpdate);
+                maintains_health.setLayout(new FlowLayout());
+                maintains_health.setBackground(Color.DARK_GRAY);
+
+                //stored_at tab
+                JPanel stored_at = new JPanel();
+                stored_at.add(stored_atInsert);
+                stored_at.add(stored_atDelete);
+                stored_at.add(stored_atUpdate);
+                stored_at.setLayout(new FlowLayout());
+                stored_at.setBackground(Color.DARK_GRAY);
+
+                //works_at tab
+                JPanel works_at = new JPanel();
+                works_at.add(works_atInsert);
+                works_at.add(works_atDelete);
+                works_at.add(works_atUpdate);
+                works_at.setLayout(new FlowLayout());
+                works_at.setBackground(Color.DARK_GRAY);
 
                 //Add tabs to frame
                 tabs.addTab("Places", places);
@@ -219,6 +319,14 @@ public class JWindow {
                 tabs.addTab("Veterinarians", vets);
                 tabs.addTab("Shops", shops);
                 tabs.addTab("Items", items);
+                tabs.addTab("Assigned To", assigned_to);
+                tabs.addTab("Cohabitates With", cohabitates_with);
+                tabs.addTab("Feeds", feeds);
+                tabs.addTab("Located At", located_at);
+                tabs.addTab("Made From", made_from);
+                tabs.addTab("Maintains Health of", maintains_health);
+                tabs.addTab("Stored At", stored_at);
+                tabs.addTab("Works At", works_at);
                 defaultFrame.getContentPane().add(tabs);
         }
 
@@ -364,28 +472,99 @@ public class JWindow {
 
             //Button to apply the update
             JButton applyUpdate = new JButton("Apply Update");
+            applyUpdate.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try{
+                        String widInput = w_id.getText();
+                        String nameInput = name.getText();
+                        float payrateInput = Float.parseFloat(payrate.getText());
+                        String emailInput = email.getText();
+                        String phoneInput = phone.getText();
+                        String addressInput = address.getText();
 
-            try{
-                String widInput = w_id.getText();
-                String nameInput = name.getText();
-                float payrateInput = Float.parseFloat(payrate.getText());
-                String emailInput = email.getText();
-                String phoneInput = phone.getText();
-                String addressInput = address.getText();
+                        if(widInput.equals("") || nameInput.equals("") || emailInput.equals("") || phoneInput.equals("") || addressInput.equals("")){
+                            throw new Error();
+                        }
 
-                if(widInput.equals("") || nameInput.equals("") || emailInput.equals("") || phoneInput.equals("") || addressInput.equals("")){
-                    throw new Error();
+                        //actually updates here
+
+                        showSuccessFrame();
+
+                    }catch(Error e1){
+                        deleteFrame.dispose();
+                        JOptionPane.showMessageDialog(null, "You entered the wrong type of input, did not fill in a required field, entered a duplicate, or" +
+                                " entered a WorkerID that does not exist", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
+            });
 
-                //actually updates here
+            //add textfield components and applyUpdate button to JPanel
+            forUpdate.add(w_id);
+            forUpdate.add(name);
+            forUpdate.add(payrate);
+            forUpdate.add(email);
+            forUpdate.add(phone);
+            forUpdate.add(address);
+            forUpdate.add(applyUpdate);
 
-                showSuccessFrame();
+            //Add JPanel to JFrame
+            updateFrame.add(forUpdate);
 
-            }catch(Error e){
-                deleteFrame.dispose();
-                JOptionPane.showMessageDialog(null, "You entered the wrong type of input, did not fill in a required field, entered a duplicate, or" +
-                        " entered a WorkerID that does not exist", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            //set panel as visible
+            this.updateFrame.setVisible(true);
+
+        }
+
+        public void joinAnimals(){
+            //creating the joinFrame
+            joinFrame = new JFrame();
+            joinFrame.setTitle("Update Existing Worker");
+            joinFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            joinFrame.setSize(800, 200);
+            joinFrame.setLocationRelativeTo(null);
+
+            //create JPanel
+            JPanel forJoin = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //adds text to JFrame
+            JLabel joinText = new JLabel("This join finds the name of the Prepped Food associated with animals according to species. Please select a species");
+            JTextField joinSpecies = new JTextField("animal species [Required]");
+            JButton applyJoin = new JButton("Apply Join");
+            applyJoin.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        String speciesJoin = joinSpecies.getText();
+                        if(speciesJoin.equals("")) {
+                            throw new Error();
+                        }
+                        //show table data here
+                        showTableData();
+
+                    }catch(Error e2){
+                        deleteFrame.dispose();
+                        JOptionPane.showMessageDialog(null, "You entered the wrong type of input, did not fill in a required field, or" +
+                                " entered a species that does not exist", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+
+            //add components to JPanel
+            forJoin.add(joinText);
+            forJoin.add(joinSpecies);
+            forJoin.add(applyJoin);
+
+            //add panel to frame
+            joinFrame.add(forJoin);
+
+            //set window as visible
+            this.joinFrame.setVisible(true);
+
+        }
+
+        public void showTableData(){
+            //shows table data
         }
 
         public void showSuccessFrame(){
