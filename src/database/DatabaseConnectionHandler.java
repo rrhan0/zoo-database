@@ -608,6 +608,7 @@ public class DatabaseConnectionHandler {
 		return result;
 	}
 
+	//returns an array of vets
 	public Veterinarian[] getVeterinarianInfo(ArrayList<String> columns) throws SQLException {
 		String projection = String.join(", ", columns);
 		Object[][] queryResults = this.getTableInfo(projection, "VETERINARIANS v, WORKERS w WHERE v.W_ID = w.W_ID");
