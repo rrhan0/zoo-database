@@ -1,6 +1,5 @@
 package database;
 
-import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import exceptions.NotExists;
 
 import model.*;
@@ -1415,7 +1414,8 @@ public class DatabaseConnectionHandler {
 //
 //	public void updateWorker(int id, String name) {
 //		try {
-//		  PreparedStatement ps = connection.prepareStatement("UPDATE branch SET branch_name = ? WHERE branch_id = ?");
+//
+//		  PreparedStatement ps = connection.prepareStatement("UPDATE WORKERS SET branch_name = ? WHERE branch_id = ?");
 //		  ps.setString(1, name);
 //		  ps.setInt(2, id);
 //
