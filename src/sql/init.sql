@@ -141,7 +141,6 @@ CREATE TABLE Items(
     name VARCHAR(30) NOT NULL,
     stock INTEGER NOT NULL,
     price FLOAT NOT NULL,
-    type VARCHAR(20),
     FOREIGN KEY (p_id) REFERENCES Shops(p_id)
 );
 
@@ -282,6 +281,10 @@ INTO Computers2(model, manufacturer, type)
 VALUES ('Macbook Air 2016', 'Apple', 'Laptop');
 
 INSERT
+INTO Computers2(model, manufacturer, type)
+VALUES ('Dell XPS 13', 'Dell', 'Desktop');
+
+INSERT
 INTO Computers1(c_id, w_id, model)
 VALUES ('1', '1', 'Macbook Air 2020');
 
@@ -300,6 +303,14 @@ VALUES ('4', '4', 'Macbook Air 2017');
 INSERT
 INTO Computers1(c_id, w_id, model)
 VALUES ('5', '5', 'Macbook Air 2016');
+
+INSERT
+INTO Computers1(c_id, w_id, model)
+VALUES ('6', NULL, 'Dell XPS 13');
+
+INSERT
+INTO Computers1(c_id, w_id, model)
+VALUES ('7', NULL, 'Dell XPS 13');
 
 INSERT
 INTO Zookeepers(w_id)
@@ -442,25 +453,25 @@ INTO Storage_Units(p_id, name, temperature)
 VALUES ('205', 'Unit 5', 5);
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price, type)
-VALUES ('0001', '101', 'T-Shirt', 50, 24.99, 'clothing');
+INTO Items(i_id, p_id, name, stock, price)
+VALUES ('0001', '101', 'T-Shirt', 50, 24.99);
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price, type)
-VALUES ('0002', '102', 'Soda Bottle', 20, 3.50, 'food');
+INTO Items(i_id, p_id, name, stock, price)
+VALUES ('0002', '102', 'Soda Bottle', 20, 3.50,);
 
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price, type)
-VALUES ('0003', '103', 'Penguin Stuffie', 10, 14.99, 'toy');
+INTO Items(i_id, p_id, name, stock, price)
+VALUES ('0003', '103', 'Penguin Stuffie', 10, 14.99);
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price, type)
-VALUES ('0004', '104', 'Bear Balloon', 30, 4.99, 'toy');
+INTO Items(i_id, p_id, name, stock, price)
+VALUES ('0004', '104', 'Bear Balloon', 30, 4.99);
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price, type)
-VALUES ('0005', '105', 'Hamburger', 40, 6.99, 'food');
+INTO Items(i_id, p_id, name, stock, price)
+VALUES ('0005', '105', 'Hamburger', 40, 6.99);
 
 INSERT
 INTO Animals2(species, genus)

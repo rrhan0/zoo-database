@@ -12,6 +12,7 @@ import java.util.Date;
 
 /**
  * This class handles all database related transactions
+ * Borrowed from 304 JavaDemo
  */
 public class DatabaseConnectionHandler {
 	// Use this version of the ORACLE_URL if you are running the code off of the server
@@ -42,7 +43,79 @@ public class DatabaseConnectionHandler {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
 	}
+	public Computer[] selectManufacturer(String manufacturerName) throws SQLException {
+		ArrayList<String> columns = new ArrayList<>();
 
+		columns.add(Constants.C_ID);
+		columns.add(Constants.W_ID);
+		columns.add(Constants.MODEL);
+		columns.add(Constants.MANUFACTURER);
+		columns.add(Constants.TYPE);
+
+		String projection = String.join(", ", columns);
+
+		PreparedStatement ps = connection.prepareStatement("SELECT " + projection + " FROM COMPUTERS1 c1, COMPUTERS2 c2 WHERE c1.MODEL = c2.MODEL AND manufacturer = ?");
+		ps.setString(1, manufacturerName);
+
+
+		Object[][] queryResults = this.getTableInfoParam(ps);
+		Computer[] result = new Computer[queryResults.length];
+
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
+
+			String c_id = null;
+			String w_id = null;
+			String model = null;
+			String manufacturer = null;
+			String type = null;
+
+			for (int j = 0; j < row.length; j++) {
+				if ("c_id".equalsIgnoreCase(columns.get(j))) {
+					c_id = (String) row[j];
+				} else if ("w_id".equalsIgnoreCase(columns.get(j))) {
+					w_id = (String) row[j];
+				} else if (Constants.MODEL.equalsIgnoreCase(columns.get(j))) {
+					model = (String) row[j];
+				} else if ("manufacturer".equalsIgnoreCase(columns.get(j))) {
+					manufacturer = (String) row[j];
+				} else if ("type".equalsIgnoreCase(columns.get(j))) {
+					type = (String) row[j];
+				}
+			}
+
+			Computer computer = new Computer(c_id, w_id, model, manufacturer, type);
+			result[i] = computer;
+		}
+
+		return result;
+	}
+	public String[] getSpeciesPreppedFood(String species) throws SQLException {
+		ArrayList<String> result = new ArrayList<>();
+
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT pf.NAME FROM ANIMALS1 a, PREPPED_FOOD pf WHERE a.A_ID = pf.A_ID AND a.SPECIES = ?");
+			ps.setString(1, species);
+
+			ResultSet rs = ps.executeQuery();
+
+			ResultSetMetaData rsmd = rs.getMetaData();
+			rsmd.getColumnCount();
+
+			while (rs.next()) {
+				String values = rs.getString(rsmd.getColumnLabel(1));
+
+				result.add(values);
+			}
+
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			throw e;
+		}
+		return result.toArray(new String[0]);
+	}
 
 
 	public void deleteAnimal(String a_id) throws SQLException, NotExists {
@@ -98,6 +171,43 @@ public class DatabaseConnectionHandler {
 			throw e;
 		}
 	}
+
+	public Object[][] getTableInfoParam(PreparedStatement ps) throws SQLException {
+		ArrayList<Object[]> result = new ArrayList<>();
+
+
+		try {
+			ResultSet rs = ps.executeQuery();
+
+			ResultSetMetaData rsmd = rs.getMetaData();
+
+			while (rs.next()) {
+				Object[] values = new Object[rsmd.getColumnCount()];
+
+				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+					String columnName = rsmd.getColumnName(i);
+					if (rsmd.getColumnType(i) == Types.VARCHAR) {
+						values[i - 1] = rs.getString(columnName);
+					} else if (rsmd.getColumnType(i) == Types.NUMERIC) {
+						values[i - 1] = rs.getFloat(columnName);
+					} else if (rsmd.getColumnType(i) == Types.TIMESTAMP) {
+						values[i - 1] = rs.getDate(columnName).getTime();
+					}
+				}
+
+				result.add(values);
+			}
+
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			throw e;
+		}
+
+		return result.toArray(new Object[0][0]);
+	}
+
 
 
 	public Object[][] getTableInfo(String projection, String tableName) throws SQLException {
@@ -328,45 +438,65 @@ public class DatabaseConnectionHandler {
 		return result;
 	}
 
-	public PreppedFood[] getPreppedFoodInfo(ArrayList<String> columns) {
-		ArrayList<PreppedFood> result = new ArrayList<>();
+	public PreppedFood[] getPreppedFoodInfo(ArrayList<String> columns) throws SQLException {
 
 		String projection = String.join(", ", columns);
+		Object[][] queryResults = this.getTableInfo(projection, "PREPPED_FOOD");
 
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT " + projection + " FROM PREPPED_FOOD");
-			ResultSet rs = ps.executeQuery();
+		PreppedFood[] result = new PreppedFood[queryResults.length];
 
-			ResultSetMetaData rsmd = rs.getMetaData();
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
 
-			while (rs.next()) {
-				String a_id = null;
-				String name = null;
-				float weight = 0;
-
-				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-					String columnName = rsmd.getColumnName(i);
-
-					if ("a_id".equalsIgnoreCase(columnName)) {
-						a_id = rs.getString(columnName);
-					} else if ("name".equalsIgnoreCase(columnName)) {
-						name = rs.getString(columnName);
-					} else if ("weight".equalsIgnoreCase(columnName)) {
-						weight = rs.getFloat(columnName);
-					}
+			String a_id = null;
+			String name = null;
+			float weight = 0;
+			for (int j = 0; j < row.length; j++) {
+				if ("a_id".equalsIgnoreCase(columns.get(j))) {
+					a_id = (String) row[j];
+				} else if ("name".equalsIgnoreCase(columns.get(j))) {
+					name = (String) row[j];
+				} else if ("weight".equalsIgnoreCase(columns.get(j))) {
+					weight = (Float) row[j];
 				}
-
-				PreppedFood preppedFood = new PreppedFood(a_id, name, weight);
-				result.add(preppedFood);
 			}
-
-			rs.close();
-			ps.close();
-		} catch (SQLException e) {
-			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			result[i] = new PreppedFood(a_id, name, weight);
 		}
-
-		return result.toArray(new PreppedFood[0]);
+		return result;
+//		try {
+//			PreparedStatement ps = connection.prepareStatement("SELECT " + projection + " FROM PREPPED_FOOD");
+//			ResultSet rs = ps.executeQuery();
+//
+//			ResultSetMetaData rsmd = rs.getMetaData();
+//
+//			while (rs.next()) {
+//				String a_id = null;
+//				String name = null;
+//				float weight = 0;
+//
+//				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+//					String columnName = rsmd.getColumnName(i);
+//
+//					if ("a_id".equalsIgnoreCase(columnName)) {
+//						a_id = rs.getString(columnName);
+//					} else if ("name".equalsIgnoreCase(columnName)) {
+//						name = rs.getString(columnName);
+//					} else if ("weight".equalsIgnoreCase(columnName)) {
+//						weight = rs.getFloat(columnName);
+//					}
+//				}
+//
+//				PreppedFood preppedFood = new PreppedFood(a_id, name, weight);
+//				result.add(preppedFood);
+//			}
+//
+//			rs.close();
+//			ps.close();
+//		} catch (SQLException e) {
+//			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+//		}
+//
+//		return result.toArray(new PreppedFood[0]);
 	}
 
 	public RawFoodOrder[] getRawFoodOrderInfo(ArrayList<String> columns) throws SQLException {
@@ -1282,7 +1412,7 @@ public class DatabaseConnectionHandler {
 //		return result.toArray(new Computer[0]);
 //	}
 //
-//	public void updateBranch(int id, String name) {
+//	public void updateWorker(int id, String name) {
 //		try {
 //		  PreparedStatement ps = connection.prepareStatement("UPDATE branch SET branch_name = ? WHERE branch_id = ?");
 //		  ps.setString(1, name);
@@ -1301,7 +1431,7 @@ public class DatabaseConnectionHandler {
 //			rollbackConnection();
 //		}
 //	}
-//
+
 	public boolean login(String username, String password) {
 		try {
 			if (connection != null) {
