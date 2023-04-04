@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import util.Constants;
@@ -19,6 +21,10 @@ public class JWindow {
         private JFrame joinFrame;
         private JFrame successFrame;
         private JFrame viewFrame;
+        private JFrame checkBoxFrame;
+        private JFrame projectionFrame;
+        //Used to determine checked boxes for projection of tables
+        private boolean [] projectionArray = {false, false, false, false, false, false, false};
 
         //Create new DBHandler object for modification of Database
         private DatabaseConnectionHandler dbHandler;
@@ -153,6 +159,17 @@ public class JWindow {
                     }
                 });
 
+                //initialize projection button
+                JButton vetsProjection = new JButton("Project");
+                vetsProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectVet();
+                    }
+                });
+
+
+
                 //Places Tab creation
                 JPanel places = new JPanel();
                 places.setLayout(new FlowLayout());
@@ -237,6 +254,7 @@ public class JWindow {
                 vets.add(vetsDelete);
                 vets.add(vetsUpdate);
                 vets.add(vetsView);
+                vets.add(vetsProjection);
                 vets.setLayout(new FlowLayout());
                 vets.setBackground(Color.DARK_GRAY);
 
@@ -660,6 +678,122 @@ public class JWindow {
             this.viewFrame.setVisible(true);
         }
 
+        public void projectVet(){
+            checkBoxFrame = new JFrame();
+            checkBoxFrame.setTitle("Projection");
+            checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            checkBoxFrame.setSize(800, 500);
+            checkBoxFrame.setLocationRelativeTo(null);
+
+            //Pop up new window with checkboxes for attributes to be projected
+            JPanel forVetsProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //Reset Projection Array
+            resetProjectionArray();
+
+            JCheckBox wid = new JCheckBox("Worker ID");
+            wid.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e)  {
+                        //place zero
+                    projectionArray[0] = true;
+                }
+            });
+            JCheckBox name = new JCheckBox("Worker's Name");
+            name.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    //place 1
+                    projectionArray[1] = true;
+                }
+            });
+            JCheckBox payRate = new JCheckBox("Worker's Pay Rate");
+            payRate.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    //place 2
+                    projectionArray[2] = true;
+                }
+            });
+            JCheckBox addr = new JCheckBox("Worker's Address");
+            addr.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    //place 3
+                    projectionArray[3] = true;
+                }
+            });
+            JCheckBox email = new JCheckBox("Worker's Email");
+            email.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    //place 4
+                    projectionArray[4] = true;
+                }
+            });
+            JCheckBox phone = new JCheckBox("Worker's Phone #");
+            phone.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    //place 5
+                    projectionArray[5] = true;
+                }
+            });
+            JCheckBox spec = new JCheckBox("Worker's Specialization");
+            spec.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    //place 6
+                    projectionArray[6] = true;
+                }
+            });
+
+            //Button to apply projection
+            JButton applyProj = new JButton("Apply Projection");
+            applyProj.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    checkBoxFrame.dispose();
+
+                }
+            });
+
+            //Checkboxes
+            forVetsProjection.add(wid);
+            forVetsProjection.add(name);
+            forVetsProjection.add(payRate);
+            forVetsProjection.add(addr);
+            forVetsProjection.add(email);
+            forVetsProjection.add(phone);
+            forVetsProjection.add(spec);
+            forVetsProjection.add(applyProj);
+
+            //Add Panel to frame
+            checkBoxFrame.add(forVetsProjection);
+            this.checkBoxFrame.setVisible(true);
+
+
+        }
+
+        public void displayProjection(JTable projTable){
+            projectionFrame = new JFrame("Projected Table");
+            projectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            projectionFrame.setSize(800, 500);
+            projectionFrame.setLocationRelativeTo(null);
+
+            JPanel toProject = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            toProject.add(projTable);
+            projectionFrame.add(toProject);
+            this.projectionFrame.setVisible(true);
+
+        }
+
+        //Reset the values of projectionArray before each use
+        public void resetProjectionArray(){
+            for(int i = 0; i<projectionArray.length; i++){
+                projectionArray[i] = false;
+            }
+        }
         public void show() {
                 this.defaultFrame.setVisible(true);
         }
