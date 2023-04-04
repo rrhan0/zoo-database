@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import util.Constants;
 
 public class JWindow {
         private JFrame defaultFrame;
@@ -15,6 +18,7 @@ public class JWindow {
         private JFrame updateFrame;
         private JFrame joinFrame;
         private JFrame successFrame;
+        private JFrame viewFrame;
 
         //Create new DBHandler object for modification of Database
         private DatabaseConnectionHandler dbHandler;
@@ -121,6 +125,16 @@ public class JWindow {
                 JButton stored_atUpdate = new JButton("UPDATE");
                 JButton works_atUpdate = new JButton("UPDATE");
 
+
+                //Initialize VIEW buttons and action listeners
+                JButton vetsView = new JButton("VIEW TABLE");
+                vetsView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewVets();
+                    }
+                });
+
                 //Workers update button will actually do something :D
                 workersUpdate.addActionListener(new ActionListener() {
                     @Override
@@ -222,6 +236,7 @@ public class JWindow {
                 vets.add(vetsInsert);
                 vets.add(vetsDelete);
                 vets.add(vetsUpdate);
+                vets.add(vetsView);
                 vets.setLayout(new FlowLayout());
                 vets.setBackground(Color.DARK_GRAY);
 
@@ -540,7 +555,7 @@ public class JWindow {
                             throw new Error();
                         }
                         //show table data here
-                        showTableData();
+                        showJoinData();
 
                     }catch(Error e2){
                         deleteFrame.dispose();
@@ -563,7 +578,7 @@ public class JWindow {
 
         }
 
-        public void showTableData(){
+        public void showJoinData(){
             //shows table data
         }
 
@@ -574,6 +589,75 @@ public class JWindow {
             successFrame.setSize(300, 300);
             successFrame.setLocationRelativeTo(null);
             this.successFrame.setVisible(true);
+        }
+
+        public void viewVets(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Veterinarian Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //get table info onto jpanel
+            JPanel vetView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable vetTable;
+
+            ArrayList<String> col = new ArrayList<String>();
+            col.clear();
+            col.add(Constants.VET_W_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.PAY_RATE);
+            col.add(Constants.ADDRESS);
+            col.add(Constants.EMAIL);
+            col.add(Constants.PHONE);
+            col.add(Constants.SPECIALIZATION);
+
+            String [][] vetAttributes;
+            String [] columnNames ={"ID","Name", "Pay Rate", "Address", "Email", "Phone", "Specialization"};
+
+            try{
+                Veterinarian [] allVets = dbHandler.getVeterinarianInfo(col);
+                vetAttributes = new String[allVets.length][7];
+                //7 is for number of attributes a vet has
+                for(int row = 0; row<allVets.length; row++){
+                    for(int column = 0; column < 7; column++){
+                        if(column == 0){
+                            vetAttributes[row][column] = allVets[row].getW_id();
+                        }else if(column == 1){
+                            vetAttributes[row][column] = allVets[row].getName();
+                        }else if(column == 2){
+                            vetAttributes[row][column] = allVets[row].getPay_rate() + "";
+                        }else if(column == 3){
+                            vetAttributes[row][column] = allVets[row].getAddress();
+                        }else if(column == 4){
+                            vetAttributes[row][column] = allVets[row].getEmail();
+                        }else if(column == 5){
+                            vetAttributes[row][column] = allVets[row].getPhone();
+                        }else{
+                            String spec = allVets[row].getSpecialization();
+                            if(spec.isEmpty()){
+                                vetAttributes[row][column] = "N/A";
+                            }else{
+                                vetAttributes[row][column] = allVets[row].getSpecialization();
+                            }
+
+                        }
+
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            //Add table to panel, add panel to frame
+            vetTable = new JTable(vetAttributes, columnNames);
+            vetView.add(vetTable);
+            viewFrame.add(vetView);
+
+            //set it visible
+            this.viewFrame.setVisible(true);
         }
 
         public void show() {
