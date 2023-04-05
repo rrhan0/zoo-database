@@ -1996,7 +1996,7 @@ public class JWindow {
 
         public void viewMade_from(){
             viewFrame = new JFrame();
-            viewFrame.setTitle("Habitats Table");
+            viewFrame.setTitle("Made From Table");
             viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             viewFrame.setSize(800, 500);
             viewFrame.setLocationRelativeTo(null);
