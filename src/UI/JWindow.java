@@ -34,6 +34,7 @@ public class JWindow {
     private JFrame aggregationGroupByFrame;
     private JFrame aggregationHavingFrame;
     private JFrame divisionFrame;
+    private JFrame nestedAggregationFrame;
     //Used to determine checked boxes for projection of tables
     private boolean col0 = false, col1 = false, col2 = false, col3 = false, col4 = false, col5 = false, col6 = false;
 
@@ -482,6 +483,15 @@ public class JWindow {
             }
         });
 
+        //initialize nested aggregation button
+        JButton nestedAggregation = new JButton("NESTED AGGREGATION");
+        nestedAggregation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nestedAggregation();
+            }
+        });
+
 
         //Places Tab creation
         JPanel places = new JPanel();
@@ -590,6 +600,7 @@ public class JWindow {
         vets.add(vetsUpdate);
         vets.add(vetsView);
         vets.add(vetsProjection);
+        vets.add(nestedAggregation);
         vets.setLayout(new FlowLayout());
         vets.setBackground(Color.DARK_GRAY);
 
@@ -4863,6 +4874,67 @@ public class JWindow {
 
     }
 
+    public void nestedAggregation(){
+        //Instantiate frame
+        nestedAggregationFrame = new JFrame("Get Veterinarians With Lower Than Average Pay");
+        nestedAggregationFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        nestedAggregationFrame.setSize(800, 500);
+        nestedAggregationFrame.setLocationRelativeTo(null);
+
+        //Create text
+        JLabel text = new JLabel("Find all Veterinarians That Have Lower Than Average Worker Pay");
+        //Create Panel
+        JPanel displayNestedAggregation = new JPanel();
+
+        try {
+            Veterinarian[] allVets = dbHandler.getCheapVeterinarians();
+            String[] columnNames = {"Worker ID", "Name", "Pay Rate", "Address", "Email", "Phone", "Specialization"}; //Only spec is allowed to be null!
+            String[][] vetData = new String[allVets.length][columnNames.length];
+            for(int r=0; r<allVets.length; r++){
+                for(int c=0; c< columnNames.length; c++){
+                    if(c==0)
+                        vetData[r][c] = allVets[r].getW_id();
+                    else if(c==1)
+                        vetData[r][c] = allVets[r].getName();
+                    else if(c==2)
+                        vetData[r][c] = allVets[r].getPay_rate()+"";
+                    else if(c==3)
+                        vetData[r][c] = allVets[r].getAddress();
+                    else if(c==4)
+                        vetData[r][c] = allVets[r].getEmail();
+                    else if(c==5)
+                        vetData[r][c] = allVets[r].getPhone();
+                    else{
+                        String spec = allVets[r].getSpecialization();
+                        if(spec.isEmpty())
+                            vetData[r][c] = "N/A";
+                        else
+                            vetData[r][c] = spec;
+                    }
+                }
+            }
+
+            //Create Table and Pane
+            JTable nestedAggTable = new JTable(vetData, columnNames);
+            JScrollPane nestedAggScroll = new JScrollPane(nestedAggTable);
+            nestedAggScroll.setPreferredSize(new Dimension(700, 400));
+
+            //Add text/pane to panel
+            displayNestedAggregation.add(text);
+            displayNestedAggregation.add(nestedAggScroll);
+
+            //Add panel to frame
+            nestedAggregationFrame.add(displayNestedAggregation);
+
+            //Display frame
+            showNestedAggregationFrame();
+
+
+        } catch (SQLException e) {
+            displayError("Something went wrong!");
+        }
+    }
+
 
     public void show() {
         this.defaultFrame.setVisible(true);
@@ -4880,7 +4952,8 @@ public class JWindow {
         this.divisionFrame.setVisible(true);
     }
 
-    public void showAggregationHavingFrame() {
-        this.aggregationHavingFrame.setVisible((true));
-    }
+    public void showAggregationHavingFrame(){this.aggregationHavingFrame.setVisible((true));}
+
+    public void showNestedAggregationFrame(){this.nestedAggregationFrame.setVisible(true);}
+
 }
