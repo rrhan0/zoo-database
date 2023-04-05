@@ -852,7 +852,7 @@ public class JWindow {
             col.add(Constants.TEMPERATURE);
 
             String [][] storageAttributes;
-            String [] columnNames ={"ID", "Name", "Temperature"};
+            String [] columnNames ={"Place ID", "Name", "Temperature"};
 
             try{
                 StorageUnit [] allstorage = dbHandler.getStorageUnitInfo(col);
@@ -1213,27 +1213,302 @@ public class JWindow {
             this.viewFrame.setVisible(true);
         }
         public void viewWorkers(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Workers Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel workersView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable workersTable;
+
+            //databse entries
+            ArrayList<String> col = new ArrayList<String>();
+            col.clear();
+            col.add(Constants.W_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.PAY_RATE);
+            col.add(Constants.ADDRESS);
+            col.add(Constants.EMAIL);
+            col.add(Constants.PHONE);
+
+            String[][] workersAttributes;
+            String[] columnNames = {"Worker ID", "Name", "Pay Rate", "Address", "Email", "Phone"};
+
+            try{
+                Worker[] allWorkers = dbHandler.getWorkerInfo(col);
+                workersAttributes = new String[allWorkers.length][6];
+                for(int row = 0; row < allWorkers.length; row++) {
+                    for(int column = 0; column < 6;column++) {
+                        if(column == 0) {
+                            workersAttributes[row][column] = allWorkers[row].getW_id();
+                        }else if(column == 1) {
+                            workersAttributes[row][column] = allWorkers[row].getName();
+                        }else if(column == 2) {
+                            workersAttributes[row][column] = allWorkers[row].getPay_rate() +"";
+                        }else if(column == 3) {
+                            workersAttributes[row][column] = allWorkers[row].getAddress();
+                        }else if(column == 4) {
+                            workersAttributes[row][column] = allWorkers[row].getEmail();
+                        }else {
+                            workersAttributes[row][column] = allWorkers[row].getPhone();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            workersTable = new JTable(workersAttributes, columnNames);
+            JScrollPane workersScrollPane = new JScrollPane(workersTable);
+            workersScrollPane.setPreferredSize(new Dimension(700,400));
+            workersView.add(workersScrollPane);
+            viewFrame.add(workersView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewZookeepers(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Zookeepers Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel zookeepersView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable zookeepersTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<String>();
+            col.clear();
+            col.add(Constants.ZOO_W_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.PAY_RATE);
+            col.add(Constants.ADDRESS);
+            col.add(Constants.EMAIL);
+            col.add(Constants.PHONE);
+
+            String[][] zookeepersAttributes;
+            String[] columnNames = {"Worker ID", "Name", "Pay Rate", "Address", "Email", "Phone"};
+
+            try{
+                Zookeeper[] allZookeepers = dbHandler.getZookeeperInfo(col);
+                zookeepersAttributes = new String[allZookeepers.length][6];
+                for(int row = 0; row < allZookeepers.length; row++) {
+                    for(int column = 0; column < 6; column++) {
+                        if(column == 0) {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getW_id();
+                        } else if (column ==1) {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getName();
+                        } else if (column ==2) {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getPay_rate()+"";
+                        } else if (column ==3) {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getAddress();
+                        } else if (column ==4) {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getEmail();
+                        } else {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getPhone();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            zookeepersTable = new JTable(zookeepersAttributes, columnNames);
+            JScrollPane zookeepersScrollPane = new JScrollPane(zookeepersTable);
+            zookeepersScrollPane.setPreferredSize(new Dimension(700,400));
+            zookeepersView.add(zookeepersScrollPane);
+            viewFrame.add(zookeepersView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewVendors(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Vendors Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel vendorsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable vendorsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<String>();
+            col.clear();
+            col.add(Constants.VENDOR_W_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.PAY_RATE);
+            col.add(Constants.ADDRESS);
+            col.add(Constants.EMAIL);
+            col.add(Constants.PHONE);
+
+            String[][] vendorsAttributes;
+            String[] columnNames = {"Worker ID", "Name", "Pay Rate", "Address", "Email", "Phone"};
+
+            try{
+                Vendor[] allVendors = dbHandler.getVendorInfo(col);
+                vendorsAttributes = new String[allVendors.length][6];
+                for(int row = 0; row < allVendors.length; row++){
+                    for(int column = 0; column < 6; column++){
+                        if(column == 0) {
+                            vendorsAttributes[row][column] = allVendors[row].getW_id();
+                        } else if (column == 1) {
+                            vendorsAttributes[row][column] = allVendors[row].getName();
+                        } else if (column == 2) {
+                            vendorsAttributes[row][column] = allVendors[row].getPay_rate()+"";
+                        } else if (column == 3) {
+                            vendorsAttributes[row][column] = allVendors[row].getAddress();
+                        } else if (column == 4) {
+                            vendorsAttributes[row][column] = allVendors[row].getEmail();
+                        } else{
+                            vendorsAttributes[row][column] = allVendors[row].getPhone();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            vendorsTable = new JTable(vendorsAttributes, columnNames);
+            JScrollPane vendorScrollPane = new JScrollPane(vendorsTable);
+            vendorScrollPane.setPreferredSize(new Dimension(700,400));
+            vendorsView.add(vendorScrollPane);
+            viewFrame.add(vendorsView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewShops(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Shops Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel shopsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable shopsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<String>();
+            col.clear();
+            col.add(Constants.P_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.TYPE);
+
+            String[][] shopsAttributes;
+            String[] columnNames = {"Place ID", "Shop Name", "Shop Type"};
+
+            try{
+                Shop[] allshops = dbHandler.getShopInfo(col);
+                shopsAttributes = new String[allshops.length][3];
+                for(int row = 0; row < allshops.length; row++) {
+                    for(int column = 0; column <3; column++) {
+                        if(column == 0) {
+                            shopsAttributes[row][column] = allshops[row].getP_id();
+                        } else if (column == 1) {
+                            String name = allshops[row].getName();
+                            shopsAttributes[row][column] = allshops[row].getName();
+                        } else{
+                            shopsAttributes[row][column] = allshops[row].getType();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            shopsTable = new JTable(shopsAttributes, columnNames);
+            JScrollPane shopsPane = new JScrollPane(shopsTable);
+            shopsPane.setPreferredSize(new Dimension(700, 400));
+            shopsView.add(shopsPane);
+            viewFrame.add(shopsView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewItems(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Items Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel itemsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable itemsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.I_ID);
+            col.add(Constants.P_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.STOCK);
+            col.add(Constants.PRICE);
+
+            String[][] itemsAttributes;
+            String[] columnNames = {"Item ID", "Place ID", "Item Name", "Item Stock", "Item Price"};
+
+            try{
+                Item[] allItems = dbHandler.getItemInfo(col);
+                itemsAttributes = new String[allItems.length][5];
+                for(int row = 0; row< allItems.length;row++){
+                    for(int column=0; column<5; column++){
+                        if(column==0){
+                            itemsAttributes[row][column] = allItems[row].getI_id();
+                        } else if (column==1) {
+                            itemsAttributes[row][column] = allItems[row].getP_id();
+                        } else if (column==2) {
+                            itemsAttributes[row][column] = allItems[row].getName();
+                        } else if (column==3) {
+                            itemsAttributes[row][column] = allItems[row].getStock()+"";
+                        }
+                        else {
+                            itemsAttributes[row][column] = allItems[row].getPrice()+"";
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            itemsTable = new JTable(itemsAttributes, columnNames);
+            JScrollPane itemsScrollPane = new JScrollPane(itemsTable);
+            itemsScrollPane.setPreferredSize(new Dimension(700, 400));
+            itemsView.add(itemsScrollPane);
+            viewFrame.add(itemsView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewAssigned_to(){
-
+            //todo finish this
+//            viewFrame = new JFrame();
+//            viewFrame.setTitle("Assigned_To Table");
+//            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//            viewFrame.setSize(800, 500);
+//            viewFrame.setLocationRelativeTo(null);
+//
+//            //create panel for table to be added to
+//            JPanel assignedView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+//
+//            //1D to 2D array to fill JTable
+//            JTable assignedTable;
+//
+//            //database entries
+//            ArrayList<String> col = new ArrayList<>();
+//            col.add(Constants.ASSIGNED_TO);
         }
         public void viewCohabitates_with(){
 
