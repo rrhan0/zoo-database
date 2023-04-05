@@ -22,6 +22,7 @@ public class JWindow {
         private JFrame updateFrame;
         private JFrame updateButtons;
         private JFrame joinFrame;
+        private JFrame showJoinFrame;
         private JFrame successFrame;
         private JFrame viewFrame;
         private JFrame checkBoxFrame;
@@ -850,6 +851,12 @@ public class JWindow {
             joinFrame.setSize(800, 200);
             joinFrame.setLocationRelativeTo(null);
 
+            showJoinFrame = new JFrame();
+            showJoinFrame.setTitle("Joined Animals Based On Species");
+            showJoinFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            showJoinFrame.setSize(400, 600);
+            showJoinFrame.setLocationRelativeTo(null);
+
             //create JPanel
             JPanel forJoin = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
@@ -862,20 +869,20 @@ public class JWindow {
                 public void actionPerformed(ActionEvent e) {
                     joinFrame.dispose();
                     try {
-                        String speciesJoin = joinSpecies.getText();
-                        if(speciesJoin.equals("")) {
+                        String speciesInput = joinSpecies.getText();
+                        if(speciesInput.equals("")) {
                             throw new Error();
                         }
 
-                        String [] arrayOfFood = dbHandler.getSpeciesPreppedFood(speciesJoin); //Get names of food
+                        String [] arrayOfFood = dbHandler.getSpeciesPreppedFood(speciesInput); //Get names of food
                         JList<String> listOfFood = new JList<String>(); //Create a list for the food
                         listOfFood.setListData(arrayOfFood); //add food to JList
 
-                        joinFrame.removeAll(); //remove all components to add new components
+
                         JPanel showJoin = new JPanel(new FlowLayout(FlowLayout.CENTER));
                         showJoin.add(listOfFood);
-                        joinFrame.add(showJoin);
-                        setJoinFrameVisible();
+                        showJoinFrame.add(showJoin);
+                        setShowJoinVisible();
 
 
                     }catch(Error | SQLException joinError){
@@ -898,8 +905,8 @@ public class JWindow {
 
         }
 
-        public void setJoinFrameVisible(){
-            this.joinFrame.setVisible(true);
+        public void setShowJoinVisible(){
+            this.showJoinFrame.setVisible(true);
         }
 
 
