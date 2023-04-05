@@ -1493,7 +1493,6 @@ public class JWindow {
         }
 
         public void viewAssigned_to(){
-            //todo finish this
 //            viewFrame = new JFrame();
 //            viewFrame.setTitle("Assigned_To Table");
 //            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -1508,7 +1507,8 @@ public class JWindow {
 //
 //            //database entries
 //            ArrayList<String> col = new ArrayList<>();
-//            col.add(Constants.ASSIGNED_TO);
+//            col.add(Constants.W_ID);
+//            col.add(Constants.P_ID);
         }
         public void viewCohabitates_with(){
 
