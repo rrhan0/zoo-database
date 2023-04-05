@@ -4650,7 +4650,7 @@ public class JWindow {
         userSelectionFrame.setLocationRelativeTo(null);
 
         JPanel forUserInput = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JTextArea message = new JTextArea("Manufacturer equal to ");
+        JLabel message = new JLabel("Manufacturer equal to ");
         JTextField userMan = new JTextField("[Insert Manufacturer]");
         JButton applySelection = new JButton("Apply Selection");
         forUserInput.add(message);
@@ -4686,11 +4686,11 @@ public class JWindow {
                                 if (col == 0) {
                                     compAttributes[row][col] = validComputers[row].getC_id();
                                 } else if (col == 1) {
-                                    if (validComputers[row].getW_id().isEmpty()) {
-                                        compAttributes[row][col] = "N/A";
-                                    } else {
+//                                    if (validComputers[row].getW_id().isEmpty()) {
+//                                        compAttributes[row][col] = "N/A";
+//                                    } else {
                                         compAttributes[row][col] = validComputers[row].getW_id();
-                                    }
+//                                    }
                                 } else if (col == 2) {
                                     compAttributes[row][col] = validComputers[row].getModel();
                                 } else if (col == 3) {
