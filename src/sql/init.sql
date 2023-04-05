@@ -261,6 +261,27 @@ INTO Workers(w_id, name, pay_rate, address, email, phone)
 VALUES ('5', 'Richard Han', 15.40, '3579 somewhere place', 'richardh@domain.com','6043215678');
 
 INSERT
+INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('6', 'Steve Irwin', 30.51, 'Australia', 'steve@domain.com','9999999999');
+
+INSERT INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('7', 'Daniel Yuan', 18.00, '3579 somewhere place', 'daniel@domain.com', '6049876543');
+
+INSERT INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('8', 'Mia Park', 17.50, '2468 new street', 'miapark@domain.com', '6042345678');
+
+INSERT INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('9', 'Lisa Kim', 14.00, '2468 Elm St', 'lisa.kim@domain.com', '5551234567');
+
+INSERT INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('10', 'Daniel Park', 14.50, 'blah St', 'danielpark@domain.com', '6043216543');
+
+INSERT INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('11', 'Alex Kim', 15.00, '789 3rd Ave', 'alex.kim@domain.com', '6047891234');
+
+
+
+INSERT
 INTO Computers2(model, manufacturer, type)
 VALUES ('Macbook Air 2020', 'Apple', 'Laptop');
 
@@ -333,6 +354,10 @@ INTO Zookeepers(w_id)
 VALUES ('5');
 
 INSERT
+INTO Zookeepers(w_id)
+VALUES ('6');
+
+INSERT
 INTO Vendors(w_id)
 VALUES ('1');
 
@@ -371,6 +396,26 @@ VALUES ('4', 'reptiles');
 INSERT
 INTO Veterinarians(w_id, specialization)
 VALUES ('5', 'bears');
+
+INSERT
+INTO Veterinarians(w_id, specialization)
+VALUES ('7', 'large felines');
+
+INSERT
+INTO Veterinarians(w_id, specialization)
+VALUES ('8', 'small felines');
+
+INSERT
+INTO Veterinarians(w_id, specialization)
+VALUES ('9', 'birds');
+
+INSERT
+INTO Veterinarians(w_id, specialization)
+VALUES ('10', 'reptiles');
+
+INSERT
+INTO Veterinarians(w_id, specialization)
+VALUES ('11', 'bears');
 
 INSERT
 INTO Habitats2(biome, temperature, humidity)
@@ -414,23 +459,23 @@ VALUES ('005', 'Grizzly Bear Habitat', 'North American Woodlands', 40 );
 
 INSERT
 INTO Shops(p_id, name, type)
-VALUES ('101', 'Imperial Clothing Store', 'Clothing');
+VALUES ('101', 'Clothing Store', 'Clothing');
 
 INSERT
 INTO Shops(p_id, name, type)
-VALUES ('102', 'Imperial Drinks Store', 'Drinks');
+VALUES ('102', 'Drinks Store', 'Drinks');
 
 INSERT
 INTO Shops(p_id, name, type)
-VALUES ('103', 'Imperial Plushy Store', 'Stuffed Animals');
+VALUES ('103', 'Plushy Store', 'Stuffed Animals');
 
 INSERT
 INTO Shops(p_id, name, type)
-VALUES ('104', 'Imperial Balloon Store', 'Balloons');
+VALUES ('104', 'Balloon Store', 'Balloons');
 
 INSERT
 INTO Shops(p_id, name, type)
-VALUES ('105', 'Imperial Food Store', 'Food');
+VALUES ('105', 'Food Store', 'Food');
 
 INSERT
 INTO Storage_Units(p_id, name, temperature)
@@ -612,6 +657,27 @@ VALUES ('4', '1004');
 INSERT
 INTO Feeds(w_id, a_id)
 VALUES ('5', '1005');
+
+INSERT
+INTO Feeds(w_id, a_id)
+VALUES ('6', '1001');
+
+INSERT
+INTO Feeds(w_id, a_id)
+VALUES ('6', '1002');
+
+INSERT
+INTO Feeds(w_id, a_id)
+VALUES ('6', '1003');
+
+INSERT
+INTO Feeds(w_id, a_id)
+VALUES ('6', '1004');
+
+INSERT
+INTO Feeds(w_id, a_id)
+VALUES ('6', '1005');
+
 
 INSERT
 INTO Maintains_Health_of(w_id, a_id)

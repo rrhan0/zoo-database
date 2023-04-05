@@ -886,10 +886,122 @@ public class DatabaseConnectionHandler {
 		return result;
 	}
 
-//	public Zookeeper[] getSuperZookeepers() {
-//
-//	}
+	public Zookeeper[] getSuperZookeepers() throws SQLException {
+		ArrayList<String> columns = new ArrayList<>();
 
+		columns.add(Constants.W_ID);
+		columns.add(Constants.NAME);
+		columns.add(Constants.PAY_RATE);
+		columns.add(Constants.ADDRESS);
+		columns.add(Constants.EMAIL);
+		columns.add(Constants.PHONE);
+
+		PreparedStatement ps = connection.prepareStatement(
+				"SELECT w.W_ID, w.NAME, w.PAY_RATE, w.ADDRESS, w.EMAIL, w.PHONE " +
+					"FROM ZOOKEEPERS z, WORKERS w " +
+					"WHERE NOT EXISTS " +
+						"((SELECT a.A_ID " +
+							"FROM ANIMALS1 a) " +
+							"MINUS " +
+							"((SELECT f.A_ID " +
+							"FROM FEEDS f " +
+							"WHERE f.W_ID = z.W_ID))) " +
+					"AND z.W_ID = w.W_ID");
+
+		Object[][] queryResults = this.getTableInfoParam(ps);
+		Zookeeper[] result = new Zookeeper[queryResults.length];
+
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
+
+			String w_id = null;
+			String name = null;
+			float pay_rate = 0;
+			String address = null;
+			String email = null;
+			String phone = null;
+
+			for (int j = 0; j < row.length; j++) {
+				if (Constants.W_ID.equalsIgnoreCase(columns.get(j))) {
+					w_id = (String) row[j];
+				} else if ("name".equalsIgnoreCase(columns.get(j))) {
+					name = (String) row[j];
+				} else if ("pay_rate".equalsIgnoreCase(columns.get(j))) {
+					pay_rate = (float) row[j];
+				} else if ("address".equalsIgnoreCase(columns.get(j))) {
+					address = (String) row[j];
+				} else if ("email".equalsIgnoreCase(columns.get(j))) {
+					email = (String) row[j];
+				} else if ("phone".equalsIgnoreCase(columns.get(j))) {
+					phone = (String) row[j];
+				}
+			}
+
+			Zookeeper zookeeper = new Zookeeper(w_id, name, pay_rate, address, email, phone);
+			result[i] = zookeeper;
+		}
+		return result;
+
+
+	}
+
+	public Veterinarian[] getCheapVeterinarians() throws SQLException {
+		ArrayList<String> columns = new ArrayList<>();
+
+		columns.add(Constants.W_ID);
+		columns.add(Constants.NAME);
+		columns.add(Constants.PAY_RATE);
+		columns.add(Constants.ADDRESS);
+		columns.add(Constants.EMAIL);
+		columns.add(Constants.PHONE);
+		columns.add(Constants.SPECIALIZATION);
+
+		PreparedStatement ps = connection.prepareStatement(
+				"SELECT w.W_ID, w.NAME, w.PAY_RATE, w.ADDRESS, w.EMAIL, w.PHONE, v.SPECIALIZATION " +
+					"FROM VETERINARIANS v, WORKERS w " +
+					"WHERE v.W_ID = w.W_ID AND " +
+					"w.PAY_RATE <= ALL (SELECT AVG(w2.pay_rate) " +
+										"FROM Workers w2, VETERINARIANS v2 " +
+										"WHERE w2.w_id = v2.w_id AND v.SPECIALIZATION = v2.SPECIALIZATION\n" +
+										"GROUP BY v2.specialization\n)");
+
+		Object[][] queryResults = this.getTableInfoParam(ps);
+		Veterinarian[] result = new Veterinarian[queryResults.length];
+
+		for (int i = 0; i < queryResults.length; i++) {
+			Object[] row = queryResults[i];
+
+			String w_id = null;
+			String name = null;
+			float pay_rate = 0.0f;
+			String address = null;
+			String email = null;
+			String phone = null;
+			String specialization = null;
+
+			for (int j = 0; j < row.length; j++) {
+				if (Constants.W_ID.equalsIgnoreCase(columns.get(j))) {
+					w_id = (String) row[j];
+				} else if ("name".equalsIgnoreCase(columns.get(j))) {
+					name = (String) row[j];
+				} else if ("pay_rate".equalsIgnoreCase(columns.get(j))) {
+					pay_rate = (float) row[j];
+				} else if ("address".equalsIgnoreCase(columns.get(j))) {
+					address = (String) row[j];
+				} else if ("email".equalsIgnoreCase(columns.get(j))) {
+					email = (String) row[j];
+				} else if ("phone".equalsIgnoreCase(columns.get(j))) {
+					phone = (String) row[j];
+				} else if ("specialization".equalsIgnoreCase(columns.get(j))) {
+					specialization = (String) row[j];
+				}
+			}
+			Veterinarian vet = new Veterinarian(w_id, name, pay_rate, address, email, phone, specialization);
+			result[i] = vet;
+		}
+		return result;
+
+	}
 
 	public SumWeights[] getFreeStorage() throws SQLException {
 		ArrayList<String> columns = new ArrayList<>();

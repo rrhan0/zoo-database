@@ -140,6 +140,8 @@ public class Test {
 
         SumWeights[] sum = dbHandler.getSumWeights();
         SumWeights[] sum2 = dbHandler.getFreeStorage();
+        Zookeeper[] siper = dbHandler.getSuperZookeepers();
+        Veterinarian[] cheap = dbHandler.getCheapVeterinarians();
 //         be careful of duplicates
 //        Veterinarian vet = new Veterinarian("asdf", "Richardo", 11f, "11 nowhere street", "asdf@gmail.com", "1234", "Trolling");
 //        dbHandler.insertVeterinarian(vet);
