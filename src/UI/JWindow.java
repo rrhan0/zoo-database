@@ -1773,6 +1773,24 @@ public class JWindow {
         }
 
         public void viewStored_at(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Stored At Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel animalsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable animalsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("a_id");
+            col.add("name");
+            col.add("p_id");
 
         }
 
