@@ -1055,11 +1055,162 @@ public class JWindow {
         }
 
         public void viewAnimals(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Animals Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel animalsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable animalsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.A_ID);
+            col.add(Constants.P_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.SPECIES);
+            col.add(Constants.GENUS);
+
+            String[][] animalAttributes;
+            String[] columnNames = {"Animal ID", "Habitat ID", "Animal Name", "Species", "Genus"};
+
+            try{
+                Animal[] allAnimal = dbHandler.getAnimalInfo(col);
+                animalAttributes = new String[allAnimal.length][5];
+                for(int row = 0; row < allAnimal.length; row++) {
+                    for(int column = 0; column < 5; column++){
+                        if(column == 0) {
+                            animalAttributes[row][column] = allAnimal[row].getA_id();
+                        }else if(column == 1) {
+                            String p_id = allAnimal[row].getP_id();
+                            if(p_id.isEmpty()){
+                                animalAttributes[row][column] = "N/A";
+                            }else{
+                                animalAttributes[row][column] = allAnimal[row].getP_id();
+                            }
+                        }else if(column == 2) {
+                            String name = allAnimal[row].getName();
+                            if(name.isEmpty()){
+                                animalAttributes[row][column] = "N/A";
+                            } else{
+                                animalAttributes[row][column] = allAnimal[row].getName();
+                            }
+                        }else if(column == 3) {
+                            String species = allAnimal[row].getSpecies();
+                            if(species.isEmpty()) {
+                                animalAttributes[row][column] = "N/A";
+                            }else{
+                                animalAttributes[row][column] = allAnimal[row].getSpecies();
+                            }
+                        }else {
+                            String genus = allAnimal[row].getGenus();
+                            if(genus.isEmpty()) {
+                                animalAttributes[row][column] = "N/A";
+                            } else{
+                                animalAttributes[row][column] = allAnimal[row].getGenus();
+                            }
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            animalsTable = new JTable(animalAttributes, columnNames);
+            JScrollPane preppedFoodScrollPane = new JScrollPane(animalsTable);
+            preppedFoodScrollPane.setPreferredSize(new Dimension(700, 400));
+            animalsView.add(preppedFoodScrollPane);
+            viewFrame.add(animalsView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewHabitats(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Habitats Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel habitatsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable habitatsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.P_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.BIOME);
+            col.add(Constants.AREA);
+            col.add(Constants.TEMPERATURE);
+            col.add(Constants.HUMIDITY);
+
+            String[][] habitatsAttributes;
+            String[] columnNames = {"Place ID", "Habitat Name", "Biome", "Area", "Temperature", "Humidity"};
+
+            try{
+                Habitat[] allHabitats = dbHandler.getHabitatInfo(col);
+                habitatsAttributes = new String[allHabitats.length][6];
+                for(int row = 0; row < allHabitats.length; row++) {
+                    for(int column = 0; column < 6; column++) {
+                        if(column == 0) {
+                            habitatsAttributes[row][column] = allHabitats[row].getP_id();
+                        }else if(column == 1) {
+                            String name = allHabitats[row].getName();
+                            if(name.isEmpty()) {
+                                habitatsAttributes[row][column] = "N/A";
+                            }else{
+                                habitatsAttributes[row][column] = allHabitats[row].getName();
+                            }
+                        }else if(column == 2) {
+                            String biome = allHabitats[row].getBiome();
+                            if(biome.isEmpty()) {
+                                habitatsAttributes[row][column] = "N/A";
+                            }else{
+                                habitatsAttributes[row][column] = allHabitats[row].getBiome();
+                            }
+                        }else if(column == 3) {
+                            String area = allHabitats[row].getArea() +"";
+                            if(area.isEmpty()) {
+                                habitatsAttributes[row][column] = "N/A";
+                            }else{
+                                habitatsAttributes[row][column] = allHabitats[row].getArea() +"";
+                            }
+                        }else if(column == 4) {
+                            String temp = allHabitats[row].getTemperature()+"";
+                            if(temp.isEmpty()) {
+                                habitatsAttributes[row][column] = "N/A";
+                            }else{
+                                habitatsAttributes[row][column] = allHabitats[row].getTemperature()+"";
+                            }
+                        }else {
+                            String humid = allHabitats[row].getHumidity()+"";
+                            if(humid.isEmpty()) {
+                                habitatsAttributes[row][column] = "N/A";
+                            }else{
+                                habitatsAttributes[row][column] = allHabitats[row].getHumidity()+"";
+                            }
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            habitatsTable = new JTable(habitatsAttributes,columnNames);
+            JScrollPane habitatsScrollPane = new JScrollPane(habitatsTable);
+            habitatsScrollPane.setPreferredSize(new Dimension(700, 400));
+            habitatsView.add(habitatsScrollPane);
+            viewFrame.add(habitatsView);
+
+            this.viewFrame.setVisible(true);
         }
         public void viewWorkers(){
 
