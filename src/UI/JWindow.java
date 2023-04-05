@@ -31,6 +31,7 @@ public class JWindow {
         private JFrame projectionFrame;
         private JFrame userSelectionFrame;
         private JFrame showSelectionFrame;
+        private JFrame aggregationGroupByFrame;
         //Used to determine checked boxes for projection of tables
         private boolean [] projectionArray = {false, false, false, false, false, false, false};
 
@@ -317,6 +318,15 @@ public class JWindow {
                     }
                 });
 
+                //Initialize aggregation group by button
+                JButton aggregateGroupBy = new JButton("AGGREGATE WITH GROUP BY");
+                aggregateGroupBy.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        aggregationGroupBy();
+                    }
+                });
+
 
 
                 //Places Tab creation
@@ -348,6 +358,7 @@ public class JWindow {
                 rawFoodOrders.add(rawFoodOrdersDelete);
                 rawFoodOrders.add(rawFoodOrdersUpdate);
                 rawFoodOrders.add(rawFoodOrdersView);
+                rawFoodOrders.add(aggregateGroupBy);
                 rawFoodOrders.setLayout(new FlowLayout());
                 rawFoodOrders.setBackground(Color.DARK_GRAY);
 
@@ -800,7 +811,7 @@ public class JWindow {
                                 if(widInput.equals(""))
                                     throw new Error();
 
-                                //TODO actual update here
+
                                 dbHandler.updateWorker(widInput, Constants.PAY_RATE, newPay);
 
 
@@ -2379,12 +2390,71 @@ public class JWindow {
 
         }
 
+
+        public void aggregationGroupBy(){
+            //Instantiate Frame
+            aggregationGroupByFrame = new JFrame("Aggregation With Group By");
+            aggregationGroupByFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            aggregationGroupByFrame.setSize(800, 500);
+            aggregationGroupByFrame.setLocationRelativeTo(null);
+
+
+            JLabel text = new JLabel("Sum the weights of raw food orders grouped by their storage unit.");
+            JPanel displayAggregation = new JPanel();
+
+            try {
+                SumWeights [] allSums = dbHandler.getSumWeights();
+                String [] colNames = {"Place ID", "Name", "Weight Sum"}; //Name can be null
+                String [][] sumData = new String[allSums.length][colNames.length];
+                for(int r = 0; r<allSums.length; r++){
+                    for(int c = 0; c<colNames.length; c++){
+                        if(c==0){
+                            sumData[r][c] = allSums[r].getP_id();
+                        }else if(c == 1){
+                            String isNull = allSums[r].getName();
+                            if(isNull.isEmpty()){
+                                sumData[r][c] = "N/A";
+                            }else{
+                                sumData[r][c] = isNull;
+                            }
+                        }else{
+                            sumData[r][c] = allSums[r].getSumWeight()+"";
+                        }
+                    }
+                }
+
+                //Create table and pane
+                JTable aggregationTable = new JTable(sumData, colNames);
+                JScrollPane aggregationScroll = new JScrollPane(aggregationTable);
+                aggregationScroll.setPreferredSize(new Dimension(700, 400));
+
+                //Add table/pane to panel
+                displayAggregation.add(aggregationScroll);
+
+                //Add panel to frame
+                aggregationGroupByFrame.add(displayAggregation);
+
+                //Display frame
+                showAggregationGroupByFrame();
+
+            } catch (SQLException e) {
+                displayError("Something went wrong!");
+            }
+
+        }
+
+
+
         public void show() {
                 this.defaultFrame.setVisible(true);
         }
 
         public void showSelectionFrame(){
             this.showSelectionFrame.setVisible(true);
+        }
+
+        public void showAggregationGroupByFrame(){
+            this.aggregationGroupByFrame.setVisible(true);
         }
 
 
