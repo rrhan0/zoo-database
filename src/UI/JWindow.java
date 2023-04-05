@@ -1,12 +1,9 @@
 package UI;
 
 import database.DatabaseConnectionHandler;
-import model.*;
 import exceptions.NotExists;
-import model.Computer;
-import model.Veterinarian;
+import model.*;
 import util.Constants;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +29,9 @@ public class JWindow {
     private JFrame userSelectionFrame;
     private JFrame showSelectionFrame;
     private JFrame aggregationGroupByFrame;
+    private JFrame aggregationHavingFrame;
     private JFrame divisionFrame;
+
     //Used to determine checked boxes for projection of tables
     private boolean col0 = false, col1 = false, col2 = false, col3 = false, col4 = false, col5 = false, col6 = false;
 
@@ -461,13 +460,19 @@ public class JWindow {
             public void actionPerformed(ActionEvent e) {
                 aggregationGroupBy();
             }
-        });
+        })
+        JButton aggregationHaving = new JButton("AGGREGATING WITH HAVING");
+        aggregationHaving.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggregationHaving();
 
         JButton division = new JButton("DIVISION");
         division.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 division();
+
             }
         });
 
@@ -484,6 +489,7 @@ public class JWindow {
         storageUnits.add(storageUpdate);
         storageUnits.add(storageView);
         storageUnits.add(storageProjection);
+        storageUnits.add(aggregationHaving);
         storageUnits.setLayout((new FlowLayout()));
         storageUnits.setBackground(Color.DARK_GRAY);
 
@@ -3498,6 +3504,7 @@ public class JWindow {
         JLabel text = new JLabel("Sum the weights of raw food orders grouped by their storage unit.");
         JPanel displayAggregation = new JPanel();
 
+        //Get attributes into table to display
         try {
             SumWeights[] allSums = dbHandler.getSumWeights();
             String[] colNames = {"Place ID", "Name", "Weight Sum"}; //Name can be null
@@ -3586,6 +3593,63 @@ public class JWindow {
     }
 
 
+
+    public void aggregationHaving(){
+        //Instantiate frame
+        aggregationHavingFrame = new JFrame("Aggregation With Having");
+        aggregationHavingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        aggregationHavingFrame.setSize(800, 500);
+        aggregationHavingFrame.setLocationRelativeTo(null);
+
+        //Create Label
+        JLabel text = new JLabel("Storage units found that meets restriction of weight < 50.");
+        //Create Panel
+        JPanel displayAggregation = new JPanel();
+
+        try {
+            SumWeights[] allSums = dbHandler.getFreeStorage();
+            String[] colNames = {"Place ID", "Name", "Weight Sum"}; //Column names
+            String[][] sumData = new String[allSums.length][colNames.length];
+
+            for (int r = 0; r < allSums.length; r++) {
+                for (int c = 0; c < colNames.length; c++) {
+                    if (c == 0) {
+                        sumData[r][c] = allSums[r].getP_id();
+                    } else if (c == 1) {
+                        String isNull = allSums[r].getName();
+                        if (isNull.isEmpty()) {
+                            sumData[r][c] = "N/A";
+                        } else {
+                            sumData[r][c] = isNull;
+                        }
+                    } else {
+                        sumData[r][c] = allSums[r].getSumWeight() + "";
+                    }
+                }
+            }
+
+            //Create table and pane
+            JTable aggregationTable = new JTable(sumData, colNames);
+            JScrollPane aggregationScroll = new JScrollPane(aggregationTable);
+            aggregationScroll.setPreferredSize(new Dimension(700, 400));
+
+            //Add table/pane and text to panel
+            displayAggregation.add(text);
+            displayAggregation.add(aggregationScroll);
+
+            //Add panel to frame
+            aggregationHavingFrame.add(displayAggregation);
+
+            //Display frame
+            showAggregationHavingFrame();
+
+        } catch (SQLException e) {
+            displayError("Something went wrong!");
+        }
+
+    }
+
+
     public void show() {
         this.defaultFrame.setVisible(true);
     }
@@ -3598,9 +3662,12 @@ public class JWindow {
         this.aggregationGroupByFrame.setVisible(true);
     }
 
+    public void showAggregationHavingFrame(){this.aggregationHavingFrame.setVisible((true));}
+
     public void showdivisionFrame() {
         this.divisionFrame.setVisible(true);
     }
+
 
 
 }
