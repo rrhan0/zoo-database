@@ -1,6 +1,7 @@
 package UI;
 
 import database.DatabaseConnectionHandler;
+import exceptions.NotExists;
 import model.Veterinarian;
 import util.Constants;
 
@@ -574,14 +575,22 @@ public class JWindow {
                                 String newName = update.getText();
                                 if(widInput.equals("") || newName.equals(""))
                                     throw new Error();
+
                                 //TODO actual update here
+                                dbHandler.updateWorker(widInput, Constants.NAME, newName);
 
 
                                 updateFrame.dispose();
                                 showSuccessFrame();
                             }catch(Error nameError){
                                 updateFrame.dispose();
-                                displayError("Current worker ID does not exist or you did not fill in a required field");
+                                displayError("You did not fill in a required field");
+                            } catch (SQLException throwables) {
+                                updateFrame.dispose();
+                                displayError("You entered a worker ID that does not exist or did not fill in a required field");
+                            } catch (NotExists notExists) {
+                                updateFrame.dispose();
+                                displayError("You entered a worker ID that does not exist");
                             }
 
 
@@ -621,12 +630,20 @@ public class JWindow {
                                     throw new Error();
 
                                 //TODO actual update here
+                                dbHandler.updateWorker(widInput, Constants.PAY_RATE, newPay);
+
 
                                 updateFrame.dispose();
                                 showSuccessFrame();
                             }catch(Error payError){
                                 updateFrame.dispose();
-                                displayError("Current worker ID does not exist, you did not fill in a required field, or did not input a float for new pay rate");
+                                displayError("You did not fill in a required field, or did not input a float for new pay rate");
+                            } catch (SQLException throwables) {
+                                updateFrame.dispose();
+                                displayError("You entered a worker ID that does not exist or did not fill in a required field");
+                            } catch (NotExists notExists) {
+                                updateFrame.dispose();
+                                displayError("You entered a worker ID that does not exist");
                             }
                             //Remove for next use
                             updateText.removeAll();
@@ -664,12 +681,19 @@ public class JWindow {
                                     throw new Error();
 
                                 //TODO actual update here
+                                dbHandler.updateWorker(widInput, Constants.EMAIL, newEmail);
 
                                 updateFrame.dispose();
                                 showSuccessFrame();
                             }catch(Error payError){
                                 updateFrame.dispose();
-                                displayError("Current worker ID does not exist or you did not fill in a required field");
+                                displayError("You did not fill in a required field");
+                            } catch (SQLException throwables) {
+                                updateFrame.dispose();
+                                displayError("You entered a worker ID that does not exist or did not fill in a required field");
+                            } catch (NotExists notExists) {
+                                updateFrame.dispose();
+                                displayError("You entered a worker ID that does not exist");
                             }
                             //Remove for next use
                             updateText.removeAll();
@@ -706,12 +730,20 @@ public class JWindow {
                                     throw new Error();
 
                                 //TODO actual update here
+                                dbHandler.updateWorker(widInput, Constants.PHONE, newPhone);
+
 
                                 updateFrame.dispose();
                                 showSuccessFrame();
                             }catch(Error payError){
                                 updateFrame.dispose();
                                 displayError("Current worker ID does not exist or you did not fill in a required field");
+                            } catch (SQLException throwables) {
+                                updateFrame.dispose();
+                                displayError("You entered a worker ID that does not exist or did not fill in a required field");
+                            } catch (NotExists notExists) {
+                                updateFrame.dispose();
+                                displayError("You entered a worker ID that does not exist");
                             }
                             //Remove for next use
                             updateText.removeAll();
@@ -749,11 +781,19 @@ public class JWindow {
 
 
                                 //TODO actual update here
+                                dbHandler.updateWorker(widInput, Constants.ADDRESS, newAddress);
 
-
+                                updateFrame.dispose();
                                 showSuccessFrame();
                             }catch(Error payError){
+                                updateFrame.dispose();
                                 displayError("Current worker ID does not exist or you did not fill in a required field");
+                            } catch (SQLException throwables) {
+                                updateFrame.dispose();
+                                displayError("You entered a worker ID that does not exist or did not fill in a required field");
+                            } catch (NotExists notExists) {
+                                updateFrame.dispose();
+                                displayError("You entered a worker ID that does not exist");
                             }
                             //Remove for next use
                             updateText.removeAll();
