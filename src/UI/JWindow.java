@@ -33,7 +33,7 @@ public class JWindow {
         private JFrame showSelectionFrame;
         private JFrame aggregationGroupByFrame;
         //Used to determine checked boxes for projection of tables
-        private boolean [] projectionArray = {false, false, false, false, false, false, false};
+        private boolean col0 = false, col1 = false, col2 = false, col3 = false, col4 = false, col5 = false, col6 = false;
 
         //Create new DBHandler object for modification of Database
         private DatabaseConnectionHandler dbHandler;
@@ -301,11 +301,145 @@ public class JWindow {
                 });
 
                 //initialize projection button
+                JButton storageProjection = new JButton("PROJECT");
+                JButton preppedFoodProjection = new JButton("PROJECT");
+                JButton rawFoodOrdersProjection = new JButton("PROJECT");
+                JButton computersProjection = new JButton("PROJECT");
+                JButton animalsProjection = new JButton("PROJECT");
+                JButton habitatsProjection = new JButton("PROJECT");
+                JButton workersProjection = new JButton("PROJECT");
+                JButton zookeepersProjection = new JButton("PROJECT");
                 JButton vetsProjection = new JButton("PROJECT");
+                JButton vendorsProjection = new JButton("PROJECT");
+                JButton shopsProjection = new JButton("PROJECT");
+                JButton itemsProjection = new JButton("PROJECT");
+                JButton assigned_toProjection = new JButton("PROJECT");
+                JButton cohabitates_withProjection = new JButton("PROJECT");
+                JButton feedsProjection = new JButton("PROJECT");
+                JButton located_atProjection = new JButton("PROJECT");
+                JButton made_fromProjection = new JButton("PROJECT");
+                JButton maintains_healthProjection = new JButton("PROJECT");
+                JButton stored_atProjection = new JButton("PROJECT");
+                JButton works_atProjection = new JButton("PROJECT");
+                //initialize projection action listeners
+                storageProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectStorage();
+                    }
+                });
+                preppedFoodProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectPreppedFood();
+                    }
+                });
+                rawFoodOrdersProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectRawFood();
+                    }
+                });
+                computersProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectComputers();
+                    }
+                });
+                animalsProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectAnimals();
+                    }
+                });
+                habitatsProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectHabitats();
+                    }
+                });
+                workersProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectWorkers();
+                    }
+                });
+                zookeepersProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectZookeepers();
+                    }
+                });
                 vetsProjection.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         projectVet();
+                    }
+                });
+                vendorsProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectVendors();
+                    }
+                });
+                shopsProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectShops();
+                    }
+                });
+                itemsProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectItems();
+                    }
+                });
+                assigned_toProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectAssigned_to();
+                    }
+                });
+                cohabitates_withProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectcohab();
+                    }
+                });
+                feedsProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectFeeds();
+                    }
+                });
+                located_atProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectLocated();
+                    }
+                });
+                made_fromProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectMade();
+                    }
+                });
+                maintains_healthProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectMaintains();
+                    }
+                });
+                stored_atProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectStoredAt();
+                    }
+                });
+                works_atProjection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        projectWorksAt();
                     }
                 });
 
@@ -665,6 +799,7 @@ public class JWindow {
             //set frame as visible
             this.deleteFrame.setVisible(true);
     }
+
         //updates worker tuple according to w_id
         public void updateWorkers(){
             //Create A JFrame to show text entries for update
@@ -673,9 +808,6 @@ public class JWindow {
             updateFrame.setTitle("Entries For Update");
             updateFrame.setSize(400, 500);
             updateFrame.setLocationRelativeTo(null);
-
-
-
 
             //CREATE A JFRAME & JPANEL FOR A BUTTON FOR ALL ATTRIBUTES
             updateButtons = new JFrame();
@@ -1886,7 +2018,6 @@ public class JWindow {
             String[][] cohabAttributes;
             String[] columnNames = {"Animal ID #1", "Animal ID #2"};
 
-            //todo: fix only last tuple showing up in table
             try{
                 CohabitatesWith[] allCohab = dbHandler.getCohabitatesWithInfo(col);
                 cohabAttributes = new String[allCohab.length][2];
@@ -2205,14 +2336,14 @@ public class JWindow {
             JPanel forVetsProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
             //Reset Projection Array
-            resetProjectionArray();
+            resetCols();
 
             JCheckBox wid = new JCheckBox("Worker ID");
             wid.addItemListener(new ItemListener() {
                 @Override
                 public void itemStateChanged(ItemEvent e)  {
-                        //place zero
-                    projectionArray[0] = true;
+                    //place zero
+                    col0 = true;
                 }
             });
             JCheckBox name = new JCheckBox("Worker's Name");
@@ -2220,7 +2351,7 @@ public class JWindow {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     //place 1
-                    projectionArray[1] = true;
+                    col1 = true;
                 }
             });
             JCheckBox payRate = new JCheckBox("Worker's Pay Rate");
@@ -2228,7 +2359,7 @@ public class JWindow {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     //place 2
-                    projectionArray[2] = true;
+                    col2 = true;
                 }
             });
             JCheckBox addr = new JCheckBox("Worker's Address");
@@ -2236,7 +2367,7 @@ public class JWindow {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     //place 3
-                    projectionArray[3] = true;
+                    col3 = true;
                 }
             });
             JCheckBox email = new JCheckBox("Worker's Email");
@@ -2244,7 +2375,7 @@ public class JWindow {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     //place 4
-                    projectionArray[4] = true;
+                    col4 = true;
                 }
             });
             JCheckBox phone = new JCheckBox("Worker's Phone #");
@@ -2252,7 +2383,7 @@ public class JWindow {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     //place 5
-                    projectionArray[5] = true;
+                    col5 = true;
                 }
             });
             JCheckBox spec = new JCheckBox("Worker's Specialization");
@@ -2260,7 +2391,7 @@ public class JWindow {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     //place 6
-                    projectionArray[6] = true;
+                    col6 = true;
                 }
             });
 
@@ -2270,7 +2401,92 @@ public class JWindow {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     checkBoxFrame.dispose();
+                    int numCols = 0;
+                    ArrayList<String> col = new ArrayList<String>();
+                    ArrayList<String> colNames = new ArrayList<String>();
+                    col.clear();
+                    if(col0) {
+                        col.add(Constants.VET_W_ID);
+                        numCols++;
+                        colNames.add("Veterinarian's IDs");
+                    }
+                    if(col1) {
+                        col.add(Constants.NAME);
+                        numCols++;
+                        colNames.add("Veterinarian's Names");
+                    }
+                    if(col2) {
+                        col.add(Constants.PAY_RATE);
+                        numCols++;
+                        colNames.add("Veterinarian's Pay Rates");
+                    }
+                    if(col3) {
+                        col.add(Constants.ADDRESS);
+                        numCols++;
+                        colNames.add("Veterinarian's Addresses");
+                    }
+                    if(col4) {
+                        col.add(Constants.EMAIL);
+                        numCols++;
+                        colNames.add("Veterinarian's Emails");
+                    }
+                    if(col5){
+                        col.add(Constants.PHONE);
+                        numCols++;
+                        colNames.add("Veterinarian's Phone #s");
+                    }
+                    if(col6){
+                        col.add(Constants.SPECIALIZATION);
+                        numCols++;
+                        colNames.add("Veterinarian's Specializations");
+                    }
 
+                    try {
+                        Veterinarian [] allVets = dbHandler.getVeterinarianInfo(col);
+                        String [][] VetAttributes = new String[allVets.length][numCols];
+                        Object [] columnNames =  colNames.toArray();
+                        for (int i = 0; i < allVets.length; i++) {
+                            int j = 0;
+                            if (col0) {
+                                VetAttributes[i][j] = allVets[i].getW_id();
+                                j++;
+                            }
+                            if (col1) {
+                                VetAttributes[i][j] = allVets[i].getName();
+                                j++;
+                            }
+                            if (col2) {
+                                VetAttributes[i][j] = Float.toString(allVets[i].getPay_rate());
+                                j++;
+                            }
+                            if (col3) {
+                                VetAttributes[i][j] = allVets[i].getAddress();
+                                j++;
+                            }
+                            if (col4) {
+                                VetAttributes[i][j] = allVets[i].getEmail();
+                                j++;
+                            }
+                            if (col5) {
+                                VetAttributes[i][j] = allVets[i].getPhone();
+                                j++;
+                            }
+                            if (col6) {
+                                VetAttributes[i][j] = allVets[i].getSpecialization();
+                            }
+                        }
+                        resetCols();
+                        //Make JTable to display projected table
+                        JTable vetProj = new JTable(VetAttributes, columnNames);
+                        //Add JTable to scroll pane
+                        JScrollPane scroll = new JScrollPane(vetProj);
+                        scroll.setPreferredSize(new Dimension(700, 400));
+                        //Call display
+                        displayProjection(scroll);
+
+                    } catch (SQLException ex) {
+                        displayError("Something went wrong");
+                    }
                 }
             });
 
@@ -2287,30 +2503,107 @@ public class JWindow {
             //Add Panel to frame
             checkBoxFrame.add(forVetsProjection);
             this.checkBoxFrame.setVisible(true);
+        }
 
+        public void projectStorage(){
 
         }
 
-        public void displayProjection(JTable projTable){
+        public void projectPreppedFood(){
+
+        }
+
+        public void projectRawFood(){
+
+        }
+
+        public void projectComputers(){
+
+        }
+
+        public void projectAnimals(){
+
+        }
+
+        public void projectHabitats(){
+
+        }
+
+        public void projectWorkers(){
+
+        }
+
+        public void projectZookeepers(){
+
+        }
+
+        public void projectVendors(){
+
+        }
+
+        public void projectShops(){
+
+        }
+
+        public void projectItems(){
+
+        }
+
+        public void projectAssigned_to(){
+
+        }
+
+        public void projectcohab(){
+
+        }
+
+        public void projectFeeds(){
+
+        }
+
+        public void projectLocated(){
+
+        }
+
+        public void projectMade(){
+
+        }
+
+        public void projectMaintains(){
+
+        }
+
+        public void projectStoredAt(){
+
+        }
+
+        public void projectWorksAt(){
+
+        }
+
+        public void displayProjection(JScrollPane table){
             projectionFrame = new JFrame("Projected Table");
             projectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             projectionFrame.setSize(800, 500);
             projectionFrame.setLocationRelativeTo(null);
 
             JPanel toProject = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            toProject.add(projTable);
+            toProject.add(table);
             projectionFrame.add(toProject);
             this.projectionFrame.setVisible(true);
 
         }
 
         //Reset the values of projectionArray before each use
-        public void resetProjectionArray(){
-            for(int i = 0; i<projectionArray.length; i++){
-                projectionArray[i] = false;
-            }
+        public void resetCols(){
+            col0 = false;
+            col1 = false;
+            col2 = false;
+            col3 = false;
+            col4 = false;
+            col5 = false;
+            col6 = false;
         }
-
 
         //For selection
         public void selectComputer(){
