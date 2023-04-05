@@ -1656,11 +1656,25 @@ public class JWindow {
             try{
                 LocatedAt[] allLocated = dbHandler.getLocatedAtInfo(col);
                 locatedAttributes = new String[allLocated.length][2];
-
+                for(int row = 0; row < allLocated.length;row++) {
+                    for(int column = 0; column < 2; column++) {
+                        if(column==0) {
+                            locatedAttributes[row][column] = allLocated[row].getO_id();
+                        } else{
+                            locatedAttributes[row][column] = allLocated[row].getP_id();
+                        }
+                    }
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            locatedTable = new JTable(locatedAttributes, columnNames);
+            JScrollPane locatedScrollPane = new JScrollPane(locatedTable);
+            locatedScrollPane.setPreferredSize(new Dimension(700, 400));
+            locatedView.add(locatedScrollPane);
+            viewFrame.add(locatedView);
 
+            this.viewFrame.setVisible(true);
         }
 
         public void viewMade_from(){
