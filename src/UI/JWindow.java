@@ -1120,7 +1120,7 @@ public class JWindow {
                             Computer [] validComputers = dbHandler.selectManufacturer(inputtedMan);
                             showSelectionFrame = new JFrame("Selected Computers");
                             showSelectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                            showSelectionFrame.setSize(500, 600);
+                            showSelectionFrame.setSize(700, 400);
                             showSelectionFrame.setLocationRelativeTo(null);
 
                             JPanel showComputers = new JPanel(new FlowLayout(FlowLayout.CENTER));
