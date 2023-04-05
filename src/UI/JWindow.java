@@ -1042,7 +1042,7 @@ public class JWindow {
                         setShowJoinVisible();
 
 
-                    }catch(Error | SQLException joinError){
+                    }catch(Error | SQLException | NotExists joinError){
                         JOptionPane.showMessageDialog(null, "You entered the wrong type of input, did not fill in a required field, or" +
                                 " entered a species that does not exist", "Error", JOptionPane.ERROR_MESSAGE);
                     }
