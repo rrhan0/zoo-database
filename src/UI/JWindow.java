@@ -22,6 +22,7 @@ public class JWindow {
         private JFrame updateFrame;
         private JFrame updateButtons;
         private JFrame joinFrame;
+        private JFrame showJoinFrame;
         private JFrame successFrame;
         private JFrame viewFrame;
         private JFrame checkBoxFrame;
@@ -160,7 +161,7 @@ public class JWindow {
                 animalsPreppedFoodJoin.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        joinAnimals();
+                        joinAnimalsWithPreppedFood();
                     }
                 });
 
@@ -842,34 +843,49 @@ public class JWindow {
         }
 
 
-        public void joinAnimals(){
+        public void joinAnimalsWithPreppedFood(){
             //creating the joinFrame
             joinFrame = new JFrame();
-            joinFrame.setTitle("Update Existing Worker");
+            joinFrame.setTitle("Join Animals With Prepped Food");
             joinFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             joinFrame.setSize(800, 200);
             joinFrame.setLocationRelativeTo(null);
+
+            showJoinFrame = new JFrame();
+            showJoinFrame.setTitle("Joined Animals Based On Species");
+            showJoinFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            showJoinFrame.setSize(300, 400);
+            showJoinFrame.setLocationRelativeTo(null);
 
             //create JPanel
             JPanel forJoin = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
             //adds text to JFrame
             JLabel joinText = new JLabel("This join finds the name of the Prepped Food associated with animals according to species. Please select a species");
-            JTextField joinSpecies = new JTextField("animal species [Required]");
+            JTextField joinSpecies = new JTextField("Animal Species [Required]");
             JButton applyJoin = new JButton("Apply Join");
             applyJoin.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    joinFrame.dispose();
                     try {
-                        String speciesJoin = joinSpecies.getText();
-                        if(speciesJoin.equals("")) {
+                        String speciesInput = joinSpecies.getText();
+                        if(speciesInput.equals("")) {
                             throw new Error();
                         }
-                        //show table data here
-                        showJoinData();
 
-                    }catch(Error e2){
-                        deleteFrame.dispose();
+                        String [] arrayOfFood = dbHandler.getSpeciesPreppedFood(speciesInput); //Get names of food
+                        JList<String> listOfFood = new JList<String>(); //Create a list for the food
+                        listOfFood.setListData(arrayOfFood); //add food to JList
+
+
+                        JPanel showJoin = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                        showJoin.add(listOfFood);
+                        showJoinFrame.add(showJoin);
+                        setShowJoinVisible();
+
+
+                    }catch(Error | SQLException joinError){
                         JOptionPane.showMessageDialog(null, "You entered the wrong type of input, did not fill in a required field, or" +
                                 " entered a species that does not exist", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -889,9 +905,11 @@ public class JWindow {
 
         }
 
-        public void showJoinData(){
-            //shows table data
+        public void setShowJoinVisible(){
+            this.showJoinFrame.setVisible(true);
         }
+
+
 
         public void showSuccessFrame(){
             successFrame = new JFrame();
