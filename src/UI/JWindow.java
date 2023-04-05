@@ -1122,9 +1122,9 @@ public class JWindow {
             }
 
             animalsTable = new JTable(animalAttributes, columnNames);
-            JScrollPane preppedFoodScrollPane = new JScrollPane(animalsTable);
-            preppedFoodScrollPane.setPreferredSize(new Dimension(700, 400));
-            animalsView.add(preppedFoodScrollPane);
+            JScrollPane animalsScrollPane = new JScrollPane(animalsTable);
+            animalsScrollPane.setPreferredSize(new Dimension(700, 400));
+            animalsView.add(animalsScrollPane);
             viewFrame.add(animalsView);
 
             this.viewFrame.setVisible(true);
@@ -1493,33 +1493,149 @@ public class JWindow {
         }
 
         public void viewAssigned_to(){
-//            viewFrame = new JFrame();
-//            viewFrame.setTitle("Assigned_To Table");
-//            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//            viewFrame.setSize(800, 500);
-//            viewFrame.setLocationRelativeTo(null);
-//
-//            //create panel for table to be added to
-//            JPanel assignedView = new JPanel(new FlowLayout(FlowLayout.CENTER));
-//
-//            //1D to 2D array to fill JTable
-//            JTable assignedTable;
-//
-//            //database entries
-//            ArrayList<String> col = new ArrayList<>();
-//            col.add(Constants.W_ID);
-//            col.add(Constants.P_ID);
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Assigned_To Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel assignedView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable assignedTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.W_ID);
+            col.add(Constants.P_ID);
+
+            String[][] assignedAttributes;
+            String[] columnNames = {"Worker ID", "Place ID"};
+
+            try{
+                AssignedTo[] allAssigned = dbHandler.getAssignedToInfo(col);
+                assignedAttributes = new String[allAssigned.length][2];
+                for(int row=0; row< allAssigned.length;row++){
+                    for(int column = 0; column<2;column++){
+                        if (column==0){
+                            assignedAttributes[row][column] = allAssigned[row].getW_id();
+                        } else {
+                            assignedAttributes[row][column] = allAssigned[row].getP_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            assignedTable = new JTable(assignedAttributes,columnNames);
+            JScrollPane assignedPane = new JScrollPane(assignedTable);
+            assignedPane.setPreferredSize(new Dimension(700,400));
+            assignedView.add(assignedPane);
+            viewFrame.add(assignedView);
+
+            this.viewFrame.setVisible(true);
         }
         public void viewCohabitates_with(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Cohabitates With Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel cohabView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable cohabTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("A_ID1");
+            col.add("A_ID2");
+
+            String[][] cohabAttributes;
+            String[] columnNames = {"Animal ID #1", "Animal ID #2"};
+
+            //todo: fix only last tuple showing up in table
+            try{
+                CohabitatesWith[] allCohab = dbHandler.getCohabitatesWithInfo(col);
+                cohabAttributes = new String[allCohab.length][2];
+                for(int row=0;row<allCohab.length;row++){
+                    for(int column=0;column<2;column++){
+                        if(column==0){
+                            cohabAttributes[row][column] = allCohab[row].getA_id1();
+                        } else{
+                            cohabAttributes[row][column] = allCohab[row].getA_id2();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            cohabTable = new JTable(cohabAttributes,columnNames);
+            JScrollPane cohabPane = new JScrollPane(cohabTable);
+            cohabPane.setPreferredSize(new Dimension(700,400));
+            cohabView.add(cohabPane);
+            viewFrame.add(cohabView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewFeeds(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Feeds Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel feedsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable feedsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("w_id");
+            col.add("a_id");
+
+            String[][] feedsAttributes;
+            String[] columnNames = {"Worker ID", "Animal ID"};
+
+            try{
+                Feeds[] allFeeds = dbHandler.getFeedsInfo(col);
+                feedsAttributes = new String[allFeeds.length][2];
+                for(int row =0; row < allFeeds.length;row++) {
+                    for(int column = 0; column <2; column++) {
+                        if(column == 0) {
+                            feedsAttributes[row][column] = allFeeds[row].getW_id();
+                        } else{
+                            feedsAttributes[row][column] = allFeeds[row].getA_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            feedsTable = new JTable(feedsAttributes,columnNames);
+            JScrollPane feedsPane = new JScrollPane(feedsTable);
+            feedsPane.setPreferredSize(new Dimension(700,400));
+            feedsView.add(feedsPane);
+            viewFrame.add(feedsView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewLocated_at(){
-
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Animals Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
         }
 
         public void viewMade_from(){
