@@ -463,6 +463,14 @@ public class JWindow {
             }
         });
 
+        JButton division = new JButton("DIVISION");
+        division.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                division();
+            }
+        });
+
 
         //Places Tab creation
         JPanel places = new JPanel();
@@ -559,6 +567,7 @@ public class JWindow {
         zookeepers.add(zookeepersUpdate);
         zookeepers.add(zookeepersView);
         zookeepers.add(zookeepersProjection);
+        zookeepers.add(division);
         zookeepers.setLayout(new FlowLayout());
         zookeepers.setBackground(Color.DARK_GRAY);
 
