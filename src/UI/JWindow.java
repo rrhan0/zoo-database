@@ -2,6 +2,7 @@ package UI;
 
 import database.DatabaseConnectionHandler;
 import model.Veterinarian;
+import util.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,13 +12,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import util.Constants;
 
 public class JWindow {
         private JFrame defaultFrame;
         private JFrame insertFrame;
         private JFrame deleteFrame;
         private JFrame updateFrame;
+        private JFrame updateButtons;
         private JFrame joinFrame;
         private JFrame successFrame;
         private JFrame viewFrame;
@@ -35,8 +36,8 @@ public class JWindow {
 
         public void initialize() {
                 this.dbHandler = new DatabaseConnectionHandler();
-               //dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
-                dbHandler.login(System.getenv("ora_arl20"), System.getenv("a43629526"));
+                dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
+//                dbHandler.login(System.getenv("ora_arl20"), System.getenv("a43629526"));
                 //frame creation
                 defaultFrame = new JFrame();
 
@@ -487,67 +488,306 @@ public class JWindow {
     }
 
         public void updateWorkers(){
-            //create new frame
+            //Create A JFrame to show text entries for update
             updateFrame = new JFrame();
-            updateFrame.setTitle("Update Existing Worker");
             updateFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            updateFrame.setTitle("Entries For Update");
             updateFrame.setSize(400, 500);
             updateFrame.setLocationRelativeTo(null);
 
-            //TODO create all text fields required for workers
-            JPanel forUpdate = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            JTextField w_id = new JTextField("Worker's ID (REQUIRED)", 20); //REQUIRED
-            JTextField name = new JTextField("Worker's Name", 20); //NOT NULL
-            JTextField payrate = new JTextField("Worker's Pay rate"); //NOT NULL
-            JTextField email = new JTextField("Worker's Email", 30); //NOT NULL
-            JTextField phone = new JTextField("Worker's Phone Number", 13); //NOT NULL
-            JTextField address = new JTextField("Worker's Address", 30); //NOT NULL
 
-            //Button to apply the update
-            JButton applyUpdate = new JButton("Apply Update");
-            applyUpdate.addActionListener(new ActionListener() {
+            //CREATE A JFRAME & JPANEL FOR A BUTTON FOR ALL ATTRIBUTES
+            updateButtons = new JFrame();
+            updateButtons.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            updateButtons.setTitle("Update Existing Worker");
+            updateButtons.setSize(400, 500);
+            updateFrame.setLocationRelativeTo(null);
+            JPanel forUpdate = new JPanel(new FlowLayout(FlowLayout.CENTER)); //To show all the buttons
+            JPanel updateText = new JPanel(new FlowLayout(FlowLayout.CENTER)); //To show text for actual update
+            JTextField wid = new JTextField("Worker's Current ID [Required]"); //wid text field REQUIRED FOR ALL UPDATES
+
+            //Create Buttons & associated action listeners
+//            JButton w_id = new JButton("Update Worker ID");
+//            w_id.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    updateButtons.remove(forUpdate);
+//
+//                    JTextField update = new JTextField("New Worker ID [Required]"); //text for new worker ID
+//                    //Add components to panel
+//                    updateText.add(wid);
+//                    updateText.add(update);
+//
+//
+//                    JButton applyUpdate = new JButton("Apply Update"); //Button to actually apply update
+//                    updateText.add(applyUpdate);
+//
+//                    //Add panel to frame
+//                    updateButtons.add(updateText);
+//                    applyUpdate.addActionListener(new ActionListener() {
+//                        @Override
+//                        public void actionPerformed(ActionEvent e) {
+//                            try{
+//                                String oldWID = wid.getText();
+//                                String newWID = update.getText();
+//                                if(oldWID.equals("") || newWID.equals(""))
+//                                    throw new Error();
+//                                //TODO actual update here
+//
+//
+//                                showSuccessFrame();
+//                            }catch(Error widError){
+//                                displayError("Current worker ID does not exist or you did not fill in a required field");
+//                            }
+//                            //Remove for next use
+//                            updateText.removeAll();
+//                            updateButtons.removeAll();
+//
+//
+//                        }
+//                    });
+//                }
+//            });
+            JButton name = new JButton("Update Worker's Name");
+            name.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    try{
-                        String widInput = w_id.getText();
-                        String nameInput = name.getText();
-                        float payrateInput = Float.parseFloat(payrate.getText());
-                        String emailInput = email.getText();
-                        String phoneInput = phone.getText();
-                        String addressInput = address.getText();
+                    updateButtons.dispose();
+//                    updateButtons.remove(forUpdate);
+                    JTextField update = new JTextField("Worker's New Name [Required]"); //text for new Worker name
+                    //Add components to panel
+                    updateText.add(wid);
+                    updateText.add(update);
 
-                        if(widInput.equals("") || nameInput.equals("") || emailInput.equals("") || phoneInput.equals("") || addressInput.equals("")){
-                            throw new Error();
+
+                    JButton applyUpdate = new JButton("Apply Update"); //Button to actually apply update
+                    updateText.add(applyUpdate);
+
+                    //Add panel to frame
+                    updateFrame.add(updateText);
+                    displayUpdateFrame(); //Display frame with text entries for user and button to apply changes
+                    applyUpdate.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            try{
+                                String widInput = wid.getText();
+                                String newName = update.getText();
+                                if(widInput.equals("") || newName.equals(""))
+                                    throw new Error();
+                                //TODO actual update here
+
+
+                                updateFrame.dispose();
+                                showSuccessFrame();
+                            }catch(Error nameError){
+                                updateFrame.dispose();
+                                displayError("Current worker ID does not exist or you did not fill in a required field");
+                            }
+
+
+                            //Remove for next use
+                            updateText.removeAll();
+                            updateFrame.removeAll();
+
                         }
+                    });
+                }
+            });
+            JButton payrate = new JButton("Update Worker's Pay Rate");
+            payrate.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateButtons.dispose();
+//                    updateButtons.remove(forUpdate);
+                    JTextField update = new JTextField("Worker's New Pay Rate [Required]"); //text for new worker pay rate
+                    //Add components to panel
+                    updateText.add(wid);
+                    updateText.add(update);
 
-                        //actually updates here
 
-                        showSuccessFrame();
+                    JButton applyUpdate = new JButton("Apply Update"); //Button to actually apply update
+                    updateText.add(applyUpdate);
 
-                    }catch(Error e1){
-                        deleteFrame.dispose();
-                        JOptionPane.showMessageDialog(null, "You entered the wrong type of input, did not fill in a required field, entered a duplicate, or" +
-                                " entered a WorkerID that does not exist", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                    //Add panel to frame
+                    updateFrame.add(updateText);
+                    displayUpdateFrame();
+                    applyUpdate.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            try{
+                                String widInput = wid.getText();
+                                float newPay = Float.parseFloat(update.getText());
+                                if(widInput.equals(""))
+                                    throw new Error();
+
+                                //TODO actual update here
+
+                                updateFrame.dispose();
+                                showSuccessFrame();
+                            }catch(Error payError){
+                                updateFrame.dispose();
+                                displayError("Current worker ID does not exist, you did not fill in a required field, or did not input a float for new pay rate");
+                            }
+                            //Remove for next use
+                            updateText.removeAll();
+                            updateFrame.removeAll();
+                        }
+                    });
+
+                }
+            });
+            JButton email = new JButton("Update Worker's Email");
+            email.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateButtons.dispose();
+ //                   updateButtons.remove(forUpdate);
+                    JTextField update = new JTextField("Worker's New Email [Required]"); //text for new worker pay rate
+                    //Add components to panel
+                    updateText.add(wid);
+                    updateText.add(update);
+
+
+                    JButton applyUpdate = new JButton("Apply Update"); //Button to actually apply update
+                    updateText.add(applyUpdate);
+
+                    //Add panel to frame
+                    updateFrame.add(updateText);
+                    displayUpdateFrame();
+                    applyUpdate.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            try{
+                                String widInput = wid.getText();
+                                String newEmail = update.getText();
+                                if(widInput.equals("") || newEmail.equals(""))
+                                    throw new Error();
+
+                                //TODO actual update here
+
+                                updateFrame.dispose();
+                                showSuccessFrame();
+                            }catch(Error payError){
+                                updateFrame.dispose();
+                                displayError("Current worker ID does not exist or you did not fill in a required field");
+                            }
+                            //Remove for next use
+                            updateText.removeAll();
+                            updateFrame.removeAll();
+                        }
+                    });
+                }
+            });
+            JButton phone = new JButton("Update Worker's Phone #");
+            phone.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateButtons.dispose();
+//                    updateButtons.remove(forUpdate);
+                    JTextField update = new JTextField("Worker's New Phone # [Required]"); //text for new worker pay rate
+                    //Add components to panel
+                    updateText.add(wid);
+                    updateText.add(update);
+
+
+                    JButton applyUpdate = new JButton("Apply Update"); //Button to actually apply update
+                    updateText.add(applyUpdate);
+
+                    //Add panel to frame
+                    updateFrame.add(updateText);
+                    displayUpdateFrame();
+                    applyUpdate.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            try{
+                                String widInput = wid.getText();
+                                String newPhone = update.getText();
+                                if(widInput.equals("") || newPhone.equals(""))
+                                    throw new Error();
+
+                                //TODO actual update here
+
+                                updateFrame.dispose();
+                                showSuccessFrame();
+                            }catch(Error payError){
+                                updateFrame.dispose();
+                                displayError("Current worker ID does not exist or you did not fill in a required field");
+                            }
+                            //Remove for next use
+                            updateText.removeAll();
+                            updateFrame.removeAll();
+                        }
+                    });
+                }
+            });
+            JButton address = new JButton("Update Worker's Address");
+            address.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateButtons.dispose();
+                    //updateButtons.remove(forUpdate);
+                    JTextField update = new JTextField("Worker's New Address [Required]"); //text for new worker pay rate
+                    //Add components to panel
+                    updateText.add(wid);
+                    updateText.add(update);
+
+
+                    JButton applyUpdate = new JButton("Apply Update"); //Button to actually apply update
+                    updateText.add(applyUpdate);
+
+                    //Add panel to frame
+                    updateFrame.add(updateText);
+                    displayUpdateFrame();
+                    applyUpdate.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            try{
+                                String widInput = wid.getText();
+                                String newAddress =update.getText();
+                                if(widInput.equals("") || newAddress.equals(""))
+                                    throw new Error();
+
+
+                                //TODO actual update here
+
+
+                                showSuccessFrame();
+                            }catch(Error payError){
+                                displayError("Current worker ID does not exist or you did not fill in a required field");
+                            }
+                            //Remove for next use
+                            updateText.removeAll();
+                            updateFrame.removeAll();
+                        }
+                    });
                 }
             });
 
-            //add textfield components and applyUpdate button to JPanel
-            forUpdate.add(w_id);
+
+            //Add Buttons to JPanel
+//            forUpdate.add(w_id);
             forUpdate.add(name);
             forUpdate.add(payrate);
             forUpdate.add(email);
             forUpdate.add(phone);
             forUpdate.add(address);
-            forUpdate.add(applyUpdate);
 
-            //Add JPanel to JFrame
-            updateFrame.add(forUpdate);
-
-            //set panel as visible
-            this.updateFrame.setVisible(true);
+            //Add JPanel to JWindow & set to visible
+            updateButtons.add(forUpdate);
+            this.updateButtons.setVisible(true);
 
         }
+
+        //Display update Frame for update worker
+        public void displayUpdateFrame(){
+            this.updateFrame.setVisible(true);
+        }
+
+        //Display error text
+        public void displayError(String text){
+            JOptionPane.showMessageDialog(null, text, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
 
         public void joinAnimals(){
             //creating the joinFrame
