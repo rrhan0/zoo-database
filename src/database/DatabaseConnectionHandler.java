@@ -174,7 +174,7 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
-	private Object[][] getTableInfoParam(PreparedStatement ps) throws SQLException {
+	public Object[][] getTableInfoParam(PreparedStatement ps) throws SQLException {
 		ArrayList<Object[]> result = new ArrayList<>();
 
 
@@ -212,7 +212,7 @@ public class DatabaseConnectionHandler {
 
 
 
-	private Object[][] getTableInfo(String projection, String tableName) throws SQLException {
+	public Object[][] getTableInfo(String projection, String tableName) throws SQLException {
 		ArrayList<Object[]> result = new ArrayList<>();
 
 
