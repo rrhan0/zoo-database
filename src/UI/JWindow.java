@@ -2492,39 +2492,7 @@ public class JWindow {
                             VetAttributes[i][j] = String.valueOf(rawResults[i][j]);
                         }
                     }
-//                        Veterinarian [] allVets = dbHandler.getVeterinarianInfo(col);
-//                        String [][] VetAttributes = new String[allVets.length][numCols];
                     Object[] columnNames = colNames.toArray();
-//                        for (int i = 0; i < allVets.length; i++) {
-//                            int j = 0;
-//                            if (col0) {
-//                                VetAttributes[i][j] = allVets[i].getW_id();
-//                                j++;
-//                            }
-//                            if (col1) {
-//                                VetAttributes[i][j] = allVets[i].getName();
-//                                j++;
-//                            }
-//                            if (col2) {
-//                                VetAttributes[i][j] = Float.toString(allVets[i].getPay_rate());
-//                                j++;
-//                            }
-//                            if (col3) {
-//                                VetAttributes[i][j] = allVets[i].getAddress();
-//                                j++;
-//                            }
-//                            if (col4) {
-//                                VetAttributes[i][j] = allVets[i].getEmail();
-//                                j++;
-//                            }
-//                            if (col5) {
-//                                VetAttributes[i][j] = allVets[i].getPhone();
-//                                j++;
-//                            }
-//                            if (col6) {
-//                                VetAttributes[i][j] = allVets[i].getSpecialization();
-//                            }
-//                        }
                     resetCols();
                     //Make JTable to display projected table
                     JTable vetProj = new JTable(VetAttributes, columnNames);
@@ -3486,51 +3454,1157 @@ public class JWindow {
     }
 
     public void projectZookeepers() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Zookeepers Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forZookeeperProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox wid = new JCheckBox("Worker ID");
+        JCheckBox name = new JCheckBox("Name");
+        JCheckBox pay = new JCheckBox("Pay Rate");
+        JCheckBox address = new JCheckBox("Address");
+        JCheckBox email = new JCheckBox("Email");
+        JCheckBox phone = new JCheckBox("Phone");
+        //initialize listeners for each checkbox
+        wid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place zero
+                col0 = true;
+            }
+        });
+        name.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 1
+                col1 = true;
+            }
+        });
+        pay.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 2
+                col2 = true;
+            }
+        });
+        address.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 3
+                col3 = true;
+            }
+        });
+        email.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 4
+                col4 = true;
+            }
+        });
+        phone.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 5
+                col5 = true;
+            }
+        });
+
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if (col0) {
+                    col.add(Constants.ZOO_W_ID);
+                    numCols++;
+                    colNames.add("Worker ID");
+                }
+                if (col1) {
+                    col.add(Constants.NAME);
+                    numCols++;
+                    colNames.add("Name");
+                }
+                if (col2) {
+                    col.add(Constants.PAY_RATE);
+                    numCols++;
+                    colNames.add("Pay Rate");
+                }
+                if (col3) {
+                    col.add(Constants.ADDRESS);
+                    numCols++;
+                    colNames.add("Address");
+                }
+                if (col4) {
+                    col.add(Constants.EMAIL);
+                    numCols++;
+                    colNames.add("Email");
+                }
+                if (col5) {
+                    col.add(Constants.PHONE);
+                    numCols++;
+                    colNames.add("Phone");
+                }
+
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection, "ZOOKEEPERS z, WORKERS w WHERE z.W_ID = w.W_ID");
+                    String[][] zookeeperAttributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++){
+                        for(int j = 0; j < rawResults[0].length; j++){
+                            zookeeperAttributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable zookeeperProj = new JTable(zookeeperAttributes,columnNames);
+                    JScrollPane zookeeperPane = new JScrollPane(zookeeperProj);
+                    zookeeperPane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(zookeeperPane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+
+        //add checkboxes and button
+        forZookeeperProjection.add(wid);
+        forZookeeperProjection.add(name);
+        forZookeeperProjection.add(pay);
+        forZookeeperProjection.add(address);
+        forZookeeperProjection.add(email);
+        forZookeeperProjection.add(phone);
+        forZookeeperProjection.add(applyProj);
+
+        //add panel to frame and display
+        checkBoxFrame.add(forZookeeperProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectVendors() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Vendors Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox wid = new JCheckBox("Worker ID");
+        JCheckBox name = new JCheckBox("Name");
+        JCheckBox pay = new JCheckBox("Pay Rate");
+        JCheckBox address = new JCheckBox("Address");
+        JCheckBox email = new JCheckBox("Email");
+        JCheckBox phone = new JCheckBox("Phone");
+        //initialize listeners for each checkbox
+        wid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place zero
+                col0 = true;
+            }
+        });
+        name.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 1
+                col1 = true;
+            }
+        });
+        pay.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 2
+                col2 = true;
+            }
+        });
+        address.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 3
+                col3 = true;
+            }
+        });
+        email.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 4
+                col4 = true;
+            }
+        });
+        phone.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 5
+                col5 = true;
+            }
+        });
+
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if(col0) {
+                    col.add(Constants.VENDOR_W_ID);
+                    numCols++;
+                    colNames.add("Worker ID");
+                }
+                if(col1) {
+                    col.add(Constants.NAME);
+                    numCols++;
+                    colNames.add("Name");
+                }
+                if(col2) {
+                    col.add(Constants.PAY_RATE);
+                    numCols++;
+                    colNames.add("Pay Rate");
+                }
+                if(col3) {
+                    col.add(Constants.ADDRESS);
+                    numCols++;
+                    colNames.add("Address");
+                }
+                if(col4) {
+                    col.add(Constants.EMAIL);
+                    numCols++;
+                    colNames.add("Email");
+                }
+                if(col5) {
+                    col.add(Constants.PHONE);
+                    numCols++;
+                    colNames.add("Phone");
+                }
+
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection,"VENDORS v, WORKERS w WHERE v.W_ID = w.W_ID");
+                    String[][] attributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++) {
+                        for(int j = 0; j< rawResults[0].length;j++) {
+                            attributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable proj = new JTable(attributes, columnNames);
+                    JScrollPane pane = new JScrollPane(proj);
+                    pane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(pane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+
+        //add checkboxes and button
+        forProjection.add(wid);
+        forProjection.add(name);
+        forProjection.add(pay);
+        forProjection.add(address);
+        forProjection.add(email);
+        forProjection.add(phone);
+        forProjection.add(applyProj);
+
+        //add panel to frame and display
+        checkBoxFrame.add(forProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectShops() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Shops Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox pid = new JCheckBox("Place ID");
+        JCheckBox name = new JCheckBox("Shop Name");
+        JCheckBox type = new JCheckBox("Shop Type");
+        //initialize listeners for each checkbox
+        pid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place zero
+                col0 = true;
+            }
+        });
+        name.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 1
+                col1 = true;
+            }
+        });
+        type.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 2
+                col2 = true;
+            }
+        });
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if(col0){
+                    col.add(Constants.P_ID);
+                    numCols++;
+                    colNames.add("Place ID");
+                }
+                if(col1){
+                    col.add(Constants.NAME);
+                    numCols++;
+                    colNames.add("Shop Name");
+                }
+                if(col2){
+                    col.add(Constants.TYPE);
+                    numCols++;
+                    colNames.add("Shop Type");
+                }
+
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection,"SHOPS");
+                    String[][] attributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++) {
+                        for(int j = 0; j< rawResults[0].length;j++) {
+                            attributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable proj = new JTable(attributes, columnNames);
+                    JScrollPane pane = new JScrollPane(proj);
+                    pane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(pane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+        forProjection.add(pid);
+        forProjection.add(name);
+        forProjection.add(type);
+        forProjection.add(applyProj);
+
+        //add panel to frame and display
+        checkBoxFrame.add(forProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectItems() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Items Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox iid = new JCheckBox("Item ID");
+        JCheckBox pid = new JCheckBox("Place ID");
+        JCheckBox name = new JCheckBox("Name");
+        JCheckBox stock = new JCheckBox("Stock");
+        JCheckBox price = new JCheckBox("Price");
+        //action listeners
+        iid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col0 = true;
+            }
+        });
+        pid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col1 = true;
+            }
+        });
+        name.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col2 = true;
+            }
+        });
+        stock.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col3 = true;
+            }
+        });
+        price.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col4 = true;
+            }
+        });
+
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if(col0) {
+                    col.add(Constants.I_ID);
+                    numCols++;
+                    colNames.add("Item ID");
+                }
+                if(col1) {
+                    col.add(Constants.P_ID);
+                    numCols++;
+                    colNames.add("Place ID");
+                }
+                if(col2) {
+                    col.add(Constants.NAME);
+                    numCols++;
+                    colNames.add("Name");
+                }
+                if(col3) {
+                    col.add(Constants.STOCK);
+                    numCols++;
+                    colNames.add("Stock");
+                }
+                if(col4) {
+                    col.add(Constants.PRICE);
+                    numCols++;
+                    colNames.add("Price");
+                }
+
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection,"ITEMS");
+                    String[][] attributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++) {
+                        for(int j = 0; j< rawResults[0].length;j++) {
+                            attributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable proj = new JTable(attributes, columnNames);
+                    JScrollPane pane = new JScrollPane(proj);
+                    pane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(pane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+
+        //add checkboxes to button
+        forProjection.add(iid);
+        forProjection.add(pid);
+        forProjection.add(name);
+        forProjection.add(stock);
+        forProjection.add(price);
+        forProjection.add(applyProj);
+
+        //add panel to frame and display
+        checkBoxFrame.add(forProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectAssigned_to() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Assigned To Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox wid = new JCheckBox("Worker ID");
+        JCheckBox pid = new JCheckBox("Place ID");
+        wid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place zero
+                col0 = true;
+            }
+        });
+        pid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 1
+                col1 = true;
+            }
+        });
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if(col0) {
+                    col.add(Constants.W_ID);
+                    numCols++;
+                    colNames.add("Worker ID");
+                }
+                if(col1) {
+                    col.add(Constants.P_ID);
+                    numCols++;
+                    colNames.add("Place ID");
+                }
+
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection,"ASSIGNED_TO");
+                    String[][] attributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++) {
+                        for(int j = 0; j< rawResults[0].length;j++) {
+                            attributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable proj = new JTable(attributes, columnNames);
+                    JScrollPane pane = new JScrollPane(proj);
+                    pane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(pane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+
+        forProjection.add(wid);
+        forProjection.add(pid);
+        forProjection.add(applyProj);
+        checkBoxFrame.add(forProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectcohab() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Cohabitates With Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox aid1 = new JCheckBox("Animal ID #1");
+        JCheckBox aid2 = new JCheckBox("Animal ID #2");
+        aid1.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col0 = true;
+            }
+        });
+        aid2.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col1 = true;
+            }
+        });
+
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if(col0) {
+                    col.add("a_id1");
+                    numCols++;
+                    colNames.add("Animal ID #1");
+                }
+                if(col1) {
+                    col.add("a_id2");
+                    numCols++;
+                    colNames.add("Animal ID #2");
+                }
+
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection,"COHABITATES_WITH");
+                    String[][] attributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++) {
+                        for(int j = 0; j< rawResults[0].length;j++) {
+                            attributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable proj = new JTable(attributes, columnNames);
+                    JScrollPane pane = new JScrollPane(proj);
+                    pane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(pane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+        forProjection.add(aid1);
+        forProjection.add(aid2);
+        forProjection.add(applyProj);
+        checkBoxFrame.add(forProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectFeeds() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Feeds Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox wid = new JCheckBox("Worker ID");
+        JCheckBox aid = new JCheckBox("Animal ID");
+        //initialize listeners
+        wid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col0 = true;
+            }
+        });
+        aid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col1 = true;
+            }
+        });
+
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if(col0) {
+                    col.add(Constants.W_ID);
+                    numCols++;
+                    colNames.add("Worker ID");
+                }
+                if(col1) {
+                    col.add(Constants.A_ID);
+                    numCols++;
+                    colNames.add("Animal ID");
+                }
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection,"FEEDS");
+                    String[][] attributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++) {
+                        for(int j = 0; j< rawResults[0].length;j++) {
+                            attributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable proj = new JTable(attributes, columnNames);
+                    JScrollPane pane = new JScrollPane(proj);
+                    pane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(pane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+
+        //add checkboxes and button
+        forProjection.add(wid);
+        forProjection.add(aid);
+        forProjection.add(applyProj);
+        //add panel to frame and display
+        checkBoxFrame.add(forProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectLocated() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Located At Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox oid = new JCheckBox("Order ID");
+        JCheckBox pid = new JCheckBox("Place ID");
+        oid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col0 = true;
+            }
+        });
+        pid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col1 = true;
+            }
+        });
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if(col0) {
+                    col.add(Constants.O_ID);
+                    numCols++;
+                    colNames.add("Order ID");
+                }
+                if(col1) {
+                    col.add(Constants.P_ID);
+                    numCols++;
+                    colNames.add("Place ID");
+                }
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection,"LOCATED_AT");
+                    String[][] attributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++) {
+                        for(int j = 0; j< rawResults[0].length;j++) {
+                            attributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable proj = new JTable(attributes, columnNames);
+                    JScrollPane pane = new JScrollPane(proj);
+                    pane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(pane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+
+        //add checkboxes and button
+        forProjection.add(oid);
+        forProjection.add(pid);
+        forProjection.add(applyProj);
+
+        //add panel to frame and display
+        checkBoxFrame.add(forProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectMade() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Made From Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox aid = new JCheckBox("Animal ID");
+        JCheckBox name = new JCheckBox("Name");
+        JCheckBox oid = new JCheckBox("Order ID");
+        aid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col0 = true;
+            }
+        });
+        name.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col1 = true;
+            }
+        });
+        oid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col2 = true;
+            }
+        });
+
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if(col0) {
+                    col.add(Constants.A_ID);
+                    numCols++;
+                    colNames.add("Animal ID");
+                }
+                if(col1) {
+                    col.add(Constants.NAME);
+                    numCols++;
+                    colNames.add("Name");
+                }
+                if(col2) {
+                    col.add(Constants.O_ID);
+                    numCols++;
+                    colNames.add("Order ID");
+                }
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection,"MADE_FROM");
+                    String[][] attributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++) {
+                        for(int j = 0; j< rawResults[0].length;j++) {
+                            attributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable proj = new JTable(attributes, columnNames);
+                    JScrollPane pane = new JScrollPane(proj);
+                    pane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(pane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+        //add checkboxes and button
+        forProjection.add(aid);
+        forProjection.add(name);
+        forProjection.add(oid);
+        forProjection.add(applyProj);
+
+        //add panel to frame and display
+        checkBoxFrame.add(forProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectMaintains() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Maintains Health Of Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox wid = new JCheckBox("Worker ID");
+        JCheckBox aid = new JCheckBox("Animal ID");
+        //initialize listeners
+        wid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col0 = true;
+            }
+        });
+        aid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col1 = true;
+            }
+        });
+
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if(col0) {
+                    col.add(Constants.W_ID);
+                    numCols++;
+                    colNames.add("Worker ID");
+                }
+                if(col1) {
+                    col.add(Constants.A_ID);
+                    numCols++;
+                    colNames.add("Animal ID");
+                }
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection,"MAINTAINS_HEALTH_OF");
+                    String[][] attributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++) {
+                        for(int j = 0; j< rawResults[0].length;j++) {
+                            attributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable proj = new JTable(attributes, columnNames);
+                    JScrollPane pane = new JScrollPane(proj);
+                    pane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(pane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+
+        //add checkboxes and button
+        forProjection.add(wid);
+        forProjection.add(aid);
+        forProjection.add(applyProj);
+        //add panel to frame and display
+        checkBoxFrame.add(forProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectStoredAt() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Stored At Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox aid = new JCheckBox("Animal ID");
+        JCheckBox name = new JCheckBox("Name");
+        JCheckBox pid = new JCheckBox("Place ID");
+        aid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col0=true;
+            }
+        });
+        name.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col1=true;
+            }
+        });
+        pid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                col2=true;
+            }
+        });
+
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if(col0) {
+                    col.add(Constants.A_ID);
+                    numCols++;
+                    colNames.add("Animal ID");
+                }
+                if(col1) {
+                    col.add(Constants.NAME);
+                    numCols++;
+                    colNames.add("Name");
+                }
+                if(col2) {
+                    col.add(Constants.P_ID);
+                    numCols++;
+                    colNames.add("Place ID");
+                }
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection,"STORED_AT");
+                    String[][] attributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++) {
+                        for(int j = 0; j< rawResults[0].length;j++) {
+                            attributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable proj = new JTable(attributes, columnNames);
+                    JScrollPane pane = new JScrollPane(proj);
+                    pane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(pane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+
+        //add checkboxes and button
+        forProjection.add(aid);
+        forProjection.add(name);
+        forProjection.add(pid);
+        forProjection.add(applyProj);
+        //add panel to frame and display
+        checkBoxFrame.add(forProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectWorksAt() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Works At Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox wid = new JCheckBox("Worker ID");
+        JCheckBox pid = new JCheckBox("Place ID");
+        wid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place zero
+                col0 = true;
+            }
+        });
+        pid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place 1
+                col1 = true;
+            }
+        });
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if(col0) {
+                    col.add(Constants.W_ID);
+                    numCols++;
+                    colNames.add("Worker ID");
+                }
+                if(col1) {
+                    col.add(Constants.P_ID);
+                    numCols++;
+                    colNames.add("Place ID");
+                }
+
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection,"WORKS_AT");
+                    String[][] attributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i< rawResults.length;i++) {
+                        for(int j = 0; j< rawResults[0].length;j++) {
+                            attributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable proj = new JTable(attributes, columnNames);
+                    JScrollPane pane = new JScrollPane(proj);
+                    pane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(pane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+
+        forProjection.add(wid);
+        forProjection.add(pid);
+        forProjection.add(applyProj);
+        checkBoxFrame.add(forProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void displayProjection(JScrollPane table) {
