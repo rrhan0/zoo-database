@@ -141,7 +141,6 @@ CREATE TABLE Items(
     name VARCHAR(30) NOT NULL,
     stock INTEGER NOT NULL,
     price FLOAT NOT NULL,
-    type VARCHAR(20),
     FOREIGN KEY (p_id) REFERENCES Shops(p_id)
 );
 
@@ -262,6 +261,27 @@ INTO Workers(w_id, name, pay_rate, address, email, phone)
 VALUES ('5', 'Richard Han', 15.40, '3579 somewhere place', 'richardh@domain.com','6043215678');
 
 INSERT
+INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('6', 'Steve Irwin', 30.51, 'Australia', 'steve@domain.com','9999999999');
+
+INSERT INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('7', 'Daniel Yuan', 18.00, '3579 somewhere place', 'daniel@domain.com', '6049876543');
+
+INSERT INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('8', 'Mia Park', 17.50, '2468 new street', 'miapark@domain.com', '6042345678');
+
+INSERT INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('9', 'Lisa Kim', 14.00, '2468 Elm St', 'lisa.kim@domain.com', '5551234567');
+
+INSERT INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('10', 'Daniel Park', 14.50, 'blah St', 'danielpark@domain.com', '6043216543');
+
+INSERT INTO Workers(w_id, name, pay_rate, address, email, phone)
+VALUES ('11', 'Alex Kim', 15.00, '789 3rd Ave', 'alex.kim@domain.com', '6047891234');
+
+
+
+INSERT
 INTO Computers2(model, manufacturer, type)
 VALUES ('Macbook Air 2020', 'Apple', 'Laptop');
 
@@ -280,6 +300,10 @@ VALUES ('Macbook Air 2017', 'Apple', 'Laptop');
 INSERT
 INTO Computers2(model, manufacturer, type)
 VALUES ('Macbook Air 2016', 'Apple', 'Laptop');
+
+INSERT
+INTO Computers2(model, manufacturer, type)
+VALUES ('Dell XPS 13', 'Dell', 'Desktop');
 
 INSERT
 INTO Computers1(c_id, w_id, model)
@@ -302,6 +326,14 @@ INTO Computers1(c_id, w_id, model)
 VALUES ('5', '5', 'Macbook Air 2016');
 
 INSERT
+INTO Computers1(c_id, w_id, model)
+VALUES ('6', NULL, 'Dell XPS 13');
+
+INSERT
+INTO Computers1(c_id, w_id, model)
+VALUES ('7', NULL, 'Dell XPS 13');
+
+INSERT
 INTO Zookeepers(w_id)
 VALUES ('1');
 
@@ -320,6 +352,10 @@ VALUES ('4');
 INSERT
 INTO Zookeepers(w_id)
 VALUES ('5');
+
+INSERT
+INTO Zookeepers(w_id)
+VALUES ('6');
 
 INSERT
 INTO Vendors(w_id)
@@ -362,6 +398,26 @@ INTO Veterinarians(w_id, specialization)
 VALUES ('5', 'bears');
 
 INSERT
+INTO Veterinarians(w_id, specialization)
+VALUES ('7', 'large felines');
+
+INSERT
+INTO Veterinarians(w_id, specialization)
+VALUES ('8', 'small felines');
+
+INSERT
+INTO Veterinarians(w_id, specialization)
+VALUES ('9', 'birds');
+
+INSERT
+INTO Veterinarians(w_id, specialization)
+VALUES ('10', 'reptiles');
+
+INSERT
+INTO Veterinarians(w_id, specialization)
+VALUES ('11', 'bears');
+
+INSERT
 INTO Habitats2(biome, temperature, humidity)
 VALUES ('Asian Taiga', 32, 70);
 
@@ -402,24 +458,24 @@ INTO Habitats1(p_id, name, biome, area)
 VALUES ('005', 'Grizzly Bear Habitat', 'North American Woodlands', 40 );
 
 INSERT
-INTO Shops(p_id, type)
-VALUES ('101', 'Clothing');
+INTO Shops(p_id, name, type)
+VALUES ('101', 'Clothing Store', 'Clothing');
 
 INSERT
-INTO Shops(p_id, type)
-VALUES ('102', 'Drinks');
+INTO Shops(p_id, name, type)
+VALUES ('102', 'Drinks Store', 'Drinks');
 
 INSERT
-INTO Shops(p_id, type)
-VALUES ('103', 'Stuffed Animals');
+INTO Shops(p_id, name, type)
+VALUES ('103', 'Plushy Store', 'Stuffed Animals');
 
 INSERT
-INTO Shops(p_id, type)
-VALUES ('104', 'Balloons');
+INTO Shops(p_id, name, type)
+VALUES ('104', 'Balloon Store', 'Balloons');
 
 INSERT
-INTO Shops(p_id, type)
-VALUES ('105', 'Food');
+INTO Shops(p_id, name, type)
+VALUES ('105', 'Food Store', 'Food');
 
 INSERT
 INTO Storage_Units(p_id, name, temperature)
@@ -442,25 +498,25 @@ INTO Storage_Units(p_id, name, temperature)
 VALUES ('205', 'Unit 5', 5);
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price, type)
-VALUES ('0001', '101', 'T-Shirt', 50, 24.99, 'clothing');
+INTO Items(i_id, p_id, name, stock, price)
+VALUES ('0001', '101', 'T-Shirt', 50, 24.99);
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price, type)
-VALUES ('0002', '102', 'Soda Bottle', 20, 3.50, 'food');
+INTO Items(i_id, p_id, name, stock, price)
+VALUES ('0002', '102', 'Soda Bottle', 20, 3.50);
 
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price, type)
-VALUES ('0003', '103', 'Penguin Stuffie', 10, 14.99, 'toy');
+INTO Items(i_id, p_id, name, stock, price)
+VALUES ('0003', '103', 'Penguin Stuffie', 10, 14.99);
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price, type)
-VALUES ('0004', '104', 'Bear Balloon', 30, 4.99, 'toy');
+INTO Items(i_id, p_id, name, stock, price)
+VALUES ('0004', '104', 'Bear Balloon', 30, 4.99);
 
 INSERT
-INTO Items(i_id, p_id, name, stock, price, type)
-VALUES ('0005', '105', 'Hamburger', 40, 6.99, 'food');
+INTO Items(i_id, p_id, name, stock, price)
+VALUES ('0005', '105', 'Hamburger', 40, 6.99);
 
 INSERT
 INTO Animals2(species, genus)
@@ -601,6 +657,27 @@ VALUES ('4', '1004');
 INSERT
 INTO Feeds(w_id, a_id)
 VALUES ('5', '1005');
+
+INSERT
+INTO Feeds(w_id, a_id)
+VALUES ('6', '1001');
+
+INSERT
+INTO Feeds(w_id, a_id)
+VALUES ('6', '1002');
+
+INSERT
+INTO Feeds(w_id, a_id)
+VALUES ('6', '1003');
+
+INSERT
+INTO Feeds(w_id, a_id)
+VALUES ('6', '1004');
+
+INSERT
+INTO Feeds(w_id, a_id)
+VALUES ('6', '1005');
+
 
 INSERT
 INTO Maintains_Health_of(w_id, a_id)
