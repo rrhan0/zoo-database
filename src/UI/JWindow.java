@@ -1,6 +1,9 @@
 package UI;
 
 import database.DatabaseConnectionHandler;
+import model.PreppedFood;
+import model.Shop;
+import model.StorageUnit;
 import model.Veterinarian;
 
 import javax.swing.*;
@@ -35,8 +38,8 @@ public class JWindow {
 
         public void initialize() {
                 this.dbHandler = new DatabaseConnectionHandler();
-               //dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
-                dbHandler.login(System.getenv("ora_arl20"), System.getenv("a43629526"));
+               dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
+//                dbHandler.login(System.getenv("ora_arl20"), System.getenv("a43629526"));
                 //frame creation
                 defaultFrame = new JFrame();
 
@@ -131,21 +134,153 @@ public class JWindow {
                 JButton stored_atUpdate = new JButton("UPDATE");
                 JButton works_atUpdate = new JButton("UPDATE");
 
+                //Workers update button will actually do something :D
+                workersUpdate.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        updateWorkers();
+                    }
+                });
 
                 //Initialize VIEW buttons and action listeners
+                JButton storageView = new JButton("VIEW TABLE");
+                JButton preppedFoodView = new JButton("VIEW TABLE");
+                JButton rawFoodOrdersView = new JButton("VIEW TABLE");
+                JButton computersView = new JButton("VIEW TABLE");
+                JButton animalsView = new JButton("VIEW TABLE");
+                JButton habitatsView = new JButton("VIEW TABLE");
+                JButton workersView = new JButton("VIEW TABLE");
+                JButton zookeepersView = new JButton("VIEW TABLE");
                 JButton vetsView = new JButton("VIEW TABLE");
+                JButton vendorsView = new JButton("VIEW TABLE");
+                JButton shopsView = new JButton("VIEW TABLE");
+                JButton itemsView = new JButton("VIEW TABLE");
+                JButton assigned_toView = new JButton("VIEW TABLE");
+                JButton cohabitates_withView = new JButton("VIEW TABLE");
+                JButton feedsView = new JButton("VIEW TABLE");
+                JButton located_atView = new JButton("VIEW TABLE");
+                JButton made_fromView = new JButton("VIEW TABLE");
+                JButton maintains_healthView = new JButton("VIEW TABLE");
+                JButton stored_atView = new JButton("VIEW TABLE");
+                JButton works_atView = new JButton("VIEW TABLE");
+                storageView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewStorage();
+                    }
+                });
+                preppedFoodView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewPreppedFood();
+                    }
+                });
+                rawFoodOrdersView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewRawFoodOrders();
+                    }
+                });
+                computersView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewComputers();
+                    }
+                });
+                animalsView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewAnimals();
+                    }
+                });
+                habitatsView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewHabitats();
+                    }
+                });
+                workersView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewWorkers();
+                    }
+                });
+                zookeepersView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewZookeepers();
+                    }
+                });
                 vetsView.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         viewVets();
                     }
                 });
-
-                //Workers update button will actually do something :D
-                workersUpdate.addActionListener(new ActionListener() {
+                vendorsView.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        updateWorkers();
+                        viewVendors();
+                    }
+                });
+                shopsView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewShops();
+                    }
+                });
+                itemsView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewItems();
+                    }
+                });
+                assigned_toView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewAssigned_to();
+                    }
+                });
+                cohabitates_withView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewCohabitates_with();
+                    }
+                });
+                feedsView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewFeeds();
+                    }
+                });
+                located_atView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewLocated_at();
+                    }
+                });
+                made_fromView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewMade_from();
+                    }
+                });
+                maintains_healthView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewMaintains_health();
+                    }
+                });
+                stored_atView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewStored_at();
+                    }
+                });
+                works_atView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewWorks_at();
                     }
                 });
 
@@ -180,6 +315,7 @@ public class JWindow {
                 storageUnits.add(storageInsert);
                 storageUnits.add(storageDelete);
                 storageUnits.add(storageUpdate);
+                storageUnits.add(storageView);
                 storageUnits.setLayout((new FlowLayout()));
                 storageUnits.setBackground(Color.DARK_GRAY);
 
@@ -188,6 +324,7 @@ public class JWindow {
                 preppedFood.add(preppedFoodInsert);
                 preppedFood.add(preppedFoodDelete);
                 preppedFood.add(preppedFoodUpdate);
+                preppedFood.add(preppedFoodView);
                 preppedFood.setLayout(new FlowLayout());
                 preppedFood.setBackground(Color.DARK_GRAY);
 
@@ -196,6 +333,7 @@ public class JWindow {
                 rawFoodOrders.add(rawFoodOrdersInsert);
                 rawFoodOrders.add(rawFoodOrdersDelete);
                 rawFoodOrders.add(rawFoodOrdersUpdate);
+                rawFoodOrders.add(rawFoodOrdersView);
                 rawFoodOrders.setLayout(new FlowLayout());
                 rawFoodOrders.setBackground(Color.DARK_GRAY);
 
@@ -204,6 +342,7 @@ public class JWindow {
                 computers.add(computersInsert);
                 computers.add(computersDelete);
                 computers.add(computersUpdate);
+                computers.add(computersView);
                 computers.setLayout(new FlowLayout());
                 computers.setBackground(Color.DARK_GRAY);
 
@@ -212,6 +351,7 @@ public class JWindow {
                 animals.add(animalsInsert);
                 animals.add(animalsDelete);
                 animals.add(animalsUpdate);
+                animals.add(animalsView);
                 animals.add(animalsPreppedFoodJoin);
                 animals.setLayout(new FlowLayout());
                 animals.setBackground(Color.DARK_GRAY);
@@ -221,6 +361,7 @@ public class JWindow {
                 habitats.add(habitatsInsert);
                 habitats.add(habitatsDelete);
                 habitats.add(habitatsUpdate);
+                habitats.add(habitatsView);
                 habitats.setLayout(new FlowLayout());
                 habitats.setBackground(Color.DARK_GRAY);
 
@@ -229,6 +370,7 @@ public class JWindow {
                 workers.add(workerInsert);
                 workers.add(workerDelete);
                 workers.add(workersUpdate);
+                workers.add(workersView);
                 workers.setLayout(new FlowLayout());
                 workers.setBackground(Color.DARK_GRAY);
 
@@ -237,6 +379,7 @@ public class JWindow {
                 vendors.add(vendorsInsert);
                 vendors.add(vendorsDelete);
                 vendors.add(vendorsUpdate);
+                vendors.add(vendorsView);
                 vendors.setLayout(new FlowLayout());
                 vendors.setBackground(Color.DARK_GRAY);
 
@@ -245,6 +388,7 @@ public class JWindow {
                 zookeepers.add(zookeepersInsert);
                 zookeepers.add(zookeepersDelete);
                 zookeepers.add(zookeepersUpdate);
+                zookeepers.add(zookeepersView);
                 zookeepers.setLayout(new FlowLayout());
                 zookeepers.setBackground(Color.DARK_GRAY);
 
@@ -263,6 +407,7 @@ public class JWindow {
                 shops.add(shopsInsert);
                 shops.add(shopsDelete);
                 shops.add(shopsUpdate);
+                shops.add(shopsView);
                 shops.setLayout(new FlowLayout());
                 shops.setBackground(Color.DARK_GRAY);
 
@@ -271,6 +416,7 @@ public class JWindow {
                 items.add(itemsInsert);
                 items.add(itemsDelete);
                 items.add(itemsUpdate);
+                items.add(itemsView);
                 items.setLayout(new FlowLayout());
                 items.setBackground(Color.DARK_GRAY);
 
@@ -279,14 +425,16 @@ public class JWindow {
                 assigned_to.add(assigned_toInsert);
                 assigned_to.add(assigned_toDelete);
                 assigned_to.add(assigned_toUpdate);
-                items.setLayout(new FlowLayout());
-                items.setBackground(Color.DARK_GRAY);
+                assigned_to.add(assigned_toView);
+                assigned_to.setLayout(new FlowLayout());
+                assigned_to.setBackground(Color.DARK_GRAY);
 
                 //cohabitates_with tab
                 JPanel cohabitates_with = new JPanel();
                 cohabitates_with.add(cohabitates_withInsert);
                 cohabitates_with.add(cohabitates_withDelete);
                 cohabitates_with.add(cohabitates_withUpdate);
+                cohabitates_with.add(cohabitates_withView);
                 cohabitates_with.setLayout(new FlowLayout());
                 cohabitates_with.setBackground(Color.DARK_GRAY);
 
@@ -295,6 +443,7 @@ public class JWindow {
                 feeds.add(feedsInsert);
                 feeds.add(feedsDelete);
                 feeds.add(feedsUpdate);
+                feeds.add(feedsView);
                 feeds.setLayout(new FlowLayout());
                 feeds.setBackground(Color.DARK_GRAY);
 
@@ -303,6 +452,7 @@ public class JWindow {
                 located_at.add(located_atInsert);
                 located_at.add(located_atDelete);
                 located_at.add(located_atUpdate);
+                located_at.add(located_atView);
                 located_at.setLayout(new FlowLayout());
                 located_at.setBackground(Color.DARK_GRAY);
 
@@ -311,6 +461,7 @@ public class JWindow {
                 made_from.add(made_fromInsert);
                 made_from.add(made_fromDelete);
                 made_from.add(made_fromUpdate);
+                made_from.add(made_fromView);
                 made_from.setLayout(new FlowLayout());
                 made_from.setBackground(Color.DARK_GRAY);
 
@@ -319,6 +470,7 @@ public class JWindow {
                 maintains_health.add(maintains_healthInsert);
                 maintains_health.add(maintains_healthDelete);
                 maintains_health.add(maintains_healthUpdate);
+                maintains_health.add(maintains_healthView);
                 maintains_health.setLayout(new FlowLayout());
                 maintains_health.setBackground(Color.DARK_GRAY);
 
@@ -327,6 +479,7 @@ public class JWindow {
                 stored_at.add(stored_atInsert);
                 stored_at.add(stored_atDelete);
                 stored_at.add(stored_atUpdate);
+                stored_at.add(stored_atView);
                 stored_at.setLayout(new FlowLayout());
                 stored_at.setBackground(Color.DARK_GRAY);
 
@@ -335,6 +488,7 @@ public class JWindow {
                 works_at.add(works_atInsert);
                 works_at.add(works_atDelete);
                 works_at.add(works_atUpdate);
+                works_at.add(works_atView);
                 works_at.setLayout(new FlowLayout());
                 works_at.setBackground(Color.DARK_GRAY);
 
@@ -377,8 +531,8 @@ public class JWindow {
             JTextField w_id = new JTextField("Worker's ID (REQUIRED)", 20); //REQUIRED
             JTextField pay_rate = new JTextField("Pay Rate (REQUIRED)"); //NOT NULL
             JTextField name = new JTextField("Worker's Name (REQUIRED)", 20); //NOT NULL
-            JTextField email = new JTextField("Worker's email"); //UNIQUE
-            JTextField phone = new JTextField("Worker's phone", 13); //UNIQUE
+            JTextField email = new JTextField("Worker's email (REQUIRED)"); //UNIQUE
+            JTextField phone = new JTextField("Worker's phone (REQUIRED)", 13); //UNIQUE
             JTextField address = new JTextField("Worker's Address (REQUIRED)", 30); //NOT NULL
             JTextField specialization = new JTextField("Veterinarian's Specialization", 20);
 
@@ -485,7 +639,7 @@ public class JWindow {
             //set frame as visible
             this.deleteFrame.setVisible(true);
     }
-
+        //updates worker tuple according to w_id
         public void updateWorkers(){
             //create new frame
             updateFrame = new JFrame();
@@ -494,7 +648,7 @@ public class JWindow {
             updateFrame.setSize(400, 500);
             updateFrame.setLocationRelativeTo(null);
 
-            //TODO create all text fields required for workers
+            // create all text fields required for workers
             JPanel forUpdate = new JPanel(new FlowLayout(FlowLayout.CENTER));
             JTextField w_id = new JTextField("Worker's ID (REQUIRED)", 20); //REQUIRED
             JTextField name = new JTextField("Worker's Name", 20); //NOT NULL
@@ -520,7 +674,7 @@ public class JWindow {
                             throw new Error();
                         }
 
-                        //actually updates here
+                        //TODO actually updates here
 
                         showSuccessFrame();
 
@@ -572,7 +726,7 @@ public class JWindow {
                         if(speciesJoin.equals("")) {
                             throw new Error();
                         }
-                        //show table data here
+                        //todo show table data here
                         showJoinData();
 
                     }catch(Error e2){
@@ -637,7 +791,7 @@ public class JWindow {
 
             try{
                 Veterinarian [] allVets = dbHandler.getVeterinarianInfo(col);
-                vetAttributes = new String[allVets.length][7];
+                vetAttributes = new String[allVets.length][7]; // [number of rows][number of columns]
                 //7 is for number of attributes a vet has
                 for(int row = 0; row<allVets.length; row++){
                     for(int column = 0; column < 7; column++){
@@ -671,11 +825,195 @@ public class JWindow {
 
             //Add table to panel, add panel to frame
             vetTable = new JTable(vetAttributes, columnNames);
-            vetView.add(vetTable);
+            JScrollPane vetScrollPane = new JScrollPane(vetTable);
+            vetScrollPane.setPreferredSize(new Dimension(700, 400));
+            vetView.add(vetScrollPane);
             viewFrame.add(vetView);
 
             //set it visible
             this.viewFrame.setVisible(true);
+        }
+        //
+        public void viewStorage(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Storage Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel storageView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable storageTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.P_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.TEMPERATURE);
+
+            String [][] storageAttributes;
+            String [] columnNames ={"ID", "Name", "Temperature"};
+
+            try{
+                StorageUnit [] allstorage = dbHandler.getStorageUnitInfo(col);
+                storageAttributes = new String[allstorage.length][3]; // 3 = # attributes in StorageUnit
+                for(int row = 0; row < allstorage.length; row++) {
+                    for(int column = 0; column < 3; column++) {
+                        if(column == 0) {
+                            storageAttributes[row][column] = allstorage[row].getP_id();
+                        }else if(column == 1){
+                            String name = allstorage[row].getName();
+                            if(name.isEmpty()){
+                                storageAttributes[row][column] = "N/A";
+                            }else{
+                                storageAttributes[row][column] = allstorage[row].getName();
+                            }
+                        }else{
+                            storageAttributes[row][column] = allstorage[row].getTemperature() + "";
+                        }
+                    }
+                }
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            //add table to panel, add panel to frame
+            storageTable = new JTable(storageAttributes, columnNames);
+            JScrollPane storageScrollPane = new JScrollPane(storageTable);
+            storageScrollPane.setPreferredSize(new Dimension(700,400));
+            storageView.add(storageScrollPane);
+            viewFrame.add(storageView);
+
+            //set visible
+            this.viewFrame.setVisible(true);
+        }
+
+        //view method for prepped_food
+        public void viewPreppedFood(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Prepped Food Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel preppedFoodView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable preppedFoodTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.A_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.WEIGHT);
+
+            String[][] preppedFoodAttributes;
+            String[] columnNames = {"Animal ID", "Food Name", "Food Weight"};
+
+            try{
+                PreppedFood [] allPreppedFood = dbHandler.getPreppedFoodInfo(col);
+                preppedFoodAttributes = new String[allPreppedFood.length][3];
+                for(int row = 0; row < allPreppedFood.length; row++) {
+                    for(int column = 0; column < 3; column++) {
+                        if(column == 0) {
+                            preppedFoodAttributes[row][column] = allPreppedFood[row].getA_id();
+                        } else if (column == 1) {
+                            preppedFoodAttributes[row][column] = allPreppedFood[row].getName();
+                        } else{
+                            String weight = allPreppedFood[row].getWeight() + "";
+                            if(weight.isEmpty()) {
+                                preppedFoodAttributes[row][column] = "N/A";
+                            }else {
+                                preppedFoodAttributes[row][column] = allPreppedFood[row].getWeight() + "";
+                            }
+                        }
+                    }
+                }
+            }catch (Exception e) { //weird. never catches SQLexception when all the other ones do
+                throw new RuntimeException(e);
+            }
+            //add table to panel, add panel to frame
+            preppedFoodTable = new JTable(preppedFoodAttributes, columnNames);
+            JScrollPane preppedFoodScrollPane = new JScrollPane(preppedFoodTable);
+            preppedFoodScrollPane.setPreferredSize(new Dimension(700, 400));
+            preppedFoodView.add(preppedFoodScrollPane);
+            viewFrame.add(preppedFoodView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewRawFoodOrders(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Veterinarian Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+        }
+
+        public void viewComputers(){
+
+        }
+
+        public void viewAnimals(){
+
+        }
+
+        public void viewHabitats(){
+
+        }
+        public void viewWorkers(){
+
+        }
+
+        public void viewZookeepers(){
+
+        }
+
+        public void viewVendors(){
+
+        }
+
+        public void viewShops(){
+
+        }
+
+        public void viewItems(){
+
+        }
+
+        public void viewAssigned_to(){
+
+        }
+        public void viewCohabitates_with(){
+
+        }
+
+        public void viewFeeds(){
+
+        }
+
+        public void viewLocated_at(){
+
+        }
+
+        public void viewMade_from(){
+
+        }
+
+        public void viewMaintains_health(){
+
+        }
+
+        public void viewStored_at(){
+
+        }
+
+        public void viewWorks_at(){
+
         }
 
         public void projectVet(){
