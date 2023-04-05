@@ -3548,7 +3548,7 @@ public class JWindow {
         aggregationHavingFrame.setLocationRelativeTo(null);
 
         //Create Label
-        JLabel text = new JLabel("Storage units found that meets restriction of weight < 20.");
+        JLabel text = new JLabel("Storage units found that meets restriction of weight < 50.");
         //Create Panel
         JPanel displayAggregation = new JPanel();
 
