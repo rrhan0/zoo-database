@@ -783,8 +783,10 @@ public class JWindow {
                                 //TODO actual update here
                                 dbHandler.updateWorker(widInput, Constants.ADDRESS, newAddress);
 
+                                updateFrame.dispose();
                                 showSuccessFrame();
                             }catch(Error payError){
+                                updateFrame.dispose();
                                 displayError("Current worker ID does not exist or you did not fill in a required field");
                             } catch (SQLException throwables) {
                                 updateFrame.dispose();
