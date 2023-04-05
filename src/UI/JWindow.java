@@ -2482,19 +2482,19 @@ public class JWindow {
                     colNames.add("Veterinarian's Specializations");
                 }
 
-                    try {
-                        String projection = String.join(", ", col);
+                try {
+                    String projection = String.join(", ", col);
 
-                        Object[][] rawResults = dbHandler.getTableInfo(projection, "VETERINARIANS v, WORKERS w WHERE v.W_ID = w.W_ID");
-                        String [][] VetAttributes = new String[rawResults.length][numCols];
-                        for (int i = 0; i < rawResults.length; i++) {
-                            for (int j = 0; j < rawResults[0].length; j++) {
-                                VetAttributes[i][j] = String.valueOf(rawResults[i][j]);
-                            }
+                    Object[][] rawResults = dbHandler.getTableInfo(projection, "VETERINARIANS v, WORKERS w WHERE v.W_ID = w.W_ID");
+                    String[][] VetAttributes = new String[rawResults.length][numCols];
+                    for (int i = 0; i < rawResults.length; i++) {
+                        for (int j = 0; j < rawResults[0].length; j++) {
+                            VetAttributes[i][j] = String.valueOf(rawResults[i][j]);
                         }
+                    }
 //                        Veterinarian [] allVets = dbHandler.getVeterinarianInfo(col);
 //                        String [][] VetAttributes = new String[allVets.length][numCols];
-                        Object [] columnNames =  colNames.toArray();
+                    Object[] columnNames = colNames.toArray();
 //                        for (int i = 0; i < allVets.length; i++) {
 //                            int j = 0;
 //                            if (col0) {
@@ -2525,14 +2525,14 @@ public class JWindow {
 //                                VetAttributes[i][j] = allVets[i].getSpecialization();
 //                            }
 //                        }
-                        resetCols();
-                        //Make JTable to display projected table
-                        JTable vetProj = new JTable(VetAttributes, columnNames);
-                        //Add JTable to scroll pane
-                        JScrollPane scroll = new JScrollPane(vetProj);
-                        scroll.setPreferredSize(new Dimension(700, 400));
-                        //Call display
-                        displayProjection(scroll);
+                    resetCols();
+                    //Make JTable to display projected table
+                    JTable vetProj = new JTable(VetAttributes, columnNames);
+                    //Add JTable to scroll pane
+                    JScrollPane scroll = new JScrollPane(vetProj);
+                    scroll.setPreferredSize(new Dimension(700, 400));
+                    //Call display
+                    displayProjection(scroll);
 
                 } catch (SQLException ex) {
                     displayError("Something went wrong");
@@ -2874,20 +2874,20 @@ public class JWindow {
                             j++;
                         }
                         if (col2) {
-                            rawFoodAttributes[i][j] = allRawFood[i].getWeight()+"";
+                            rawFoodAttributes[i][j] = allRawFood[i].getWeight() + "";
                             j++;
                         }
                         if (col3) {
-                            rawFoodAttributes[i][j] = allRawFood[i].getDate_received()+"";
+                            rawFoodAttributes[i][j] = allRawFood[i].getDate_received() + "";
                             j++;
                         }
                         if (col4) {
-                            rawFoodAttributes[i][j] = allRawFood[i].getExpiry_date()+"";
+                            rawFoodAttributes[i][j] = allRawFood[i].getExpiry_date() + "";
                         }
                     }
                     resetCols();
                     //make JTable to display projected table
-                    JTable rawFoodProj = new JTable(rawFoodAttributes,columnNames);
+                    JTable rawFoodProj = new JTable(rawFoodAttributes, columnNames);
                     //add JTable to scroll pane
                     JScrollPane rawFoodPane = new JScrollPane(rawFoodProj);
                     rawFoodPane.setPreferredSize(new Dimension(700, 400));
@@ -3000,34 +3000,34 @@ public class JWindow {
                     numCols++;
                     colNames.add("Type");
                 }
-                try{
+                try {
                     Computer[] allComputers = dbHandler.getComputerInfo(col);
                     String[][] computersAttributes = new String[allComputers.length][numCols];
                     Object[] columnNames = colNames.toArray();
-                    for(int i=0;i< allComputers.length;i++){
+                    for (int i = 0; i < allComputers.length; i++) {
                         int j = 0;
-                        if(col0){
+                        if (col0) {
                             computersAttributes[i][j] = allComputers[i].getC_id();
                             j++;
                         }
-                        if(col1){
+                        if (col1) {
                             computersAttributes[i][j] = allComputers[i].getW_id();
                             j++;
                         }
-                        if(col2){
+                        if (col2) {
                             computersAttributes[i][j] = allComputers[i].getModel();
                             j++;
                         }
-                        if(col3){
+                        if (col3) {
                             computersAttributes[i][j] = allComputers[i].getManufacturer();
                             j++;
                         }
-                        if(col4){
+                        if (col4) {
                             computersAttributes[i][j] = allComputers[i].getType();
                         }
                     }
                     resetCols();
-                    JTable computersProj = new JTable(computersAttributes,columnNames);
+                    JTable computersProj = new JTable(computersAttributes, columnNames);
                     JScrollPane computersPane = new JScrollPane(computersProj);
                     computersPane.setPreferredSize(new Dimension(700, 400));
                     displayProjection(computersPane);
@@ -3139,11 +3139,11 @@ public class JWindow {
                     colNames.add("Genus");
                 }
 
-                try{
+                try {
                     Animal[] allAnimals = dbHandler.getAnimalInfo(col);
                     String[][] animalAttributes = new String[allAnimals.length][numCols];
                     Object[] columnNames = colNames.toArray();
-                    for(int i = 0; i< allAnimals.length; i++) {
+                    for (int i = 0; i < allAnimals.length; i++) {
                         int j = 0;
                         if (col0) {
                             animalAttributes[i][j] = allAnimals[i].getA_id();
@@ -3168,7 +3168,7 @@ public class JWindow {
                     resetCols();
                     JTable animalProj = new JTable(animalAttributes, columnNames);
                     JScrollPane animalPane = new JScrollPane(animalProj);
-                    animalPane.setPreferredSize(new Dimension(700,400));
+                    animalPane.setPreferredSize(new Dimension(700, 400));
                     displayProjection(animalPane);
                 } catch (SQLException ex) {
                     displayError("Something went wrong");
@@ -3290,34 +3290,34 @@ public class JWindow {
                     colNames.add("Humidity");
                 }
 
-                try{
+                try {
                     Habitat[] allHabitats = dbHandler.getHabitatInfo(col);
                     String[][] habitatsAttributes = new String[allHabitats.length][numCols];
                     Object[] columnNames = colNames.toArray();
-                    for(int i = 0; i< allHabitats.length; i++) {
+                    for (int i = 0; i < allHabitats.length; i++) {
                         int j = 0;
-                        if(col0){
+                        if (col0) {
                             habitatsAttributes[i][j] = allHabitats[i].getP_id();
                             j++;
                         }
-                        if(col1){
+                        if (col1) {
                             habitatsAttributes[i][j] = allHabitats[i].getName();
                             j++;
                         }
-                        if(col2){
+                        if (col2) {
                             habitatsAttributes[i][j] = allHabitats[i].getBiome();
                             j++;
                         }
-                        if(col3){
-                            habitatsAttributes[i][j] = allHabitats[i].getArea()+"";
+                        if (col3) {
+                            habitatsAttributes[i][j] = allHabitats[i].getArea() + "";
                             j++;
                         }
-                        if(col4){
-                            habitatsAttributes[i][j] = allHabitats[i].getTemperature()+"";
+                        if (col4) {
+                            habitatsAttributes[i][j] = allHabitats[i].getTemperature() + "";
                             j++;
                         }
-                        if(col5){
-                            habitatsAttributes[i][j] = allHabitats[i].getHumidity()+"";
+                        if (col5) {
+                            habitatsAttributes[i][j] = allHabitats[i].getHumidity() + "";
                         }
                     }
                     resetCols();
@@ -3346,7 +3346,143 @@ public class JWindow {
     }
 
     public void projectWorkers() {
+        checkBoxFrame = new JFrame();
+        checkBoxFrame.setTitle("Workers Projection");
+        checkBoxFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkBoxFrame.setSize(800, 500);
+        checkBoxFrame.setLocationRelativeTo(null);
 
+        //Pop up new window with checkboxes for attributes to be projected
+        JPanel forWorkersProjection = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //Reset Projection Array
+        resetCols();
+
+        //initialize checkboxes
+        JCheckBox wid = new JCheckBox("Worker ID");
+        JCheckBox name = new JCheckBox("Name");
+        JCheckBox pay = new JCheckBox("Pay Rate");
+        JCheckBox address = new JCheckBox("Address");
+        JCheckBox email = new JCheckBox("Email");
+        JCheckBox phone = new JCheckBox("Phone");
+        //initialize listeners for each checkbox
+        wid.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place zero
+                col0 = true;
+            }
+        });
+        name.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place zero
+                col1 = true;
+            }
+        });
+        pay.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place zero
+                col2 = true;
+            }
+        });
+        address.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place zero
+                col3 = true;
+            }
+        });
+        email.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place zero
+                col4 = true;
+            }
+        });
+        phone.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                //place zero
+                col5 = true;
+            }
+        });
+
+        //button to apply projection
+        JButton applyProj = new JButton("Apply Projection");
+        applyProj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkBoxFrame.dispose();
+                int numCols = 0;
+                ArrayList<String> col = new ArrayList<String>();
+                ArrayList<String> colNames = new ArrayList<String>();
+                col.clear();
+                if (col0) {
+                    col.add(Constants.W_ID);
+                    numCols++;
+                    colNames.add("Worker ID");
+                }
+                if (col1) {
+                    col.add(Constants.NAME);
+                    numCols++;
+                    colNames.add("Name");
+                }
+                if (col2) {
+                    col.add(Constants.PAY_RATE);
+                    numCols++;
+                    colNames.add("Pay Rate");
+                }
+                if (col3) {
+                    col.add(Constants.ADDRESS);
+                    numCols++;
+                    colNames.add("Address");
+                }
+                if (col4) {
+                    col.add(Constants.EMAIL);
+                    numCols++;
+                    colNames.add("Email");
+                }
+                if (col5) {
+                    col.add(Constants.PHONE);
+                    numCols++;
+                    colNames.add("Phone");
+                }
+
+                try{
+                    String projection = String.join(", ", col);
+                    Object[][] rawResults = dbHandler.getTableInfo(projection, "WORKERS");
+                    String[][] workerAttributes = new String[rawResults.length][numCols];
+                    for(int i = 0; i < rawResults.length;i++) {
+                        for(int j = 0; j < rawResults[0].length; j++) {
+                            workerAttributes[i][j] = String.valueOf(rawResults[i][j]);
+                        }
+                    }
+                    Object[] columnNames = colNames.toArray();
+                    resetCols();
+                    JTable workerProj = new JTable(workerAttributes, columnNames);
+                    JScrollPane workerPane = new JScrollPane(workerProj);
+                    workerPane.setPreferredSize(new Dimension(700, 400));
+                    displayProjection(workerPane);
+                } catch (SQLException ex) {
+                    displayError("Something went wrong");
+                }
+            }
+        });
+
+        //add checkboxes and button
+        forWorkersProjection.add(wid);
+        forWorkersProjection.add(name);
+        forWorkersProjection.add(pay);
+        forWorkersProjection.add(address);
+        forWorkersProjection.add(email);
+        forWorkersProjection.add(phone);
+        forWorkersProjection.add(applyProj);
+
+        //add panel to frame and display
+        checkBoxFrame.add(forWorkersProjection);
+        this.checkBoxFrame.setVisible(true);
     }
 
     public void projectZookeepers() {
@@ -3552,7 +3688,7 @@ public class JWindow {
 
     }
 
-    public void aggregationHaving(){
+    public void aggregationHaving() {
         //Instantiate frame
         aggregationHavingFrame = new JFrame("Aggregation With Having");
         aggregationHavingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -3670,5 +3806,7 @@ public class JWindow {
         this.divisionFrame.setVisible(true);
     }
 
-    public void showAggregationHavingFrame(){this.aggregationHavingFrame.setVisible((true));}
+    public void showAggregationHavingFrame() {
+        this.aggregationHavingFrame.setVisible((true));
+    }
 }
