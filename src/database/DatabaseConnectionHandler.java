@@ -1412,27 +1412,36 @@ public class DatabaseConnectionHandler {
 //		return result.toArray(new Computer[0]);
 //	}
 //
-//	public void updateWorker(int id, String name) {
-//		try {
-//
-//		  PreparedStatement ps = connection.prepareStatement("UPDATE WORKERS SET branch_name = ? WHERE branch_id = ?");
-//		  ps.setString(1, name);
-//		  ps.setInt(2, id);
-//
-//		  int rowCount = ps.executeUpdate();
-//		  if (rowCount == 0) {
-//		      System.out.println(WARNING_TAG + " Branch " + id + " does not exist!");
-//		  }
-//
-//		  connection.commit();
-//
-//		  ps.close();
-//		} catch (SQLException e) {
-//			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-//			rollbackConnection();
-//		}
-//	}
-//
+	public void updateWorker(String w_id, String column, Object value) throws SQLException, NotExists {
+		try {
+
+		  PreparedStatement ps = connection.prepareStatement("UPDATE WORKERS SET " + column + " = ? WHERE W_ID = ?");
+		  if (column.equalsIgnoreCase(Constants.PAY_RATE)) {
+			  ps.setFloat(1, (float) value);
+		  } else {
+			  ps.setString(1, (String) value);
+		  }
+		  ps.setString(2, w_id);
+
+
+		  int rowCount = ps.executeUpdate();
+
+
+		  connection.commit();
+
+		  ps.close();
+
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Worker " + w_id + " does not exist!");
+				throw new NotExists(WARNING_TAG + " Worker " + w_id + " does not exist!");
+			}
+		} catch (SQLException | NotExists e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+			throw e;
+		}
+	}
+
 	public boolean login(String username, String password) {
 		try {
 			if (connection != null) {

@@ -1,6 +1,7 @@
 package controller;
 
 import database.DatabaseConnectionHandler;
+import exceptions.NotExists;
 import model.*;
 import util.Constants;
 
@@ -8,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Test {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, NotExists {
         DatabaseConnectionHandler dbHandler = new DatabaseConnectionHandler();
         dbHandler.login(System.getenv("USER"), System.getenv("PASSWORD"));
         //dbHandler.login("ora_arl20","a43629526");
@@ -130,6 +131,12 @@ public class Test {
         String[] stigs = dbHandler.getSpeciesPreppedFood("Lion");
 
         Computer[] manu = dbHandler.selectManufacturer("Dell");
+
+        dbHandler.updateWorker("5", Constants.NAME, "New val");
+        dbHandler.updateWorker("5", Constants.PAY_RATE, 100.1f);
+        dbHandler.updateWorker("5", Constants.ADDRESS, "New val");
+        dbHandler.updateWorker("5", Constants.EMAIL, "New val");
+        dbHandler.updateWorker("5", Constants.PHONE, "New val");
 //         be careful of duplicates
 //        Veterinarian vet = new Veterinarian("asdf", "Richardo", 11f, "11 nowhere street", "asdf@gmail.com", "1234", "Trolling");
 //        dbHandler.insertVeterinarian(vet);
