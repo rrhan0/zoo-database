@@ -493,6 +493,7 @@ public class JWindow {
             updateFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             updateFrame.setTitle("Entries For Update");
             updateFrame.setSize(400, 500);
+            updateFrame.setLocationRelativeTo(null);
 
 
             //CREATE A JFRAME & JPANEL FOR A BUTTON FOR ALL ATTRIBUTES
@@ -500,6 +501,7 @@ public class JWindow {
             updateButtons.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             updateButtons.setTitle("Update Existing Worker");
             updateButtons.setSize(400, 500);
+            updateFrame.setLocationRelativeTo(null);
             JPanel forUpdate = new JPanel(new FlowLayout(FlowLayout.CENTER)); //To show all the buttons
             JPanel updateText = new JPanel(new FlowLayout(FlowLayout.CENTER)); //To show text for actual update
             JTextField wid = new JTextField("Worker's Current ID [Required]"); //wid text field REQUIRED FOR ALL UPDATES
