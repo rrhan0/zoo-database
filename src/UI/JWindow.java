@@ -2428,7 +2428,8 @@ public class JWindow {
                 JScrollPane aggregationScroll = new JScrollPane(aggregationTable);
                 aggregationScroll.setPreferredSize(new Dimension(700, 400));
 
-                //Add table/pane to panel
+                //Add table/pane and text to panel
+                displayAggregation.add(text);
                 displayAggregation.add(aggregationScroll);
 
                 //Add panel to frame
