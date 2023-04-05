@@ -2,6 +2,7 @@ package UI;
 
 import database.DatabaseConnectionHandler;
 import exceptions.NotExists;
+import model.Computer;
 import model.Veterinarian;
 import util.Constants;
 
@@ -25,6 +26,8 @@ public class JWindow {
         private JFrame viewFrame;
         private JFrame checkBoxFrame;
         private JFrame projectionFrame;
+        private JFrame userSelectionFrame;
+        private JFrame showSelectionFrame;
         //Used to determine checked boxes for projection of tables
         private boolean [] projectionArray = {false, false, false, false, false, false, false};
 
@@ -162,11 +165,20 @@ public class JWindow {
                 });
 
                 //initialize projection button
-                JButton vetsProjection = new JButton("Project");
+                JButton vetsProjection = new JButton("PROJECT");
                 vetsProjection.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         projectVet();
+                    }
+                });
+
+                //Initialize selection button
+                JButton compsSelection = new JButton("SELECT");
+                compsSelection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                            selectComputer();
                     }
                 });
 
@@ -206,6 +218,7 @@ public class JWindow {
                 computers.add(computersInsert);
                 computers.add(computersDelete);
                 computers.add(computersUpdate);
+                computers.add(compsSelection);
                 computers.setLayout(new FlowLayout());
                 computers.setBackground(Color.DARK_GRAY);
 
@@ -1074,8 +1087,91 @@ public class JWindow {
                 projectionArray[i] = false;
             }
         }
+
+
+        //For selection
+        public void selectComputer(){
+            userSelectionFrame = new JFrame("Select");
+            userSelectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            userSelectionFrame.setSize(300, 400);
+            userSelectionFrame.setLocationRelativeTo(null);
+
+            JPanel forUserInput = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            JTextArea message = new JTextArea("Manufacturer equal to ");
+            JTextField userMan = new JTextField("[Insert Manufacturer]");
+            JButton applySelection = new JButton("Apply Selection");
+            forUserInput.add(message);
+            forUserInput.add(userMan);
+            forUserInput.add(applySelection);
+
+            userSelectionFrame.add(forUserInput);
+            this.userSelectionFrame.setVisible(true);
+
+
+            applySelection.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try{
+                        String inputtedMan = userMan.getText();
+                        userSelectionFrame.dispose();
+                        if(inputtedMan.isEmpty()){
+                            displayError("You did not enter a manufacturer");
+                        }else{
+                            Computer [] validComputers = dbHandler.selectManufacturer(inputtedMan);
+                            showSelectionFrame = new JFrame("Selected Computers");
+                            showSelectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                            showSelectionFrame.setSize(700, 400);
+                            showSelectionFrame.setLocationRelativeTo(null);
+
+                            JPanel showComputers = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+                            String[] colNames = {"Computer ID", "Worker ID", "Model", "Manufacturer", "Type"};
+                            String [][] compAttributes = new String[validComputers.length][colNames.length];
+
+                            for(int row = 0; row<validComputers.length; row++){
+                                for(int col = 0; col<colNames.length; col++){
+                                    if(col == 0){
+                                        compAttributes[row][col] = validComputers[row].getC_id();
+                                    }else if(col == 1){
+                                        if(validComputers[row].getW_id().isEmpty()){
+                                            compAttributes[row][col] = "N/A";
+                                        }else{
+                                            compAttributes[row][col] = validComputers[row].getW_id();
+                                        }
+                                    }else if(col == 2){
+                                        compAttributes[row][col] = validComputers[row].getModel();
+                                    }else if(col == 3){
+                                        compAttributes[row][col] = validComputers[row].getManufacturer();
+                                    }else{
+                                        compAttributes[row][col] = validComputers[row].getType();
+                                    }
+                                }
+                            }
+
+                            JTable compSelectionTable = new JTable(compAttributes, colNames);
+                            JScrollPane compSelectionPane = new JScrollPane(compSelectionTable);
+                            compSelectionPane.setPreferredSize(new Dimension(700, 400));
+
+                            showComputers.add(compSelectionPane);
+                            showSelectionFrame.add(showComputers);
+                            showSelectionFrame(); //Unable to do it in try catch I think?
+
+                        }
+                    }catch(Error | SQLException selectionError){
+                        userSelectionFrame.dispose();
+                        displayError("You did not enter a valid manufacturer");
+                    }
+                }
+            });
+
+        }
+
         public void show() {
                 this.defaultFrame.setVisible(true);
+        }
+
+        public void showSelectionFrame(){
+            this.showSelectionFrame.setVisible(true);
         }
 
 
