@@ -1,10 +1,12 @@
 package UI;
 
 import database.DatabaseConnectionHandler;
+import model.*;
 import exceptions.NotExists;
 import model.Computer;
 import model.Veterinarian;
 import util.Constants;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -137,21 +139,153 @@ public class JWindow {
                 JButton stored_atUpdate = new JButton("UPDATE");
                 JButton works_atUpdate = new JButton("UPDATE");
 
+                //Workers update button will actually do something :D
+                workersUpdate.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        updateWorkers();
+                    }
+                });
 
                 //Initialize VIEW buttons and action listeners
+                JButton storageView = new JButton("VIEW TABLE");
+                JButton preppedFoodView = new JButton("VIEW TABLE");
+                JButton rawFoodOrdersView = new JButton("VIEW TABLE");
+                JButton computersView = new JButton("VIEW TABLE");
+                JButton animalsView = new JButton("VIEW TABLE");
+                JButton habitatsView = new JButton("VIEW TABLE");
+                JButton workersView = new JButton("VIEW TABLE");
+                JButton zookeepersView = new JButton("VIEW TABLE");
                 JButton vetsView = new JButton("VIEW TABLE");
+                JButton vendorsView = new JButton("VIEW TABLE");
+                JButton shopsView = new JButton("VIEW TABLE");
+                JButton itemsView = new JButton("VIEW TABLE");
+                JButton assigned_toView = new JButton("VIEW TABLE");
+                JButton cohabitates_withView = new JButton("VIEW TABLE");
+                JButton feedsView = new JButton("VIEW TABLE");
+                JButton located_atView = new JButton("VIEW TABLE");
+                JButton made_fromView = new JButton("VIEW TABLE");
+                JButton maintains_healthView = new JButton("VIEW TABLE");
+                JButton stored_atView = new JButton("VIEW TABLE");
+                JButton works_atView = new JButton("VIEW TABLE");
+                storageView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewStorage();
+                    }
+                });
+                preppedFoodView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewPreppedFood();
+                    }
+                });
+                rawFoodOrdersView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewRawFoodOrders();
+                    }
+                });
+                computersView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewComputers();
+                    }
+                });
+                animalsView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewAnimals();
+                    }
+                });
+                habitatsView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewHabitats();
+                    }
+                });
+                workersView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewWorkers();
+                    }
+                });
+                zookeepersView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewZookeepers();
+                    }
+                });
                 vetsView.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         viewVets();
                     }
                 });
-
-                //Workers update button will actually do something :D
-                workersUpdate.addActionListener(new ActionListener() {
+                vendorsView.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        updateWorkers();
+                        viewVendors();
+                    }
+                });
+                shopsView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewShops();
+                    }
+                });
+                itemsView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewItems();
+                    }
+                });
+                assigned_toView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewAssigned_to();
+                    }
+                });
+                cohabitates_withView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewCohabitates_with();
+                    }
+                });
+                feedsView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewFeeds();
+                    }
+                });
+                located_atView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewLocated_at();
+                    }
+                });
+                made_fromView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewMade_from();
+                    }
+                });
+                maintains_healthView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewMaintains_health();
+                    }
+                });
+                stored_atView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewStored_at();
+                    }
+                });
+                works_atView.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewWorks_at();
                     }
                 });
 
@@ -195,6 +329,7 @@ public class JWindow {
                 storageUnits.add(storageInsert);
                 storageUnits.add(storageDelete);
                 storageUnits.add(storageUpdate);
+                storageUnits.add(storageView);
                 storageUnits.setLayout((new FlowLayout()));
                 storageUnits.setBackground(Color.DARK_GRAY);
 
@@ -203,6 +338,7 @@ public class JWindow {
                 preppedFood.add(preppedFoodInsert);
                 preppedFood.add(preppedFoodDelete);
                 preppedFood.add(preppedFoodUpdate);
+                preppedFood.add(preppedFoodView);
                 preppedFood.setLayout(new FlowLayout());
                 preppedFood.setBackground(Color.DARK_GRAY);
 
@@ -211,6 +347,7 @@ public class JWindow {
                 rawFoodOrders.add(rawFoodOrdersInsert);
                 rawFoodOrders.add(rawFoodOrdersDelete);
                 rawFoodOrders.add(rawFoodOrdersUpdate);
+                rawFoodOrders.add(rawFoodOrdersView);
                 rawFoodOrders.setLayout(new FlowLayout());
                 rawFoodOrders.setBackground(Color.DARK_GRAY);
 
@@ -219,6 +356,7 @@ public class JWindow {
                 computers.add(computersInsert);
                 computers.add(computersDelete);
                 computers.add(computersUpdate);
+                computers.add(computersView);
                 computers.add(compsSelection);
                 computers.setLayout(new FlowLayout());
                 computers.setBackground(Color.DARK_GRAY);
@@ -228,6 +366,7 @@ public class JWindow {
                 animals.add(animalsInsert);
                 animals.add(animalsDelete);
                 animals.add(animalsUpdate);
+                animals.add(animalsView);
                 animals.add(animalsPreppedFoodJoin);
                 animals.setLayout(new FlowLayout());
                 animals.setBackground(Color.DARK_GRAY);
@@ -237,6 +376,7 @@ public class JWindow {
                 habitats.add(habitatsInsert);
                 habitats.add(habitatsDelete);
                 habitats.add(habitatsUpdate);
+                habitats.add(habitatsView);
                 habitats.setLayout(new FlowLayout());
                 habitats.setBackground(Color.DARK_GRAY);
 
@@ -245,6 +385,7 @@ public class JWindow {
                 workers.add(workerInsert);
                 workers.add(workerDelete);
                 workers.add(workersUpdate);
+                workers.add(workersView);
                 workers.setLayout(new FlowLayout());
                 workers.setBackground(Color.DARK_GRAY);
 
@@ -253,6 +394,7 @@ public class JWindow {
                 vendors.add(vendorsInsert);
                 vendors.add(vendorsDelete);
                 vendors.add(vendorsUpdate);
+                vendors.add(vendorsView);
                 vendors.setLayout(new FlowLayout());
                 vendors.setBackground(Color.DARK_GRAY);
 
@@ -261,6 +403,7 @@ public class JWindow {
                 zookeepers.add(zookeepersInsert);
                 zookeepers.add(zookeepersDelete);
                 zookeepers.add(zookeepersUpdate);
+                zookeepers.add(zookeepersView);
                 zookeepers.setLayout(new FlowLayout());
                 zookeepers.setBackground(Color.DARK_GRAY);
 
@@ -279,6 +422,7 @@ public class JWindow {
                 shops.add(shopsInsert);
                 shops.add(shopsDelete);
                 shops.add(shopsUpdate);
+                shops.add(shopsView);
                 shops.setLayout(new FlowLayout());
                 shops.setBackground(Color.DARK_GRAY);
 
@@ -287,6 +431,7 @@ public class JWindow {
                 items.add(itemsInsert);
                 items.add(itemsDelete);
                 items.add(itemsUpdate);
+                items.add(itemsView);
                 items.setLayout(new FlowLayout());
                 items.setBackground(Color.DARK_GRAY);
 
@@ -295,14 +440,16 @@ public class JWindow {
                 assigned_to.add(assigned_toInsert);
                 assigned_to.add(assigned_toDelete);
                 assigned_to.add(assigned_toUpdate);
-                items.setLayout(new FlowLayout());
-                items.setBackground(Color.DARK_GRAY);
+                assigned_to.add(assigned_toView);
+                assigned_to.setLayout(new FlowLayout());
+                assigned_to.setBackground(Color.DARK_GRAY);
 
                 //cohabitates_with tab
                 JPanel cohabitates_with = new JPanel();
                 cohabitates_with.add(cohabitates_withInsert);
                 cohabitates_with.add(cohabitates_withDelete);
                 cohabitates_with.add(cohabitates_withUpdate);
+                cohabitates_with.add(cohabitates_withView);
                 cohabitates_with.setLayout(new FlowLayout());
                 cohabitates_with.setBackground(Color.DARK_GRAY);
 
@@ -311,6 +458,7 @@ public class JWindow {
                 feeds.add(feedsInsert);
                 feeds.add(feedsDelete);
                 feeds.add(feedsUpdate);
+                feeds.add(feedsView);
                 feeds.setLayout(new FlowLayout());
                 feeds.setBackground(Color.DARK_GRAY);
 
@@ -319,6 +467,7 @@ public class JWindow {
                 located_at.add(located_atInsert);
                 located_at.add(located_atDelete);
                 located_at.add(located_atUpdate);
+                located_at.add(located_atView);
                 located_at.setLayout(new FlowLayout());
                 located_at.setBackground(Color.DARK_GRAY);
 
@@ -327,6 +476,7 @@ public class JWindow {
                 made_from.add(made_fromInsert);
                 made_from.add(made_fromDelete);
                 made_from.add(made_fromUpdate);
+                made_from.add(made_fromView);
                 made_from.setLayout(new FlowLayout());
                 made_from.setBackground(Color.DARK_GRAY);
 
@@ -335,6 +485,7 @@ public class JWindow {
                 maintains_health.add(maintains_healthInsert);
                 maintains_health.add(maintains_healthDelete);
                 maintains_health.add(maintains_healthUpdate);
+                maintains_health.add(maintains_healthView);
                 maintains_health.setLayout(new FlowLayout());
                 maintains_health.setBackground(Color.DARK_GRAY);
 
@@ -343,6 +494,7 @@ public class JWindow {
                 stored_at.add(stored_atInsert);
                 stored_at.add(stored_atDelete);
                 stored_at.add(stored_atUpdate);
+                stored_at.add(stored_atView);
                 stored_at.setLayout(new FlowLayout());
                 stored_at.setBackground(Color.DARK_GRAY);
 
@@ -351,6 +503,7 @@ public class JWindow {
                 works_at.add(works_atInsert);
                 works_at.add(works_atDelete);
                 works_at.add(works_atUpdate);
+                works_at.add(works_atView);
                 works_at.setLayout(new FlowLayout());
                 works_at.setBackground(Color.DARK_GRAY);
 
@@ -393,8 +546,8 @@ public class JWindow {
             JTextField w_id = new JTextField("Worker's ID (REQUIRED)", 20); //REQUIRED
             JTextField pay_rate = new JTextField("Pay Rate (REQUIRED)"); //NOT NULL
             JTextField name = new JTextField("Worker's Name (REQUIRED)", 20); //NOT NULL
-            JTextField email = new JTextField("Worker's email"); //UNIQUE
-            JTextField phone = new JTextField("Worker's phone", 13); //UNIQUE
+            JTextField email = new JTextField("Worker's email (REQUIRED)"); //UNIQUE
+            JTextField phone = new JTextField("Worker's phone (REQUIRED)", 13); //UNIQUE
             JTextField address = new JTextField("Worker's Address (REQUIRED)", 30); //NOT NULL
             JTextField specialization = new JTextField("Veterinarian's Specialization", 20);
 
@@ -501,7 +654,7 @@ public class JWindow {
             //set frame as visible
             this.deleteFrame.setVisible(true);
     }
-
+        //updates worker tuple according to w_id
         public void updateWorkers(){
             //Create A JFrame to show text entries for update
             updateFrame = new JFrame();
@@ -509,6 +662,8 @@ public class JWindow {
             updateFrame.setTitle("Entries For Update");
             updateFrame.setSize(400, 500);
             updateFrame.setLocationRelativeTo(null);
+
+
 
 
             //CREATE A JFRAME & JPANEL FOR A BUTTON FOR ALL ATTRIBUTES
@@ -565,6 +720,7 @@ public class JWindow {
 //            });
             JButton name = new JButton("Update Worker's Name");
             name.addActionListener(new ActionListener() {
+
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     updateButtons.dispose();
@@ -606,6 +762,7 @@ public class JWindow {
                                 updateFrame.dispose();
                                 displayError("You entered a worker ID that does not exist");
                             }
+
 
 
                             //Remove for next use
@@ -948,7 +1105,7 @@ public class JWindow {
 
             try{
                 Veterinarian [] allVets = dbHandler.getVeterinarianInfo(col);
-                vetAttributes = new String[allVets.length][7];
+                vetAttributes = new String[allVets.length][7]; // [number of rows][number of columns]
                 //7 is for number of attributes a vet has
                 for(int row = 0; row<allVets.length; row++){
                     for(int column = 0; column < 7; column++){
@@ -982,10 +1139,1048 @@ public class JWindow {
 
             //Add table to panel, add panel to frame
             vetTable = new JTable(vetAttributes, columnNames);
-            vetView.add(vetTable);
+            JScrollPane vetScrollPane = new JScrollPane(vetTable);
+            vetScrollPane.setPreferredSize(new Dimension(700, 400));
+            vetView.add(vetScrollPane);
             viewFrame.add(vetView);
 
             //set it visible
+            this.viewFrame.setVisible(true);
+        }
+        //
+        public void viewStorage(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Storage Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel storageView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable storageTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.P_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.TEMPERATURE);
+
+            String [][] storageAttributes;
+            String [] columnNames ={"Place ID", "Name", "Temperature"};
+
+            try{
+                StorageUnit [] allstorage = dbHandler.getStorageUnitInfo(col);
+                storageAttributes = new String[allstorage.length][3]; // 3 = # attributes in StorageUnit
+                for(int row = 0; row < allstorage.length; row++) {
+                    for(int column = 0; column < 3; column++) {
+                        if(column == 0) {
+                            storageAttributes[row][column] = allstorage[row].getP_id();
+                        }else if(column == 1){
+                            String name = allstorage[row].getName();
+                            if(name.isEmpty()){
+                                storageAttributes[row][column] = "N/A";
+                            }else{
+                                storageAttributes[row][column] = allstorage[row].getName();
+                            }
+                        }else{
+                            storageAttributes[row][column] = allstorage[row].getTemperature() + "";
+                        }
+                    }
+                }
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            //add table to panel, add panel to frame
+            storageTable = new JTable(storageAttributes, columnNames);
+            JScrollPane storageScrollPane = new JScrollPane(storageTable);
+            storageScrollPane.setPreferredSize(new Dimension(700,400));
+            storageView.add(storageScrollPane);
+            viewFrame.add(storageView);
+
+            //set visible
+            this.viewFrame.setVisible(true);
+        }
+
+        //view method for prepped_food
+        public void viewPreppedFood(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Prepped Food Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel preppedFoodView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable preppedFoodTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.A_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.WEIGHT);
+
+            String[][] preppedFoodAttributes;
+            String[] columnNames = {"Animal ID", "Food Name", "Food Weight"};
+
+            try{
+                PreppedFood [] allPreppedFood = dbHandler.getPreppedFoodInfo(col);
+                preppedFoodAttributes = new String[allPreppedFood.length][3];
+                for(int row = 0; row < allPreppedFood.length; row++) {
+                    for(int column = 0; column < 3; column++) {
+                        if(column == 0) {
+                            preppedFoodAttributes[row][column] = allPreppedFood[row].getA_id();
+                        } else if (column == 1) {
+                            preppedFoodAttributes[row][column] = allPreppedFood[row].getName();
+                        } else{
+                            String weight = allPreppedFood[row].getWeight() + "";
+                            if(weight.isEmpty()) {
+                                preppedFoodAttributes[row][column] = "N/A";
+                            }else {
+                                preppedFoodAttributes[row][column] = allPreppedFood[row].getWeight() + "";
+                            }
+                        }
+                    }
+                }
+            }catch (Exception e) { //weird. never catches SQLexception when all the other ones do
+                throw new RuntimeException(e);
+            }
+            //add table to panel, add panel to frame
+            preppedFoodTable = new JTable(preppedFoodAttributes, columnNames);
+            JScrollPane preppedFoodScrollPane = new JScrollPane(preppedFoodTable);
+            preppedFoodScrollPane.setPreferredSize(new Dimension(700, 400));
+            preppedFoodView.add(preppedFoodScrollPane);
+            viewFrame.add(preppedFoodView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewRawFoodOrders(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Raw Food Orders Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel rawFoodView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable rawFoodTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.O_ID);
+            col.add(Constants.CONTENTS);
+            col.add(Constants.WEIGHT);
+            col.add(Constants.DATE_RECEIVED);
+            col.add(Constants.EXPIRY_DATE);
+
+            String[][] rawFoodAttributes;
+            String[] columnNames = {"Order ID", "Contents", "Weight", "Date Received", "Expiry Date"};
+
+            try{
+                RawFoodOrder[] allRawFood = dbHandler.getRawFoodOrderInfo(col);
+                rawFoodAttributes = new String[allRawFood.length][5];
+                for(int row = 0; row < allRawFood.length; row++) {
+                    for(int column = 0; column < 5; column++) {
+                        if(column == 0) {
+                            rawFoodAttributes[row][column] = allRawFood[row].getO_id();
+                        } else if (column == 1) {
+                            rawFoodAttributes[row][column] = allRawFood[row].getContents();
+                        }else if (column == 2) {
+                            rawFoodAttributes[row][column] = allRawFood[row].getWeight() + "";
+                        }else if (column == 3) {
+                            rawFoodAttributes[row][column] = allRawFood[row].getDate_received() + "";
+                        }else {
+                            rawFoodAttributes[row][column] = allRawFood[row].getExpiry_date()+"";
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            //add table to panel, add panel to frame
+            rawFoodTable = new JTable(rawFoodAttributes, columnNames);
+            JScrollPane rawFoodScrollPane = new JScrollPane(rawFoodTable);
+            rawFoodScrollPane.setPreferredSize(new Dimension(700, 400));
+            rawFoodView.add(rawFoodScrollPane);
+            viewFrame.add(rawFoodView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewComputers(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Computers Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel computersView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable computersTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<String>();
+            col.add(Constants.C_ID);
+            col.add(Constants.W_ID);
+            col.add(Constants.MODEL);
+            col.add(Constants.MANUFACTURER);
+            col.add(Constants.TYPE);
+
+            String[][] computersAttributes;
+            String[] columnNames = {"Computer ID", "Associated Worker ID", "Model", "Manufacturer", "Computer Type"};
+
+            try{
+                Computer[] allComputers = dbHandler.getComputerInfo(col);
+                computersAttributes = new String[allComputers.length][5];
+                for(int row = 0; row < allComputers.length; row++) {
+                    for(int column = 0; column < 5; column++){
+                        if(column==0) {
+                            computersAttributes[row][column] = allComputers[row].getC_id();
+                        }else if (column==1) {
+                            computersAttributes[row][column] = allComputers[row].getW_id();
+                        }else if (column==2) {
+                            computersAttributes[row][column] = allComputers[row].getModel();
+                        }else if (column==3) {
+                            computersAttributes[row][column] = allComputers[row].getManufacturer();
+                        }else {
+                            computersAttributes[row][column] = allComputers[row].getType();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            //add table to panel, add panel to frame
+            computersTable = new JTable(computersAttributes, columnNames);
+            JScrollPane computersScrollPane = new JScrollPane(computersTable);
+            computersScrollPane.setPreferredSize(new Dimension(700,400));
+            computersView.add(computersScrollPane);
+            viewFrame.add(computersView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewAnimals(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Animals Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel animalsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable animalsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.A_ID);
+            col.add(Constants.P_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.SPECIES);
+            col.add(Constants.GENUS);
+
+            String[][] animalAttributes;
+            String[] columnNames = {"Animal ID", "Habitat ID", "Animal Name", "Species", "Genus"};
+
+            try{
+                Animal[] allAnimal = dbHandler.getAnimalInfo(col);
+                animalAttributes = new String[allAnimal.length][5];
+                for(int row = 0; row < allAnimal.length; row++) {
+                    for(int column = 0; column < 5; column++){
+                        if(column == 0) {
+                            animalAttributes[row][column] = allAnimal[row].getA_id();
+                        }else if(column == 1) {
+                            String p_id = allAnimal[row].getP_id();
+                            if(p_id.isEmpty()){
+                                animalAttributes[row][column] = "N/A";
+                            }else{
+                                animalAttributes[row][column] = allAnimal[row].getP_id();
+                            }
+                        }else if(column == 2) {
+                            String name = allAnimal[row].getName();
+                            if(name.isEmpty()){
+                                animalAttributes[row][column] = "N/A";
+                            } else{
+                                animalAttributes[row][column] = allAnimal[row].getName();
+                            }
+                        }else if(column == 3) {
+                            String species = allAnimal[row].getSpecies();
+                            if(species.isEmpty()) {
+                                animalAttributes[row][column] = "N/A";
+                            }else{
+                                animalAttributes[row][column] = allAnimal[row].getSpecies();
+                            }
+                        }else {
+                            String genus = allAnimal[row].getGenus();
+                            if(genus.isEmpty()) {
+                                animalAttributes[row][column] = "N/A";
+                            } else{
+                                animalAttributes[row][column] = allAnimal[row].getGenus();
+                            }
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            animalsTable = new JTable(animalAttributes, columnNames);
+            JScrollPane animalsScrollPane = new JScrollPane(animalsTable);
+            animalsScrollPane.setPreferredSize(new Dimension(700, 400));
+            animalsView.add(animalsScrollPane);
+            viewFrame.add(animalsView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewHabitats(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Habitats Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel habitatsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable habitatsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.P_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.BIOME);
+            col.add(Constants.AREA);
+            col.add(Constants.TEMPERATURE);
+            col.add(Constants.HUMIDITY);
+
+            String[][] habitatsAttributes;
+            String[] columnNames = {"Place ID", "Habitat Name", "Biome", "Area", "Temperature", "Humidity"};
+
+            try{
+                Habitat[] allHabitats = dbHandler.getHabitatInfo(col);
+                habitatsAttributes = new String[allHabitats.length][6];
+                for(int row = 0; row < allHabitats.length; row++) {
+                    for(int column = 0; column < 6; column++) {
+                        if(column == 0) {
+                            habitatsAttributes[row][column] = allHabitats[row].getP_id();
+                        }else if(column == 1) {
+                            String name = allHabitats[row].getName();
+                            if(name.isEmpty()) {
+                                habitatsAttributes[row][column] = "N/A";
+                            }else{
+                                habitatsAttributes[row][column] = allHabitats[row].getName();
+                            }
+                        }else if(column == 2) {
+                            String biome = allHabitats[row].getBiome();
+                            if(biome.isEmpty()) {
+                                habitatsAttributes[row][column] = "N/A";
+                            }else{
+                                habitatsAttributes[row][column] = allHabitats[row].getBiome();
+                            }
+                        }else if(column == 3) {
+                            String area = allHabitats[row].getArea() +"";
+                            if(area.isEmpty()) {
+                                habitatsAttributes[row][column] = "N/A";
+                            }else{
+                                habitatsAttributes[row][column] = allHabitats[row].getArea() +"";
+                            }
+                        }else if(column == 4) {
+                            String temp = allHabitats[row].getTemperature()+"";
+                            if(temp.isEmpty()) {
+                                habitatsAttributes[row][column] = "N/A";
+                            }else{
+                                habitatsAttributes[row][column] = allHabitats[row].getTemperature()+"";
+                            }
+                        }else {
+                            String humid = allHabitats[row].getHumidity()+"";
+                            if(humid.isEmpty()) {
+                                habitatsAttributes[row][column] = "N/A";
+                            }else{
+                                habitatsAttributes[row][column] = allHabitats[row].getHumidity()+"";
+                            }
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            habitatsTable = new JTable(habitatsAttributes,columnNames);
+            JScrollPane habitatsScrollPane = new JScrollPane(habitatsTable);
+            habitatsScrollPane.setPreferredSize(new Dimension(700, 400));
+            habitatsView.add(habitatsScrollPane);
+            viewFrame.add(habitatsView);
+
+            this.viewFrame.setVisible(true);
+        }
+        public void viewWorkers(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Workers Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel workersView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable workersTable;
+
+            //databse entries
+            ArrayList<String> col = new ArrayList<String>();
+            col.clear();
+            col.add(Constants.W_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.PAY_RATE);
+            col.add(Constants.ADDRESS);
+            col.add(Constants.EMAIL);
+            col.add(Constants.PHONE);
+
+            String[][] workersAttributes;
+            String[] columnNames = {"Worker ID", "Name", "Pay Rate", "Address", "Email", "Phone"};
+
+            try{
+                Worker[] allWorkers = dbHandler.getWorkerInfo(col);
+                workersAttributes = new String[allWorkers.length][6];
+                for(int row = 0; row < allWorkers.length; row++) {
+                    for(int column = 0; column < 6;column++) {
+                        if(column == 0) {
+                            workersAttributes[row][column] = allWorkers[row].getW_id();
+                        }else if(column == 1) {
+                            workersAttributes[row][column] = allWorkers[row].getName();
+                        }else if(column == 2) {
+                            workersAttributes[row][column] = allWorkers[row].getPay_rate() +"";
+                        }else if(column == 3) {
+                            workersAttributes[row][column] = allWorkers[row].getAddress();
+                        }else if(column == 4) {
+                            workersAttributes[row][column] = allWorkers[row].getEmail();
+                        }else {
+                            workersAttributes[row][column] = allWorkers[row].getPhone();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            workersTable = new JTable(workersAttributes, columnNames);
+            JScrollPane workersScrollPane = new JScrollPane(workersTable);
+            workersScrollPane.setPreferredSize(new Dimension(700,400));
+            workersView.add(workersScrollPane);
+            viewFrame.add(workersView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewZookeepers(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Zookeepers Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel zookeepersView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable zookeepersTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<String>();
+            col.clear();
+            col.add(Constants.ZOO_W_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.PAY_RATE);
+            col.add(Constants.ADDRESS);
+            col.add(Constants.EMAIL);
+            col.add(Constants.PHONE);
+
+            String[][] zookeepersAttributes;
+            String[] columnNames = {"Worker ID", "Name", "Pay Rate", "Address", "Email", "Phone"};
+
+            try{
+                Zookeeper[] allZookeepers = dbHandler.getZookeeperInfo(col);
+                zookeepersAttributes = new String[allZookeepers.length][6];
+                for(int row = 0; row < allZookeepers.length; row++) {
+                    for(int column = 0; column < 6; column++) {
+                        if(column == 0) {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getW_id();
+                        } else if (column ==1) {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getName();
+                        } else if (column ==2) {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getPay_rate()+"";
+                        } else if (column ==3) {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getAddress();
+                        } else if (column ==4) {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getEmail();
+                        } else {
+                            zookeepersAttributes[row][column] = allZookeepers[row].getPhone();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            zookeepersTable = new JTable(zookeepersAttributes, columnNames);
+            JScrollPane zookeepersScrollPane = new JScrollPane(zookeepersTable);
+            zookeepersScrollPane.setPreferredSize(new Dimension(700,400));
+            zookeepersView.add(zookeepersScrollPane);
+            viewFrame.add(zookeepersView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewVendors(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Vendors Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel vendorsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable vendorsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<String>();
+            col.clear();
+            col.add(Constants.VENDOR_W_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.PAY_RATE);
+            col.add(Constants.ADDRESS);
+            col.add(Constants.EMAIL);
+            col.add(Constants.PHONE);
+
+            String[][] vendorsAttributes;
+            String[] columnNames = {"Worker ID", "Name", "Pay Rate", "Address", "Email", "Phone"};
+
+            try{
+                Vendor[] allVendors = dbHandler.getVendorInfo(col);
+                vendorsAttributes = new String[allVendors.length][6];
+                for(int row = 0; row < allVendors.length; row++){
+                    for(int column = 0; column < 6; column++){
+                        if(column == 0) {
+                            vendorsAttributes[row][column] = allVendors[row].getW_id();
+                        } else if (column == 1) {
+                            vendorsAttributes[row][column] = allVendors[row].getName();
+                        } else if (column == 2) {
+                            vendorsAttributes[row][column] = allVendors[row].getPay_rate()+"";
+                        } else if (column == 3) {
+                            vendorsAttributes[row][column] = allVendors[row].getAddress();
+                        } else if (column == 4) {
+                            vendorsAttributes[row][column] = allVendors[row].getEmail();
+                        } else{
+                            vendorsAttributes[row][column] = allVendors[row].getPhone();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            vendorsTable = new JTable(vendorsAttributes, columnNames);
+            JScrollPane vendorScrollPane = new JScrollPane(vendorsTable);
+            vendorScrollPane.setPreferredSize(new Dimension(700,400));
+            vendorsView.add(vendorScrollPane);
+            viewFrame.add(vendorsView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewShops(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Shops Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel shopsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable shopsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<String>();
+            col.clear();
+            col.add(Constants.P_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.TYPE);
+
+            String[][] shopsAttributes;
+            String[] columnNames = {"Place ID", "Shop Name", "Shop Type"};
+
+            try{
+                Shop[] allshops = dbHandler.getShopInfo(col);
+                shopsAttributes = new String[allshops.length][3];
+                for(int row = 0; row < allshops.length; row++) {
+                    for(int column = 0; column <3; column++) {
+                        if(column == 0) {
+                            shopsAttributes[row][column] = allshops[row].getP_id();
+                        } else if (column == 1) {
+                            String name = allshops[row].getName();
+                            shopsAttributes[row][column] = allshops[row].getName();
+                        } else{
+                            shopsAttributes[row][column] = allshops[row].getType();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            shopsTable = new JTable(shopsAttributes, columnNames);
+            JScrollPane shopsPane = new JScrollPane(shopsTable);
+            shopsPane.setPreferredSize(new Dimension(700, 400));
+            shopsView.add(shopsPane);
+            viewFrame.add(shopsView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewItems(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Items Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel itemsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable itemsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.I_ID);
+            col.add(Constants.P_ID);
+            col.add(Constants.NAME);
+            col.add(Constants.STOCK);
+            col.add(Constants.PRICE);
+
+            String[][] itemsAttributes;
+            String[] columnNames = {"Item ID", "Place ID", "Item Name", "Item Stock", "Item Price"};
+
+            try{
+                Item[] allItems = dbHandler.getItemInfo(col);
+                itemsAttributes = new String[allItems.length][5];
+                for(int row = 0; row< allItems.length;row++){
+                    for(int column=0; column<5; column++){
+                        if(column==0){
+                            itemsAttributes[row][column] = allItems[row].getI_id();
+                        } else if (column==1) {
+                            itemsAttributes[row][column] = allItems[row].getP_id();
+                        } else if (column==2) {
+                            itemsAttributes[row][column] = allItems[row].getName();
+                        } else if (column==3) {
+                            itemsAttributes[row][column] = allItems[row].getStock()+"";
+                        }
+                        else {
+                            itemsAttributes[row][column] = allItems[row].getPrice()+"";
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            itemsTable = new JTable(itemsAttributes, columnNames);
+            JScrollPane itemsScrollPane = new JScrollPane(itemsTable);
+            itemsScrollPane.setPreferredSize(new Dimension(700, 400));
+            itemsView.add(itemsScrollPane);
+            viewFrame.add(itemsView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewAssigned_to(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Assigned_To Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel assignedView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable assignedTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.W_ID);
+            col.add(Constants.P_ID);
+
+            String[][] assignedAttributes;
+            String[] columnNames = {"Worker ID", "Place ID"};
+
+            try{
+                AssignedTo[] allAssigned = dbHandler.getAssignedToInfo(col);
+                assignedAttributes = new String[allAssigned.length][2];
+                for(int row=0; row< allAssigned.length;row++){
+                    for(int column = 0; column<2;column++){
+                        if (column==0){
+                            assignedAttributes[row][column] = allAssigned[row].getW_id();
+                        } else {
+                            assignedAttributes[row][column] = allAssigned[row].getP_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            assignedTable = new JTable(assignedAttributes,columnNames);
+            JScrollPane assignedPane = new JScrollPane(assignedTable);
+            assignedPane.setPreferredSize(new Dimension(700,400));
+            assignedView.add(assignedPane);
+            viewFrame.add(assignedView);
+
+            this.viewFrame.setVisible(true);
+        }
+        public void viewCohabitates_with(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Cohabitates With Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel cohabView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable cohabTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("A_ID1");
+            col.add("A_ID2");
+
+            String[][] cohabAttributes;
+            String[] columnNames = {"Animal ID #1", "Animal ID #2"};
+
+            //todo: fix only last tuple showing up in table
+            try{
+                CohabitatesWith[] allCohab = dbHandler.getCohabitatesWithInfo(col);
+                cohabAttributes = new String[allCohab.length][2];
+                for(int row=0;row<allCohab.length;row++){
+                    for(int column=0;column<2;column++){
+                        if(column==0){
+                            cohabAttributes[row][column] = allCohab[row].getA_id1();
+                        } else{
+                            cohabAttributes[row][column] = allCohab[row].getA_id2();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            cohabTable = new JTable(cohabAttributes,columnNames);
+            JScrollPane cohabPane = new JScrollPane(cohabTable);
+            cohabPane.setPreferredSize(new Dimension(700,400));
+            cohabView.add(cohabPane);
+            viewFrame.add(cohabView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewFeeds(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Feeds Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel feedsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable feedsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("w_id");
+            col.add("a_id");
+
+            String[][] feedsAttributes;
+            String[] columnNames = {"Worker ID", "Animal ID"};
+
+            try{
+                Feeds[] allFeeds = dbHandler.getFeedsInfo(col);
+                feedsAttributes = new String[allFeeds.length][2];
+                for(int row =0; row < allFeeds.length;row++) {
+                    for(int column = 0; column <2; column++) {
+                        if(column == 0) {
+                            feedsAttributes[row][column] = allFeeds[row].getW_id();
+                        } else{
+                            feedsAttributes[row][column] = allFeeds[row].getA_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            feedsTable = new JTable(feedsAttributes,columnNames);
+            JScrollPane feedsPane = new JScrollPane(feedsTable);
+            feedsPane.setPreferredSize(new Dimension(700,400));
+            feedsView.add(feedsPane);
+            viewFrame.add(feedsView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewLocated_at(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Located At Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+
+            //create panel for table to be added to
+            JPanel locatedView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable locatedTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("o_id");
+            col.add("p_id");
+
+            String[][] locatedAttributes;
+            String[] columnNames = {"Order ID", "Storage Unit Place ID"};
+
+            try{
+                LocatedAt[] allLocated = dbHandler.getLocatedAtInfo(col);
+                locatedAttributes = new String[allLocated.length][2];
+                for(int row = 0; row < allLocated.length;row++) {
+                    for(int column = 0; column < 2; column++) {
+                        if(column==0) {
+                            locatedAttributes[row][column] = allLocated[row].getO_id();
+                        } else{
+                            locatedAttributes[row][column] = allLocated[row].getP_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            locatedTable = new JTable(locatedAttributes, columnNames);
+            JScrollPane locatedScrollPane = new JScrollPane(locatedTable);
+            locatedScrollPane.setPreferredSize(new Dimension(700, 400));
+            locatedView.add(locatedScrollPane);
+            viewFrame.add(locatedView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewMade_from(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Habitats Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel madeView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable madeTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("a_id");
+            col.add("name");
+            col.add("o_id");
+
+            String[][] madeAttributes;
+            String[] columnNames = {"Animal ID", "Name", "Order ID"};
+
+            try{
+                MadeFrom[] allMade = dbHandler.getMadeFromInfo(col);
+                madeAttributes = new String[allMade.length][3];
+                for(int row = 0; row < allMade.length;row++) {
+                    for(int column = 0; column < 3; column++) {
+                        if(column ==0){
+                            madeAttributes[row][column] = allMade[row].getA_id();
+                        } else if (column ==1) {
+                            madeAttributes[row][column] = allMade[row].getName();
+                        } else {
+                            madeAttributes[row][column] = allMade[row].getO_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            madeTable = new JTable(madeAttributes,columnNames);
+            JScrollPane madePane = new JScrollPane(madeTable);
+            madePane.setPreferredSize(new Dimension(700, 400));
+            madeView.add(madePane);
+            viewFrame.add(madeView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewMaintains_health(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Maintains Health Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel maintainsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable maintainsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("w_id");
+            col.add("a_id");
+
+            String[][] maintainsAttributes;
+            String[] columnNames = {"Worker ID", "Animal ID"};
+
+            try{
+                MaintainsHealthOf[] allMaintains = dbHandler.getMaintainsHealthOfInfo(col);
+                maintainsAttributes = new String[allMaintains.length][2];
+                for(int row = 0; row< allMaintains.length;row++) {
+                    for(int column = 0; column < 2; column++){
+                        if(column==0){
+                            maintainsAttributes[row][column] = allMaintains[row].getW_id();
+                        }else{
+                            maintainsAttributes[row][column] = allMaintains[row].getA_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            maintainsTable = new JTable(maintainsAttributes, columnNames);
+            JScrollPane maintainsPane = new JScrollPane(maintainsTable);
+            maintainsPane.setPreferredSize(new Dimension(700, 400));
+            maintainsView.add(maintainsPane);
+            viewFrame.add(maintainsView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewStored_at(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Stored At Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel storedView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable storedTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("a_id");
+            col.add("name");
+            col.add("p_id");
+
+            String[][] storedAttributes;
+            String[] columnNames = {"Animal ID", "Name", "Place ID"};
+
+            try{
+                StoredAt[] allStored = dbHandler.getStoredAtInfo(col);
+                storedAttributes = new String[allStored.length][3];
+                for(int row = 0; row< allStored.length;row++){
+                    for(int column = 0;column < 3; column++){
+                        if(column==0) {
+                            storedAttributes[row][column] = allStored[row].getA_id();
+                        } else if (column==1) {
+                            storedAttributes[row][column] = allStored[row].getName();
+                        } else{
+                            storedAttributes[row][column] = allStored[row].getP_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            storedTable = new JTable(storedAttributes, columnNames);
+            JScrollPane storedPane = new JScrollPane(storedTable);
+            storedPane.setPreferredSize(new Dimension(700, 400));
+            storedView.add(storedPane);
+            viewFrame.add(storedView);
+
+            this.viewFrame.setVisible(true);
+        }
+
+        public void viewWorks_at(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Works At Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel worksAtView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable worksAtTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("w_id");
+            col.add("p_id");
+
+            String[][] worksAtAttributes;
+            String[] columnNames = {"Worker ID", "Place ID"};
+
+            try{
+                WorksAt[] allWorksAt = dbHandler.getWorksAtInfo(col);
+                worksAtAttributes = new String[allWorksAt.length][3];
+                for(int row=0;row<allWorksAt.length;row++){
+                    for(int column=0;column<3;column++){
+                        if(column==0){
+                            worksAtAttributes[row][column] = allWorksAt[row].getW_id();
+                        } else{
+                            worksAtAttributes[row][column] = allWorksAt[row].getP_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            worksAtTable = new JTable(worksAtAttributes,columnNames);
+            JScrollPane worksPane = new JScrollPane(worksAtTable);
+            worksPane.setPreferredSize(new Dimension(700,400));
+            worksAtView.add(worksPane);
+            viewFrame.add(worksAtView);
+
             this.viewFrame.setVisible(true);
         }
 
