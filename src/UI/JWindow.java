@@ -1780,10 +1780,10 @@ public class JWindow {
             viewFrame.setLocationRelativeTo(null);
 
             //create panel for table to be added to
-            JPanel animalsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            JPanel storedView = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
             //1D to 2D array to fill JTable
-            JTable animalsTable;
+            JTable storedTable;
 
             //database entries
             ArrayList<String> col = new ArrayList<>();
@@ -1792,10 +1792,79 @@ public class JWindow {
             col.add("name");
             col.add("p_id");
 
+            String[][] storedAttributes;
+            String[] columnNames = {"Animal ID", "Name", "Place ID"};
+
+            try{
+                StoredAt[] allStored = dbHandler.getStoredAtInfo(col);
+                storedAttributes = new String[allStored.length][3];
+                for(int row = 0; row< allStored.length;row++){
+                    for(int column = 0;column < 3; column++){
+                        if(column==0) {
+                            storedAttributes[row][column] = allStored[row].getA_id();
+                        } else if (column==1) {
+                            storedAttributes[row][column] = allStored[row].getName();
+                        } else{
+                            storedAttributes[row][column] = allStored[row].getP_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            storedTable = new JTable(storedAttributes, columnNames);
+            JScrollPane storedPane = new JScrollPane(storedTable);
+            storedPane.setPreferredSize(new Dimension(700, 400));
+            storedView.add(storedPane);
+            viewFrame.add(storedView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewWorks_at(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Works At Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel worksAtView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable worksAtTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("w_id");
+            col.add("p_id");
+
+            String[][] worksAtAttributes;
+            String[] columnNames = {"Worker ID", "Place ID"};
+
+            try{
+                WorksAt[] allWorksAt = dbHandler.getWorksAtInfo(col);
+                worksAtAttributes = new String[allWorksAt.length][3];
+                for(int row=0;row<allWorksAt.length;row++){
+                    for(int column=0;column<3;column++){
+                        if(column==0){
+                            worksAtAttributes[row][column] = allWorksAt[row].getW_id();
+                        } else{
+                            worksAtAttributes[row][column] = allWorksAt[row].getP_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            worksAtTable = new JTable(worksAtAttributes,columnNames);
+            JScrollPane worksPane = new JScrollPane(worksAtTable);
+            worksPane.setPreferredSize(new Dimension(700,400));
+            worksAtView.add(worksPane);
+            viewFrame.add(worksAtView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void projectVet(){
