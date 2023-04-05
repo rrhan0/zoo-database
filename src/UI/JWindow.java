@@ -1632,10 +1632,35 @@ public class JWindow {
 
         public void viewLocated_at(){
             viewFrame = new JFrame();
-            viewFrame.setTitle("Animals Table");
+            viewFrame.setTitle("Located At Table");
             viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             viewFrame.setSize(800, 500);
             viewFrame.setLocationRelativeTo(null);
+
+
+            //create panel for table to be added to
+            JPanel locatedView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable locatedTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("o_id");
+            col.add("p_id");
+
+            String[][] locatedAttributes;
+            String[] columnNames = {"Order ID", "Storage Unit Place ID"};
+
+            try{
+                LocatedAt[] allLocated = dbHandler.getLocatedAtInfo(col);
+                locatedAttributes = new String[allLocated.length][2];
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
 
         public void viewMade_from(){
