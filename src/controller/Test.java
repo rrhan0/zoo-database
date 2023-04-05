@@ -137,6 +137,9 @@ public class Test {
         dbHandler.updateWorker("5", Constants.ADDRESS, "New val");
         dbHandler.updateWorker("5", Constants.EMAIL, "New val");
         dbHandler.updateWorker("5", Constants.PHONE, "New val");
+
+        SumWeights[] sum = dbHandler.getSumWeights();
+        SumWeights[] sum2 = dbHandler.getFreeStorage();
 //         be careful of duplicates
 //        Veterinarian vet = new Veterinarian("asdf", "Richardo", 11f, "11 nowhere street", "asdf@gmail.com", "1234", "Trolling");
 //        dbHandler.insertVeterinarian(vet);
