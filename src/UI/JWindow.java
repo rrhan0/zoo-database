@@ -1154,6 +1154,7 @@ public class JWindow {
 
                             showComputers.add(compSelectionPane);
                             showSelectionFrame.add(showComputers);
+                            showSelectionFrame();
 
                         }
                     }catch(Error | SQLException selectionError){
