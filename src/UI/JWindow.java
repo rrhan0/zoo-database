@@ -1720,7 +1720,7 @@ public class JWindow {
             ArrayList<String> col = new ArrayList<String>();
             col.clear();
             col.add(Constants.P_ID);
-            col.add(Constants.NAME);
+            col.add("name");
             col.add(Constants.TYPE);
 
             String[][] shopsAttributes;
@@ -1730,11 +1730,10 @@ public class JWindow {
                 Shop[] allshops = dbHandler.getShopInfo(col);
                 shopsAttributes = new String[allshops.length][3];
                 for(int row = 0; row < allshops.length; row++) {
-                    for(int column = 0; column <3; column++) {
+                    for(int column = 0; column < 3; column++) {
                         if(column == 0) {
                             shopsAttributes[row][column] = allshops[row].getP_id();
                         } else if (column == 1) {
-                            String name = allshops[row].getName();
                             shopsAttributes[row][column] = allshops[row].getName();
                         } else{
                             shopsAttributes[row][column] = allshops[row].getType();
@@ -2333,7 +2332,7 @@ public class JWindow {
                             Computer [] validComputers = dbHandler.selectManufacturer(inputtedMan);
                             showSelectionFrame = new JFrame("Selected Computers");
                             showSelectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                            showSelectionFrame.setSize(700, 400);
+                            showSelectionFrame.setSize(800, 500);
                             showSelectionFrame.setLocationRelativeTo(null);
 
                             JPanel showComputers = new JPanel(new FlowLayout(FlowLayout.CENTER));
