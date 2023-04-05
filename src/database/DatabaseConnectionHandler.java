@@ -89,7 +89,7 @@ public class DatabaseConnectionHandler {
 
 		return result;
 	}
-	public String[] getSpeciesPreppedFood(String species) throws SQLException {
+	public String[] getSpeciesPreppedFood(String species) throws SQLException, NotExists {
 		ArrayList<String> result = new ArrayList<>();
 
 		try {
@@ -106,10 +106,13 @@ public class DatabaseConnectionHandler {
 
 				result.add(values);
 			}
+			if (result.size() == 0) {
+				throw new NotExists(WARNING_TAG + " Species " + species + " Does not exist!");
+			}
 
 			rs.close();
 			ps.close();
-		} catch (SQLException e) {
+		} catch (SQLException | NotExists e) {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 			throw e;
 		}
