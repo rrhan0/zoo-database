@@ -1154,7 +1154,7 @@ public class JWindow {
 
                             showComputers.add(compSelectionPane);
                             showSelectionFrame.add(showComputers);
-                            showSelectionFrame();
+                            showSelectionFrame(); //Unable to do it in try catch I think?
 
                         }
                     }catch(Error | SQLException selectionError){
