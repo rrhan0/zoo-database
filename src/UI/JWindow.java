@@ -854,7 +854,7 @@ public class JWindow {
             showJoinFrame = new JFrame();
             showJoinFrame.setTitle("Joined Animals Based On Species");
             showJoinFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            showJoinFrame.setSize(400, 600);
+            showJoinFrame.setSize(300, 400);
             showJoinFrame.setLocationRelativeTo(null);
 
             //create JPanel
