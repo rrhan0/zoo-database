@@ -1678,11 +1678,98 @@ public class JWindow {
         }
 
         public void viewMade_from(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Habitats Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel madeView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable madeTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("a_id");
+            col.add("name");
+            col.add("o_id");
+
+            String[][] madeAttributes;
+            String[] columnNames = {"Animal ID", "Name", "Order ID"};
+
+            try{
+                MadeFrom[] allMade = dbHandler.getMadeFromInfo(col);
+                madeAttributes = new String[allMade.length][3];
+                for(int row = 0; row < allMade.length;row++) {
+                    for(int column = 0; column < 3; column++) {
+                        if(column ==0){
+                            madeAttributes[row][column] = allMade[row].getA_id();
+                        } else if (column ==1) {
+                            madeAttributes[row][column] = allMade[row].getName();
+                        } else {
+                            madeAttributes[row][column] = allMade[row].getO_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            madeTable = new JTable(madeAttributes,columnNames);
+            JScrollPane madePane = new JScrollPane(madeTable);
+            madePane.setPreferredSize(new Dimension(700, 400));
+            madeView.add(madePane);
+            viewFrame.add(madeView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewMaintains_health(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Maintains Health Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel maintainsView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable maintainsTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add("w_id");
+            col.add("a_id");
+
+            String[][] maintainsAttributes;
+            String[] columnNames = {"Worker ID", "Animal ID"};
+
+            try{
+                MaintainsHealthOf[] allMaintains = dbHandler.getMaintainsHealthOfInfo(col);
+                maintainsAttributes = new String[allMaintains.length][2];
+                for(int row = 0; row< allMaintains.length;row++) {
+                    for(int column = 0; column < 2; column++){
+                        if(column==0){
+                            maintainsAttributes[row][column] = allMaintains[row].getW_id();
+                        }else{
+                            maintainsAttributes[row][column] = allMaintains[row].getA_id();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            maintainsTable = new JTable(maintainsAttributes, columnNames);
+            JScrollPane maintainsPane = new JScrollPane(maintainsTable);
+            maintainsPane.setPreferredSize(new Dimension(700, 400));
+            maintainsView.add(maintainsPane);
+            viewFrame.add(maintainsView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewStored_at(){
