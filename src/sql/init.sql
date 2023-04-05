@@ -413,24 +413,24 @@ INTO Habitats1(p_id, name, biome, area)
 VALUES ('005', 'Grizzly Bear Habitat', 'North American Woodlands', 40 );
 
 INSERT
-INTO Shops(p_id, type)
-VALUES ('101', 'Clothing');
+INTO Shops(p_id, name, type)
+VALUES ('101', 'Imperial Clothing Store', 'Clothing');
 
 INSERT
-INTO Shops(p_id, type)
-VALUES ('102', 'Drinks');
+INTO Shops(p_id, name, type)
+VALUES ('102', 'Imperial Drinks Store', 'Drinks');
 
 INSERT
-INTO Shops(p_id, type)
-VALUES ('103', 'Stuffed Animals');
+INTO Shops(p_id, name, type)
+VALUES ('103', 'Imperial Plushy Store', 'Stuffed Animals');
 
 INSERT
-INTO Shops(p_id, type)
-VALUES ('104', 'Balloons');
+INTO Shops(p_id, name, type)
+VALUES ('104', 'Imperial Balloon Store', 'Balloons');
 
 INSERT
-INTO Shops(p_id, type)
-VALUES ('105', 'Food');
+INTO Shops(p_id, name, type)
+VALUES ('105', 'Imperial Food Store', 'Food');
 
 INSERT
 INTO Storage_Units(p_id, name, temperature)
@@ -458,7 +458,7 @@ VALUES ('0001', '101', 'T-Shirt', 50, 24.99);
 
 INSERT
 INTO Items(i_id, p_id, name, stock, price)
-VALUES ('0002', '102', 'Soda Bottle', 20, 3.50,);
+VALUES ('0002', '102', 'Soda Bottle', 20, 3.50);
 
 
 INSERT
