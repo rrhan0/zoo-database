@@ -2461,48 +2461,57 @@ public class JWindow {
                     colNames.add("Veterinarian's Specializations");
                 }
 
-                try {
-                    Veterinarian[] allVets = dbHandler.getVeterinarianInfo(col);
-                    String[][] VetAttributes = new String[allVets.length][numCols];
-                    Object[] columnNames = colNames.toArray();
-                    for (int i = 0; i < allVets.length; i++) {
-                        int j = 0;
-                        if (col0) {
-                            VetAttributes[i][j] = allVets[i].getW_id();
-                            j++;
+                    try {
+                        String projection = String.join(", ", col);
+
+                        Object[][] rawResults = dbHandler.getTableInfo(projection, "VETERINARIANS v, WORKERS w WHERE v.W_ID = w.W_ID");
+                        String [][] VetAttributes = new String[rawResults.length][numCols];
+                        for (int i = 0; i < rawResults.length; i++) {
+                            for (int j = 0; j < rawResults[0].length; j++) {
+                                VetAttributes[i][j] = String.valueOf(rawResults[i][j]);
+                            }
                         }
-                        if (col1) {
-                            VetAttributes[i][j] = allVets[i].getName();
-                            j++;
-                        }
-                        if (col2) {
-                            VetAttributes[i][j] = Float.toString(allVets[i].getPay_rate());
-                            j++;
-                        }
-                        if (col3) {
-                            VetAttributes[i][j] = allVets[i].getAddress();
-                            j++;
-                        }
-                        if (col4) {
-                            VetAttributes[i][j] = allVets[i].getEmail();
-                            j++;
-                        }
-                        if (col5) {
-                            VetAttributes[i][j] = allVets[i].getPhone();
-                            j++;
-                        }
-                        if (col6) {
-                            VetAttributes[i][j] = allVets[i].getSpecialization();
-                        }
-                    }
-                    resetCols();
-                    //Make JTable to display projected table
-                    JTable vetProj = new JTable(VetAttributes, columnNames);
-                    //Add JTable to scroll pane
-                    JScrollPane scroll = new JScrollPane(vetProj);
-                    scroll.setPreferredSize(new Dimension(700, 400));
-                    //Call display
-                    displayProjection(scroll);
+//                        Veterinarian [] allVets = dbHandler.getVeterinarianInfo(col);
+//                        String [][] VetAttributes = new String[allVets.length][numCols];
+                        Object [] columnNames =  colNames.toArray();
+//                        for (int i = 0; i < allVets.length; i++) {
+//                            int j = 0;
+//                            if (col0) {
+//                                VetAttributes[i][j] = allVets[i].getW_id();
+//                                j++;
+//                            }
+//                            if (col1) {
+//                                VetAttributes[i][j] = allVets[i].getName();
+//                                j++;
+//                            }
+//                            if (col2) {
+//                                VetAttributes[i][j] = Float.toString(allVets[i].getPay_rate());
+//                                j++;
+//                            }
+//                            if (col3) {
+//                                VetAttributes[i][j] = allVets[i].getAddress();
+//                                j++;
+//                            }
+//                            if (col4) {
+//                                VetAttributes[i][j] = allVets[i].getEmail();
+//                                j++;
+//                            }
+//                            if (col5) {
+//                                VetAttributes[i][j] = allVets[i].getPhone();
+//                                j++;
+//                            }
+//                            if (col6) {
+//                                VetAttributes[i][j] = allVets[i].getSpecialization();
+//                            }
+//                        }
+                        resetCols();
+                        //Make JTable to display projected table
+                        JTable vetProj = new JTable(VetAttributes, columnNames);
+                        //Add JTable to scroll pane
+                        JScrollPane scroll = new JScrollPane(vetProj);
+                        scroll.setPreferredSize(new Dimension(700, 400));
+                        //Call display
+                        displayProjection(scroll);
 
                 } catch (SQLException ex) {
                     displayError("Something went wrong");
