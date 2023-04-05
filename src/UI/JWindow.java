@@ -488,61 +488,70 @@ public class JWindow {
     }
 
         public void updateWorkers(){
+            //Create A JFrame to show text entries for update
+            updateFrame = new JFrame();
+            updateFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            updateFrame.setTitle("Entries For Update");
+            updateFrame.setSize(400, 500);
+
 
             //CREATE A JFRAME & JPANEL FOR A BUTTON FOR ALL ATTRIBUTES
             updateButtons = new JFrame();
+            updateButtons.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             updateButtons.setTitle("Update Existing Worker");
+            updateButtons.setSize(400, 500);
             JPanel forUpdate = new JPanel(new FlowLayout(FlowLayout.CENTER)); //To show all the buttons
             JPanel updateText = new JPanel(new FlowLayout(FlowLayout.CENTER)); //To show text for actual update
             JTextField wid = new JTextField("Worker's Current ID [Required]"); //wid text field REQUIRED FOR ALL UPDATES
 
             //Create Buttons & associated action listeners
-            JButton w_id = new JButton("Update Worker ID");
-            w_id.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    updateButtons.remove(forUpdate);
-
-                    JTextField update = new JTextField("New Worker ID [Required]"); //text for new worker ID
-                    //Add components to panel
-                    updateText.add(wid);
-                    updateText.add(update);
-
-
-                    JButton applyUpdate = new JButton("Apply Update"); //Button to actually apply update
-                    updateText.add(applyUpdate);
-
-                    //Add panel to frame
-                    updateButtons.add(updateText);
-                    applyUpdate.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            try{
-                                String oldWID = wid.getText();
-                                String newWID = update.getText();
-                                if(oldWID.equals("") || newWID.equals(""))
-                                    throw new Error();
-                                //TODO actual update here
-
-
-                                showSuccessFrame();
-                            }catch(Error widError){
-                                displayError("Current worker ID does not exist or you did not fill in a required field");
-                            }
-                            //Remove for next use
-                            updateText.removeAll();
-                            updateButtons.removeAll();
-
-
-                        }
-                    });
-                }
-            });
+//            JButton w_id = new JButton("Update Worker ID");
+//            w_id.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    updateButtons.remove(forUpdate);
+//
+//                    JTextField update = new JTextField("New Worker ID [Required]"); //text for new worker ID
+//                    //Add components to panel
+//                    updateText.add(wid);
+//                    updateText.add(update);
+//
+//
+//                    JButton applyUpdate = new JButton("Apply Update"); //Button to actually apply update
+//                    updateText.add(applyUpdate);
+//
+//                    //Add panel to frame
+//                    updateButtons.add(updateText);
+//                    applyUpdate.addActionListener(new ActionListener() {
+//                        @Override
+//                        public void actionPerformed(ActionEvent e) {
+//                            try{
+//                                String oldWID = wid.getText();
+//                                String newWID = update.getText();
+//                                if(oldWID.equals("") || newWID.equals(""))
+//                                    throw new Error();
+//                                //TODO actual update here
+//
+//
+//                                showSuccessFrame();
+//                            }catch(Error widError){
+//                                displayError("Current worker ID does not exist or you did not fill in a required field");
+//                            }
+//                            //Remove for next use
+//                            updateText.removeAll();
+//                            updateButtons.removeAll();
+//
+//
+//                        }
+//                    });
+//                }
+//            });
             JButton name = new JButton("Update Worker's Name");
             name.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    updateButtons.remove(forUpdate);
+                    updateButtons.dispose();
+//                    updateButtons.remove(forUpdate);
                     JTextField update = new JTextField("Worker's New Name [Required]"); //text for new Worker name
                     //Add components to panel
                     updateText.add(wid);
@@ -553,7 +562,8 @@ public class JWindow {
                     updateText.add(applyUpdate);
 
                     //Add panel to frame
-                    updateButtons.add(updateText);
+                    updateFrame.add(updateText);
+                    displayUpdateFrame(); //Display frame with text entries for user and button to apply changes
                     applyUpdate.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -565,13 +575,17 @@ public class JWindow {
                                 //TODO actual update here
 
 
+                                updateFrame.dispose();
                                 showSuccessFrame();
                             }catch(Error nameError){
+                                updateFrame.dispose();
                                 displayError("Current worker ID does not exist or you did not fill in a required field");
                             }
+
+
                             //Remove for next use
                             updateText.removeAll();
-                            updateButtons.removeAll();
+                            updateFrame.removeAll();
 
                         }
                     });
@@ -581,7 +595,8 @@ public class JWindow {
             payrate.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    updateButtons.remove(forUpdate);
+                    updateButtons.dispose();
+//                    updateButtons.remove(forUpdate);
                     JTextField update = new JTextField("Worker's New Pay Rate [Required]"); //text for new worker pay rate
                     //Add components to panel
                     updateText.add(wid);
@@ -592,7 +607,8 @@ public class JWindow {
                     updateText.add(applyUpdate);
 
                     //Add panel to frame
-                    updateButtons.add(updateText);
+                    updateFrame.add(updateText);
+                    displayUpdateFrame();
                     applyUpdate.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -604,14 +620,15 @@ public class JWindow {
 
                                 //TODO actual update here
 
-
+                                updateFrame.dispose();
                                 showSuccessFrame();
                             }catch(Error payError){
+                                updateFrame.dispose();
                                 displayError("Current worker ID does not exist, you did not fill in a required field, or did not input a float for new pay rate");
                             }
                             //Remove for next use
                             updateText.removeAll();
-                            updateButtons.removeAll();
+                            updateFrame.removeAll();
                         }
                     });
 
@@ -621,7 +638,8 @@ public class JWindow {
             email.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    updateButtons.remove(forUpdate);
+                    updateButtons.dispose();
+ //                   updateButtons.remove(forUpdate);
                     JTextField update = new JTextField("Worker's New Email [Required]"); //text for new worker pay rate
                     //Add components to panel
                     updateText.add(wid);
@@ -632,7 +650,8 @@ public class JWindow {
                     updateText.add(applyUpdate);
 
                     //Add panel to frame
-                    updateButtons.add(updateText);
+                    updateFrame.add(updateText);
+                    displayUpdateFrame();
                     applyUpdate.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -644,14 +663,15 @@ public class JWindow {
 
                                 //TODO actual update here
 
-
+                                updateFrame.dispose();
                                 showSuccessFrame();
                             }catch(Error payError){
+                                updateFrame.dispose();
                                 displayError("Current worker ID does not exist or you did not fill in a required field");
                             }
                             //Remove for next use
                             updateText.removeAll();
-                            updateButtons.removeAll();
+                            updateFrame.removeAll();
                         }
                     });
                 }
@@ -660,7 +680,8 @@ public class JWindow {
             phone.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    updateButtons.remove(forUpdate);
+                    updateButtons.dispose();
+//                    updateButtons.remove(forUpdate);
                     JTextField update = new JTextField("Worker's New Phone # [Required]"); //text for new worker pay rate
                     //Add components to panel
                     updateText.add(wid);
@@ -671,7 +692,8 @@ public class JWindow {
                     updateText.add(applyUpdate);
 
                     //Add panel to frame
-                    updateButtons.add(updateText);
+                    updateFrame.add(updateText);
+                    displayUpdateFrame();
                     applyUpdate.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -683,14 +705,15 @@ public class JWindow {
 
                                 //TODO actual update here
 
-
+                                updateFrame.dispose();
                                 showSuccessFrame();
                             }catch(Error payError){
+                                updateFrame.dispose();
                                 displayError("Current worker ID does not exist or you did not fill in a required field");
                             }
                             //Remove for next use
                             updateText.removeAll();
-                            updateButtons.removeAll();
+                            updateFrame.removeAll();
                         }
                     });
                 }
@@ -699,7 +722,8 @@ public class JWindow {
             address.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    updateButtons.remove(forUpdate);
+                    updateButtons.dispose();
+                    //updateButtons.remove(forUpdate);
                     JTextField update = new JTextField("Worker's New Address [Required]"); //text for new worker pay rate
                     //Add components to panel
                     updateText.add(wid);
@@ -710,7 +734,8 @@ public class JWindow {
                     updateText.add(applyUpdate);
 
                     //Add panel to frame
-                    updateButtons.add(updateText);
+                    updateFrame.add(updateText);
+                    displayUpdateFrame();
                     applyUpdate.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -719,6 +744,7 @@ public class JWindow {
                                 String newAddress =update.getText();
                                 if(widInput.equals("") || newAddress.equals(""))
                                     throw new Error();
+
 
                                 //TODO actual update here
 
@@ -729,7 +755,7 @@ public class JWindow {
                             }
                             //Remove for next use
                             updateText.removeAll();
-                            updateButtons.removeAll();
+                            updateFrame.removeAll();
                         }
                     });
                 }
@@ -737,7 +763,7 @@ public class JWindow {
 
 
             //Add Buttons to JPanel
-            forUpdate.add(w_id);
+//            forUpdate.add(w_id);
             forUpdate.add(name);
             forUpdate.add(payrate);
             forUpdate.add(email);
@@ -748,6 +774,11 @@ public class JWindow {
             updateButtons.add(forUpdate);
             this.updateButtons.setVisible(true);
 
+        }
+
+        //Display update Frame for update worker
+        public void displayUpdateFrame(){
+            this.updateFrame.setVisible(true);
         }
 
         //Display error text
