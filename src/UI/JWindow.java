@@ -3707,6 +3707,7 @@ public class JWindow {
             //Create Table and Pane
             JTable nestedAggTable = new JTable(vetData, columnNames);
             JScrollPane nestedAggScroll = new JScrollPane(nestedAggTable);
+            nestedAggScroll.setPreferredSize(new Dimension(700, 400));
 
             //Add text/pane to panel
             displayNestedAggregation.add(text);
