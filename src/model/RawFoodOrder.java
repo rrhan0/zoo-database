@@ -29,4 +29,8 @@ public class RawFoodOrder {
     public Integer getWeight() {
         return weight;
     }
+
+    public Date getDate_received() {return date_received;}
+
+    public Date getExpiry_date() {return expiry_date;}
 }

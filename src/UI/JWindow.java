@@ -1,10 +1,7 @@
 package UI;
 
 import database.DatabaseConnectionHandler;
-import model.PreppedFood;
-import model.Shop;
-import model.StorageUnit;
-import model.Veterinarian;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -948,14 +945,113 @@ public class JWindow {
 
         public void viewRawFoodOrders(){
             viewFrame = new JFrame();
-            viewFrame.setTitle("Veterinarian Table");
+            viewFrame.setTitle("Raw Food Orders Table");
             viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             viewFrame.setSize(800, 500);
             viewFrame.setLocationRelativeTo(null);
+
+            //create panel for table to be added to
+            JPanel rawFoodView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable rawFoodTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<>();
+            col.clear();
+            col.add(Constants.O_ID);
+            col.add(Constants.CONTENTS);
+            col.add(Constants.WEIGHT);
+            col.add(Constants.DATE_RECEIVED);
+            col.add(Constants.EXPIRY_DATE);
+
+            String[][] rawFoodAttributes;
+            String[] columnNames = {"Order ID", "Contents", "Weight", "Date Received", "Expiry Date"};
+
+            try{
+                RawFoodOrder[] allRawFood = dbHandler.getRawFoodOrderInfo(col);
+                rawFoodAttributes = new String[allRawFood.length][5];
+                for(int row = 0; row < allRawFood.length; row++) {
+                    for(int column = 0; column < 5; column++) {
+                        if(column == 0) {
+                            rawFoodAttributes[row][column] = allRawFood[row].getO_id();
+                        } else if (column == 1) {
+                            rawFoodAttributes[row][column] = allRawFood[row].getContents();
+                        }else if (column == 2) {
+                            rawFoodAttributes[row][column] = allRawFood[row].getWeight() + "";
+                        }else if (column == 3) {
+                            rawFoodAttributes[row][column] = allRawFood[row].getDate_received() + "";
+                        }else {
+                            rawFoodAttributes[row][column] = allRawFood[row].getExpiry_date()+"";
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            //add table to panel, add panel to frame
+            rawFoodTable = new JTable(rawFoodAttributes, columnNames);
+            JScrollPane rawFoodScrollPane = new JScrollPane(rawFoodTable);
+            rawFoodScrollPane.setPreferredSize(new Dimension(700, 400));
+            rawFoodView.add(rawFoodScrollPane);
+            viewFrame.add(rawFoodView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewComputers(){
+            viewFrame = new JFrame();
+            viewFrame.setTitle("Computers Table");
+            viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewFrame.setSize(800, 500);
+            viewFrame.setLocationRelativeTo(null);
 
+            //create panel for table to be added to
+            JPanel computersView = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+            //1D to 2D array to fill JTable
+            JTable computersTable;
+
+            //database entries
+            ArrayList<String> col = new ArrayList<String>();
+            col.add(Constants.C_ID);
+            col.add(Constants.W_ID);
+            col.add(Constants.MODEL);
+            col.add(Constants.MANUFACTURER);
+            col.add(Constants.TYPE);
+
+            String[][] computersAttributes;
+            String[] columnNames = {"Computer ID", "Associated Worker ID", "Model", "Manufacturer", "Computer Type"};
+
+            try{
+                Computer[] allComputers = dbHandler.getComputerInfo(col);
+                computersAttributes = new String[allComputers.length][5];
+                for(int row = 0; row < allComputers.length; row++) {
+                    for(int column = 0; column < 5; column++){
+                        if(column==0) {
+                            computersAttributes[row][column] = allComputers[row].getC_id();
+                        }else if (column==1) {
+                            computersAttributes[row][column] = allComputers[row].getW_id();
+                        }else if (column==2) {
+                            computersAttributes[row][column] = allComputers[row].getModel();
+                        }else if (column==3) {
+                            computersAttributes[row][column] = allComputers[row].getManufacturer();
+                        }else {
+                            computersAttributes[row][column] = allComputers[row].getType();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            //add table to panel, add panel to frame
+            computersTable = new JTable(computersAttributes, columnNames);
+            JScrollPane computersScrollPane = new JScrollPane(computersTable);
+            computersScrollPane.setPreferredSize(new Dimension(700,400));
+            computersView.add(computersScrollPane);
+            viewFrame.add(computersView);
+
+            this.viewFrame.setVisible(true);
         }
 
         public void viewAnimals(){
