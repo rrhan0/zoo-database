@@ -30,6 +30,8 @@ public class JWindow {
     private JFrame showSelectionFrame;
     private JFrame aggregationGroupByFrame;
     private JFrame aggregationHavingFrame;
+    private JFrame divisionFrame;
+
     //Used to determine checked boxes for projection of tables
     private boolean col0 = false, col1 = false, col2 = false, col3 = false, col4 = false, col5 = false, col6 = false;
 
@@ -458,13 +460,19 @@ public class JWindow {
             public void actionPerformed(ActionEvent e) {
                 aggregationGroupBy();
             }
-        });
-
+        })
         JButton aggregationHaving = new JButton("AGGREGATING WITH HAVING");
         aggregationHaving.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 aggregationHaving();
+
+        JButton division = new JButton("DIVISION");
+        division.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                division();
+
             }
         });
 
@@ -565,6 +573,7 @@ public class JWindow {
         zookeepers.add(zookeepersUpdate);
         zookeepers.add(zookeepersView);
         zookeepers.add(zookeepersProjection);
+        zookeepers.add(division);
         zookeepers.setLayout(new FlowLayout());
         zookeepers.setBackground(Color.DARK_GRAY);
 
@@ -3538,6 +3547,51 @@ public class JWindow {
 
     }
 
+    public void division() {
+        //Instantiate Frame
+        divisionFrame = new JFrame("Get Zookeeper That Feeds All The Animals");
+        divisionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        divisionFrame.setSize(800, 500);
+        divisionFrame.setLocationRelativeTo(null);
+
+
+        JLabel text = new JLabel("Find super zookeepers that feed every animal in the zoo.");
+        JPanel displayDivision = new JPanel();
+
+        try {
+            Zookeeper[] allSuper = dbHandler.getSuperZookeepers();
+            String[] colNames = {"ID", "Name", "Pay Rate", "Address", "Email", "Phone"};
+            String[][] superData = new String[allSuper.length][colNames.length];
+            for (int i = 0; i < allSuper.length; i++) {
+                superData[i][0] = String.valueOf(allSuper[i].getW_id());
+                superData[i][1] = String.valueOf(allSuper[i].getName());
+                superData[i][2] = String.valueOf(allSuper[i].getPay_rate());
+                superData[i][3] = String.valueOf(allSuper[i].getAddress());
+                superData[i][4] = String.valueOf(allSuper[i].getEmail());
+                superData[i][5] = String.valueOf(allSuper[i].getPhone());
+            }
+
+            //Create table and pane
+            JTable divisionTable = new JTable(superData, colNames);
+            JScrollPane divisionScroll = new JScrollPane(divisionTable);
+            divisionScroll.setPreferredSize(new Dimension(700, 400));
+
+            //Add table/pane and text to panel
+            displayDivision.add(text);
+            displayDivision.add(divisionScroll);
+
+            //Add panel to frame
+            divisionFrame.add(displayDivision);
+
+            //Display frame
+            showdivisionFrame();
+
+        } catch (SQLException e) {
+            displayError("Something went wrong!");
+        }
+
+    }
+
 
 
     public void aggregationHaving(){
@@ -3609,6 +3663,11 @@ public class JWindow {
     }
 
     public void showAggregationHavingFrame(){this.aggregationHavingFrame.setVisible((true));}
+
+    public void showdivisionFrame() {
+        this.divisionFrame.setVisible(true);
+    }
+
 
 
 }
