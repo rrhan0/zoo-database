@@ -579,6 +579,26 @@ INTO Prepped_Food(a_id, name, weight)
 VALUES ('1005', 'Cooked moose', 30.2);
 
 INSERT
+INTO Prepped_Food(a_id, name, weight)
+VALUES ('1001', 'Raw beef', 20.1);
+
+INSERT
+INTO Prepped_Food(a_id, name, weight)
+VALUES ('1002', 'Deer meat', 10.0);
+
+INSERT
+INTO Prepped_Food(a_id, name, weight)
+VALUES ('1003', 'Tuna', 15.7);
+
+INSERT
+INTO Prepped_Food(a_id, name, weight)
+VALUES ('1004', 'Vegetables', 25.0);
+
+INSERT
+INTO Prepped_Food(a_id, name, weight)
+VALUES ('1005', 'Cooked elk', 30.2);
+
+INSERT
 INTO Raw_Food_Orders(o_id, contents, weight, date_received, expiry_date)
 VALUES('1', 'Deer and Moose meat', 50, TO_DATE('2023/01/27', 'yyyy/mm/dd'), TO_DATE('2023/02/05',  'yyyy/mm/dd'));
 
