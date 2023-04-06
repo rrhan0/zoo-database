@@ -42,7 +42,7 @@ public class DatabaseConnectionHandler {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
 	}
-	public Computer[] selectManufacturer(String manufacturerName) throws SQLException {
+	public Computer[] selectManufacturer(String manufacturerName) throws SQLException, NotExists {
 		ArrayList<String> columns = new ArrayList<>();
 
 		columns.add(Constants.C_ID);
@@ -62,13 +62,11 @@ public class DatabaseConnectionHandler {
 
 		for (int i = 0; i < queryResults.length; i++) {
 			Object[] row = queryResults[i];
-
 			String c_id = null;
 			String w_id = null;
 			String model = null;
 			String manufacturer = null;
 			String type = null;
-
 			for (int j = 0; j < row.length; j++) {
 				if ("c_id".equalsIgnoreCase(columns.get(j))) {
 					c_id = (String) row[j];
@@ -86,7 +84,9 @@ public class DatabaseConnectionHandler {
 			Computer computer = new Computer(c_id, w_id, model, manufacturer, type);
 			result[i] = computer;
 		}
-
+		if (result.length == 0) {
+			throw new NotExists("Manufacturer " + manufacturerName + " not fond!");
+		}
 		return result;
 	}
 	public String[] getSpeciesPreppedFood(String species) throws SQLException, NotExists {
@@ -1140,41 +1140,5 @@ public class DatabaseConnectionHandler {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
 	}
-	
-//	public void databaseSetup() {
-//		dropBranchTableIfExists();
-//
-//		try {
-//			Statement stmt = connection.createStatement();
-//			stmt.executeUpdate("CREATE TABLE branch (branch_id integer PRIMARY KEY, branch_name varchar2(20) not null, branch_addr varchar2(50), branch_city varchar2(20) not null, branch_phone integer)");
-//			stmt.close();
-//		} catch (SQLException e) {
-//			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-//		}
-//
-//		BranchModel branch1 = new BranchModel("123 Charming Ave", "Vancouver", 1, "First Branch", 1234567);
-//		insertBranch(branch1);
-//
-//		BranchModel branch2 = new BranchModel("123 Coco Ave", "Vancouver", 2, "Second Branch", 1234568);
-//		insertBranch(branch2);
-//	}
-//
-//	private void dropBranchTableIfExists() {
-//		try {
-//			Statement stmt = connection.createStatement();
-//			ResultSet rs = stmt.executeQuery("select table_name from user_tables");
-//
-//			while(rs.next()) {
-//				if(rs.getString(1).toLowerCase().equals("branch")) {
-//					stmt.execute("DROP TABLE branch");
-//					break;
-//				}
-//			}
-//
-//			rs.close();
-//			stmt.close();
-//		} catch (SQLException e) {
-//			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-//		}
-//	}
+
 }
