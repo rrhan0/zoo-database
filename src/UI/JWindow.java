@@ -859,53 +859,10 @@ public class JWindow {
         updateButtons.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         updateButtons.setTitle("Update Existing Worker");
         updateButtons.setSize(400, 500);
-        updateFrame.setLocationRelativeTo(null);
+        updateButtons.setLocationRelativeTo(null);
         JPanel forUpdate = new JPanel(new FlowLayout(FlowLayout.CENTER)); //To show all the buttons
         JPanel updateText = new JPanel(new FlowLayout(FlowLayout.CENTER)); //To show text for actual update
         JTextField wid = new JTextField("Worker's Current ID [Required]"); //wid text field REQUIRED FOR ALL UPDATES
-
-        //Create Buttons & associated action listeners
-//            JButton w_id = new JButton("Update Worker ID");
-//            w_id.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    updateButtons.remove(forUpdate);
-//
-//                    JTextField update = new JTextField("New Worker ID [Required]"); //text for new worker ID
-//                    //Add components to panel
-//                    updateText.add(wid);
-//                    updateText.add(update);
-//
-//
-//                    JButton applyUpdate = new JButton("Apply Update"); //Button to actually apply update
-//                    updateText.add(applyUpdate);
-//
-//                    //Add panel to frame
-//                    updateButtons.add(updateText);
-//                    applyUpdate.addActionListener(new ActionListener() {
-//                        @Override
-//                        public void actionPerformed(ActionEvent e) {
-//                            try{
-//                                String oldWID = wid.getText();
-//                                String newWID = update.getText();
-//                                if(oldWID.equals("") || newWID.equals(""))
-//                                    throw new Error();
-//                                //TODO actual update here
-//
-//
-//                                showSuccessFrame();
-//                            }catch(Error widError){
-//                                displayError("Current worker ID does not exist or you did not fill in a required field");
-//                            }
-//                            //Remove for next use
-//                            updateText.removeAll();
-//                            updateButtons.removeAll();
-//
-//
-//                        }
-//                    });
-//                }
-//            });
         JButton name = new JButton("Update Worker's Name");
         name.addActionListener(new ActionListener() {
 
@@ -934,7 +891,6 @@ public class JWindow {
                             if (widInput.equals("") || newName.equals(""))
                                 throw new Error();
 
-                            //TODO actual update here
                             dbHandler.updateWorker(widInput, Constants.NAME, newName);
 
 
@@ -1038,7 +994,6 @@ public class JWindow {
                             if (widInput.equals("") || newEmail.equals(""))
                                 throw new Error();
 
-                            //TODO actual update here
                             dbHandler.updateWorker(widInput, Constants.EMAIL, newEmail);
 
                             updateFrame.dispose();
@@ -1087,7 +1042,6 @@ public class JWindow {
                             if (widInput.equals("") || newPhone.equals(""))
                                 throw new Error();
 
-                            //TODO actual update here
                             dbHandler.updateWorker(widInput, Constants.PHONE, newPhone);
 
 
@@ -1137,8 +1091,6 @@ public class JWindow {
                             if (widInput.equals("") || newAddress.equals(""))
                                 throw new Error();
 
-
-                            //TODO actual update here
                             dbHandler.updateWorker(widInput, Constants.ADDRESS, newAddress);
 
                             updateFrame.dispose();
