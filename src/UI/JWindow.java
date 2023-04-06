@@ -801,7 +801,7 @@ public class JWindow {
         deleteFrame = new JFrame();
         deleteFrame.setTitle("Delete Existing Animal - Cascades onto PreppedFood");
         deleteFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        deleteFrame.setSize(400, 500);
+        deleteFrame.setSize(600, 400);
         deleteFrame.setLocationRelativeTo(null);
 
         //create all text fields required for animals
