@@ -492,12 +492,6 @@ public class JWindow {
             }
         });
 
-
-        //Places Tab creation
-        JPanel places = new JPanel();
-        places.setLayout(new FlowLayout());
-        places.setBackground(Color.DARK_GRAY);
-
         //Storage_Units Tab
         JPanel storageUnits = new JPanel();
         storageUnits.add(storageInsert);
@@ -705,7 +699,6 @@ public class JWindow {
         works_at.setBackground(Color.DARK_GRAY);
 
         //Add tabs to frame
-        tabs.addTab("Places", places);
         tabs.addTab("Storage Units", storageUnits);
         tabs.addTab("Prepped Food", preppedFood);
         tabs.addTab("Raw Food Orders", rawFoodOrders);
