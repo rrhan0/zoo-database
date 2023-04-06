@@ -1,71 +1,71 @@
-drop table COMPUTERS1 cascade constraints
-/
-
-drop table COMPUTERS2 cascade constraints
-/
-
-drop table VENDORS cascade constraints
-/
-
-drop table ITEMS cascade constraints
-/
-
-drop table WORKS_AT cascade constraints
-/
-
-drop table SHOPS cascade constraints
-/
-
-drop table ASSIGNED_TO cascade constraints
-/
-
-drop table FEEDS cascade constraints
-/
-
-drop table ZOOKEEPERS cascade constraints
-/
-
-drop table MAINTAINS_HEALTH_OF cascade constraints
-/
-
-drop table VETERINARIANS cascade constraints
-/
-
-drop table WORKERS cascade constraints
-/
-
-drop table COHABITATES_WITH cascade constraints
-/
-
-drop table MADE_FROM cascade constraints
-/
-
-drop table STORED_AT cascade constraints
-/
-
-drop table PREPPED_FOOD cascade constraints
-/
-
-drop table ANIMALS1 cascade constraints
-/
-
-drop table HABITATS1 cascade constraints
-/
-
-drop table HABITATS2 cascade constraints
-/
-
-drop table ANIMALS2 cascade constraints
-/
-
-drop table LOCATED_AT cascade constraints
-/
-
-drop table STORAGE_UNITS cascade constraints
-/
-
-drop table RAW_FOOD_ORDERS cascade constraints
-/
+-- drop table COMPUTERS1 cascade constraints
+-- /
+--
+-- drop table COMPUTERS2 cascade constraints
+-- /
+--
+-- drop table VENDORS cascade constraints
+-- /
+--
+-- drop table ITEMS cascade constraints
+-- /
+--
+-- drop table WORKS_AT cascade constraints
+-- /
+--
+-- drop table SHOPS cascade constraints
+-- /
+--
+-- drop table ASSIGNED_TO cascade constraints
+-- /
+--
+-- drop table FEEDS cascade constraints
+-- /
+--
+-- drop table ZOOKEEPERS cascade constraints
+-- /
+--
+-- drop table MAINTAINS_HEALTH_OF cascade constraints
+-- /
+--
+-- drop table VETERINARIANS cascade constraints
+-- /
+--
+-- drop table WORKERS cascade constraints
+-- /
+--
+-- drop table COHABITATES_WITH cascade constraints
+-- /
+--
+-- drop table MADE_FROM cascade constraints
+-- /
+--
+-- drop table STORED_AT cascade constraints
+-- /
+--
+-- drop table PREPPED_FOOD cascade constraints
+-- /
+--
+-- drop table ANIMALS1 cascade constraints
+-- /
+--
+-- drop table HABITATS1 cascade constraints
+-- /
+--
+-- drop table HABITATS2 cascade constraints
+-- /
+--
+-- drop table ANIMALS2 cascade constraints
+-- /
+--
+-- drop table LOCATED_AT cascade constraints
+-- /
+--
+-- drop table STORAGE_UNITS cascade constraints
+-- /
+--
+-- drop table RAW_FOOD_ORDERS cascade constraints
+-- /
 
 
 

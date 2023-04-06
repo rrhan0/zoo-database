@@ -4655,7 +4655,7 @@ public class JWindow {
                         showSelectionFrame(); //Unable to do it in try catch I think?
 
                     }
-                } catch (Error | SQLException selectionError) {
+                } catch (Error | SQLException | NotExists selectionError) {
                     userSelectionFrame.dispose();
                     displayError("You did not enter a valid manufacturer");
                 }
