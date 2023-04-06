@@ -599,6 +599,26 @@ INTO Raw_Food_Orders(o_id, contents, weight, date_received, expiry_date)
 VALUES ('5', 'Pellet food for Giraffes', 100, TO_DATE('2023/01/08',  'yyyy/mm/dd'), TO_DATE('2023/06/08',  'yyyy/mm/dd'));
 
 INSERT
+INTO Raw_Food_Orders(o_id, contents, weight, date_received, expiry_date)
+VALUES('6', 'Deer and Moose meat', 12, TO_DATE('2023/01/27', 'yyyy/mm/dd'), TO_DATE('2023/02/05',  'yyyy/mm/dd'));
+
+INSERT
+INTO Raw_Food_Orders(o_id, contents, weight, date_received, expiry_date)
+VALUES('7', 'Sardines', 8, TO_DATE('2023/01/15',  'yyyy/mm/dd'), TO_DATE('2023/02/01',  'yyyy/mm/dd'));
+
+INSERT
+INTO Raw_Food_Orders(o_id, contents, weight, date_received, expiry_date)
+VALUES ('8', 'Hay and fruits', 10, TO_DATE('2023/01/15',  'yyyy/mm/dd'), TO_DATE('2023/02/10',  'yyyy/mm/dd'));
+
+INSERT
+INTO Raw_Food_Orders(o_id, contents, weight, date_received, expiry_date)
+VALUES ('9', 'Raw beef and chicken', 10, TO_DATE('2023/02/25',  'yyyy/mm/dd'), TO_DATE('2023/03/09',  'yyyy/mm/dd'));
+
+INSERT
+INTO Raw_Food_Orders(o_id, contents, weight, date_received, expiry_date)
+VALUES ('10', 'Pellet food for Giraffes', 100, TO_DATE('2023/01/08',  'yyyy/mm/dd'), TO_DATE('2023/06/08',  'yyyy/mm/dd'));
+
+INSERT
 INTO Works_at(w_id, p_id)
 VALUES ('1', '101');
 
@@ -778,3 +798,23 @@ VALUES ('4', '201');
 INSERT
 INTO Located_at(o_id, p_id)
 VALUES ('5', '204');
+
+INSERT
+INTO Located_at(o_id, p_id)
+VALUES ('6', '201');
+
+INSERT
+INTO Located_at(o_id, p_id)
+VALUES ('7', '205');
+
+INSERT
+INTO Located_at(o_id, p_id)
+VALUES ('8', '203');
+
+INSERT
+INTO Located_at(o_id, p_id)
+VALUES ('9', '201');
+
+INSERT
+INTO Located_at(o_id, p_id)
+VALUES ('10', '204');
